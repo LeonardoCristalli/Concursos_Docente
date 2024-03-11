@@ -8,6 +8,7 @@
       <select class="form-control" id="entidad" name="entidad">
         <option value="usuarios">Usuarios</option>
         <option value="dptos">Departamentos</option>
+        <option value="areas">Área</option>
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Ir al CRUD</button>

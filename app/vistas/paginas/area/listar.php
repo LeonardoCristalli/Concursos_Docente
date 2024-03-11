@@ -9,20 +9,23 @@
           <thead class="thead-dark">
             <tr>
               <th class="text-center">ID</th>
-              <th class="text-center">Nombre</th>           
+              <th class="text-center">Nombre</th>     
+              <th class="text-center">Departamento</th>        
               <th> </th>
               <th> </th>
             </tr>              
           </thead>  
           <tbody>
-            <?php foreach($datos['dptos'] as $dpto) : ?>
+            <?php foreach($datos['areas'] as $area) : ?>
             <tr>
-              <td><?php echo $dpto->nombre; ?></td>
+              <td><?php echo $area->id; ?></td>
+              <td><?php echo $area->nombre; ?></td>
+              <td><?php echo $area->dpto_id; ?></td>
                             
-              <td><a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/areacontroller/editarArea/<?php echo $area->id; ?>">Editar</a></td>
               <td>
-                <form action="<?php echo RUTA_URL;?>/dptocontroller/borrarDpto/<?php echo $dpto->id; ?>" method="POST">
-                  <input type="hidden" name="id" value="<?php echo $dpto->id; ?>">
+                <form action="<?php echo RUTA_URL;?>/areacontroller/borrarArea/<?php echo $area->id; ?>" method="POST">
+                  <input type="hidden" name="id" value="<?php echo $area->id; ?>">
                   <input type="submit" class="btn btn-danger" value="Borrar">
                 </form>
               </td>
@@ -37,7 +40,7 @@
   <div class="row">
     <div class="col-2 offset-10">
       <div>
-        <a href="<?php echo RUTA_URL; ?>/dptocontroller/agregarDpto" class="btn btn-primary w-100">
+        <a href="<?php echo RUTA_URL; ?>/areacontroller/agregarArea" class="btn btn-primary w-100">
           <i class="bi bi-plus-circle-fill"></i> Crear
         </a>
       </div>

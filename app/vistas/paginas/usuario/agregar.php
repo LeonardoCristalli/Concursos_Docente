@@ -1,12 +1,12 @@
 <?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
-<a href="<?php echo RUTA_URL;?>/paginas/usuario/listar" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
 
 <div class="card card-body bg-light mt-5">
 
   <h2>Crear Usuario</h2>
 
-  <form action="<?php echo RUTA_URL;?>/paginas/agregarUsuario" method="POST">
+  <form action="<?php echo RUTA_URL;?>/usuariocontroller/agregarUsuario" method="POST">
 
     <div class="form-group">
       <label for="nombre">Nombre: <sup>*</sup></label>

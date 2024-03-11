@@ -42,9 +42,9 @@
               <td><?php echo $usuario->usuario; ?></td>
               <td><?php echo $usuario->password; ?></td>
               
-              <td><a href="<?php echo RUTA_URL; ?>/paginas/editarUsuario/<?php echo $usuario->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>">Editar</a></td>
               <td>
-                <form action="<?php echo RUTA_URL;?>/paginas/borrarUsuario/<?php echo $usuario->id; ?>" method="POST">
+                <form action="<?php echo RUTA_URL;?>/usuariocontroller/borrarUsuario/<?php echo $usuario->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $usuario->id; ?>">
                   <input type="submit" class="btn btn-danger" value="Borrar">
                 </form>
@@ -60,7 +60,7 @@
   <div class="row">
     <div class="col-2 offset-10">
       <div>
-        <a href="<?php echo RUTA_URL; ?>/paginas/agregarUsuario" class="btn btn-primary w-100">
+        <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-primary w-100">
           <i class="bi bi-plus-circle-fill"></i> Crear
         </a>
       </div>
