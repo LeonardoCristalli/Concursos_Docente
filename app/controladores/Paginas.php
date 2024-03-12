@@ -6,6 +6,9 @@
       $this->usuarioModelo = $this->modelo('Usuario');
       $this->dptoModelo = $this->modelo('Dpto');
       $this->areaModelo = $this->modelo('Area');
+      $this->catedraModelo = $this->modelo('Catedra');
+      $this->vacanteModelo = $this->modelo('Vacante');
+      $this->estadoModelo = $this->modelo('Estado');
     } 
 
     public function index() {
@@ -13,8 +16,11 @@
     } 
 
     public function irAlCRUD() {
+
       if(isset($_GET['entidad'])) {
+
         $entidad = $_GET['entidad'];
+
         switch($entidad) {
 
           case 'usuarios':
@@ -42,6 +48,24 @@
             ];
 
             $this->vista('paginas/area/listar', $datos);
+          break;
+
+          case 'catedras':
+            $catedras = $this->catedraModelo->obtenerCatedras();
+            $datos = [
+              'catedras' => $catedras
+            ];
+
+            $this->vista('paginas/catedra/listar', $datos);
+          break;
+
+          case 'estados':
+            $estados = $this->estadoModelo->obtenerEstados();
+            $datos = [
+              'estados' => $estados
+            ];
+
+            $this->vista('paginas/estado/listar', $datos);
           break;
 
           default:
