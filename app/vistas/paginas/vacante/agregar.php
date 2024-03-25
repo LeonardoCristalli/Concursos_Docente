@@ -53,7 +53,7 @@
       <input type="number" id="catedra_id" name="catedra_id" class="form-control form-control-lg">
     </div>
 
-    <input type="submit" class="btn btn-success" value="Crear Cátedra">
+    <button type="submit" name="submit" value="submit">Crear Cátedra</button>
   </form>
 </div>
 

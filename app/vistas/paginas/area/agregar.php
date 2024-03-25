@@ -17,8 +17,9 @@
       <label for="dpto_id">Departamento: <sup>*</sup></label>
       <input type="number" id="dpto_id" name="dpto_id" class="form-control form-control-lg">
     </div>
-
-    <input type="submit" class="btn btn-success" value="Crear Área">
+    
+    <br/>
+    <button type="submit" name="submit" value="submit">Crear Área</button>
   </form>
 </div>
 

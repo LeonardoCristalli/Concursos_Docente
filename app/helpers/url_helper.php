@@ -1,4 +1,5 @@
 <?php
-  function redireccionar($pagina) {
-    header('location: ' . RUTA_URL . $pagina);
-  }
+
+function redireccionar($pagina) {
+  header('Location: ' . RUTA_URL . $pagina);
+}

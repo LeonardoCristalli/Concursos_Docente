@@ -12,8 +12,20 @@
     } 
 
     public function index() {
+      
+    }
+
+    public function login() {
+      $this->vista('paginas/login');
+    }
+
+    public function signup() {
+      $this->vista('paginas/signup');
+    }
+
+    public function inicio() {
       $this->vista('paginas/inicio');
-    } 
+    }
 
     public function irAlCRUD() {
 

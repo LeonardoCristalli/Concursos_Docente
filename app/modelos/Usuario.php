@@ -93,5 +93,17 @@
       
     }
 
+    public function obtenerUsuarioPorNombre($nombreUsuario) {
+      try {
+        $this->db->query('SELECT * FROM usuarios WHERE usuario = :usuario');
+        $this->db->bind(':usuario', $nombreUsuario);
+        $this->db->execute();
+        return $this->db->registro();
+      } catch (PDOException $e) {
+        error_log('Error al obtener usuario por nombre: ' . $e->getMessage());
+        return null;
+      }      
+    }
+
   }
 ?>

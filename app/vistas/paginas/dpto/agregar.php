@@ -12,8 +12,8 @@
       <label for="nombre">Nombre: <sup>*</sup></label>
       <input type="text" id="nombre" name="nombre" class="form-control form-control-lg">
     </div>
-
-    <input type="submit" class="btn btn-success" value="Crear Departamento">
+    
+    <button type="submit" name="submit" value="submit">Crear Departamento</button>
   </form>
 </div>
 

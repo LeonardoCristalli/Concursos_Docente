@@ -12,8 +12,8 @@
       <label for="descrip">Descripción: <sup>*</sup></label>
       <input type="text" id="descrip" name="descrip" class="form-control form-control-lg">
     </div>
-
-    <input type="submit" class="btn btn-success" value="Crear Estado">
+    
+    <button type="submit" name="submit" value="submit">Crear Estado</button>
   </form>
 </div>
 

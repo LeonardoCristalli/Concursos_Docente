@@ -1,6 +1,6 @@
 <?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
-<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+<a href="<?php echo RUTA_URL;?>/index" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
 
 <div class="card card-body bg-light mt-5">
 

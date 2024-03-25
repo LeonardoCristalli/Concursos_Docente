@@ -1,12 +1,61 @@
-body {
+* {
   margin: 0;
   padding: 0;
-  background-color: #41a0e2;
-  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+p {
+  font-size: 16px;
+  font-family: Roboto;
+  color: #fff;
+  line-height: 24px;
+}
+
+h4 {
+  font-size: 22px;
+  font-family: Roboto;
+  color: #1E1E1E;
+  line-height: 32px;
+}
+
+header {
+  background-color: #161616;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.menu-main,
+.menu-member {
+  display: flex;
+  list-style-type: none; 
+}
+
+.menu-main li,
+.menu-member li {
+  margin-right: 15px;
+}
+
+.logo {
+  height: 70px;
+  width: auto;
+}
+
+.header-login-a {
+  color: #fff; 
 }
 
 .fondo {
-  width: 1270px;
+  width: 100%;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -15,7 +64,9 @@ body {
 }
 
 .container {
-  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .table {
@@ -44,7 +95,7 @@ a {
 }
 
 a:hover {
-  color: #0056b3;
+  color: #891c6c;
 }
 
 @media screen and (max-width: 768px) {

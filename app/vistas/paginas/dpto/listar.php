@@ -17,9 +17,11 @@
           <tbody>
             <?php foreach($datos['dptos'] as $dpto) : ?>
             <tr>
+              <td><?php echo $dpto->id; ?></td>
               <td><?php echo $dpto->nombre; ?></td>
-                            
-              <td><a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>">Editar</a></td>
+              <td>
+                <a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>">Editar</a>
+              </td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/dptocontroller/borrarDpto/<?php echo $dpto->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $dpto->id; ?>">
