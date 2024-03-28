@@ -34,7 +34,11 @@ header nav {
   padding: 20px;
 }
 
-.menu-main,
+.menu-main {
+  margin-right: auto;
+  display: flex;
+  list-style-type: none;
+}
 .menu-member {
   display: flex;
   list-style-type: none; 
@@ -46,8 +50,9 @@ header nav {
 }
 
 .logo {
-  height: 70px;
+  height: 75px;
   width: auto;
+  margin-right: 10px;
 }
 
 .header-login-a {

@@ -12,14 +12,14 @@
     } 
 
     public function index() {
-      
+      $this->vista( 'paginas/index' );
     }
 
     public function login() {
       $this->vista('paginas/login');
     }
 
-    public function signup() {
+    public function signUp() {
       $this->vista('paginas/signup');
     }
 

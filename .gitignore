@@ -1,0 +1,34 @@
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Backup
+*.bak
+*.tmp
+
+# Log file
+*.log
+
+# Temporary
+*~
+
+# Composer
+composer.phar
+/vendor/
+
+# Commit your application's lock file
+composer.lock
+
+# PHP CodeSniffer
+/wpcs/*
+
+# SASS
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map

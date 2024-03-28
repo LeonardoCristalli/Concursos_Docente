@@ -6,7 +6,7 @@
 
   <h2>Crear Usuario</h2>
 
-  <form action="<?php echo RUTA_URL;?>/usuariocontroller/agregarUsuario" method="POST">
+  <form action="<?php echo RUTA_URL;?>/usuarioController/agregarUsuario" method="POST">
 
     <div class="form-group">
       <label for="nombre">Nombre: <sup>*</sup></label>
