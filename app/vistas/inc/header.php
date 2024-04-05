@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> <?php echo isset($titulo) ? $titulo : 'Inicio'; ?> </title>
-  <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/css/estilos.css">
+  <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/estilos.css">
 </head>
 <body>
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="row align-items-center">
+        
+        <!-- Sección izquierda -->
+        <div class="col-lg-6">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <a href="<?php echo RUTA_URL; ?>">
+                <img src="<?php echo RUTA_URL; ?>/img/logo.jpg" alt="Logo de la Facultad" style="width: 80px; height: auto;">
+              </a>
+            </div>
+            <div class="col-lg-10">
+              <ul class="nav justify-content-center">
+                <li><a href="<?php echo RUTA_URL; ?>/index" class="nav-link text-secondary">Home</a></li>
+                <li><a href="#" class="nav-link text-white">Vacantes</a></li>
+                <li><a href="#" class="nav-link text-white">About</a></li>
+                <li><a href="#" class="nav-link text-white">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<header>
-  <nav>
-    <div class="container">  
-      <div class="logo-container">
-        <a class="navbar-brand mr-auto" href="<?php echo RUTA_URL; ?>">
-          <img class="logo" src="<?php echo RUTA_URL; ?>/img/logo.jpg" alt="Logo de la Facultad">
-        </a>
+        <!-- Sección derecha -->
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-lg-8">
+              <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
+                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+              </form>
+            </div>
+            <div class="col-lg-4">
+              <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Login</a>
+              <a href="<?php echo RUTA_URL; ?>/paginas/signup" class="btn btn-warning">Sign-up</a>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <ul class="menu-main">
-        <li><a href="<?php echo RUTA_URL; ?>/index">HOME</a></li>
-        <li><a href="#">ABOUT</a></li>
-        <li><a href="#">CONTACT</a></li>                        
-      </ul>
     </div>
-    <ul class="menu-member">
-      <li><a href="<?php echo RUTA_URL; ?>/paginas/signup">SIGN UP</a></li>
-      <li><a href="<?php echo RUTA_URL; ?>/paginas/login" class="header-login-a">LOGIN</a></li>
-    </ul>
-  </nav>
-</header>
+  </header>

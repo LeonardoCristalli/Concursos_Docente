@@ -12,7 +12,7 @@
     } 
 
     public function index() {
-      $this->vista( 'paginas/index' );
+      $this->vista('paginas/index');
     }
 
     public function login() {
@@ -25,6 +25,15 @@
 
     public function inicio() {
       $this->vista('paginas/inicio');
+    }
+
+    public function vacantes() {
+      $vacantes = $this->vacanteModelo->obtenerVacantes();
+      $datos = [
+        'vacantes' => $vacantes
+      ];
+
+      $this->vista('paginas/vacante/listar', $datos);
     }
 
     public function irAlCRUD() {

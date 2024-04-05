@@ -1,33 +1,41 @@
-<?php 
-  require_once RUTA_APP . '/vistas/inc/header.php'; 
-?>
+<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
-<div class="container">
-  <form action="<?php echo RUTA_URL;?>/logincontroller/login" method="POST">
+<main class="main-container w-100 m-auto">
 
-    <fieldset class="login-form">
+  <div class="row">
 
-      <legend>Iniciar sesión</legend>
+    <div class="col-md-8 offset-md-2">
+      <form action="<?php echo RUTA_URL;?>/logincontroller/login" method="POST" class="form-login">
 
-      <div>
-        <label for="username">Nombre de usuario</label>
-        <input type="text" id="username" name="username" required>
+        <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+    
+        <div class="form-floating">
+          <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>
+          <label for="username">Usuario</label>
+        </div>
+
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <label for="password">Contraseña</label>
+        </div>
+
+        <div class="form-check text-start my-3">
+          <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault"> Recordarme </label>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
+      </form>
+    </div>
+
+    <div class="col-md-2">
+      <div class="d-flex justify-content-start mt-3">
+        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>
       </div>
+    </div>
 
-      <div>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-      </div>
+  </div>
+  
+</main>
 
-      <div>
-        <button type="submit" name="submit" value="submit">Iniciar sesión</button>
-      </div>
-      
-    </fieldset>
-  </form>
-</div>
-
-<!-- <p>¿Nuevo por aquí? <a href="registro.php">Regístrate</a></p>
-<p>¿Olvidaste tu contraseña? <a href="recuperar_contraseña.php">Recupérala aquí</a></p> -->
-
-<?php require_once RUTA_APP . '/vistas/inc/footer.php'; ?>
+<?php require RUTA_APP . '/vistas/inc/footer.php'; ?> 
