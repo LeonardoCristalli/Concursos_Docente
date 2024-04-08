@@ -6,72 +6,9 @@ class UsuarioController extends Controlador {
     $this->usuarioModelo = $this->modelo('Usuario');
   }
 
-  public function registrar() {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
-
-      $datos = [
-        'nombre' => trim($_POST['nombre']),
-        'apellido' => trim($_POST['apellido']),
-        'fecha_nac' => trim($_POST['fecha_nac']),
-        'sexo' => trim($_POST['sexo']),
-        'direccion' => trim($_POST['direccion']),
-        'telefono' => trim($_POST['telefono']),  
-        'email' => trim($_POST['email']),  
-        'nro_dni' => trim($_POST['nro_dni']),      
-        'cuil' => trim($_POST['cuil']),                    
-        'tipo_usu' => trim($_POST['tipo_usu']),
-        'nro_legajo' => trim($_POST['nro_legajo']),
-        'usuario' => trim($_POST['usuario']),
-        'password' => trim($_POST['password']),          
-      ];
-
-      $datosValidados = $this->validarDatosUsuario($datos);
-
-      if (is_array($datosValidados)) {
-
-        foreach ($datosValidados as $error) {
-          echo $error . "<br/>";
-        }
-
-      } elseif ($datosValidados === true) {
-
-        $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
-        $datos['password'] = $passwordHash;
-
-        if ($this->usuarioModelo->agregarUsuario($datos)) {
-          redireccionar('/paginas/login');
-        } else {
-          die ('No se pudo agregar el usuario');
-        }          
-
-      } else {
-        die('Datos de usuario no válidos');
-      }
-      
-    } else {
-      $datos = [
-        'nombre' => '',
-        'apellido' => '',
-        'fecha_nac' => '',
-        'sexo' => '',
-        'direccion' => '',
-        'telefono' => '',
-        'email' => '',
-        'nro_dni' => '',
-        'cuil' => '',
-        'tipo_usu' => '',
-        'nro_legajo' => '',
-        'usuario' => '',
-        'password' => '',          
-      ];
-
-      $this->vista('paginas/usuario/signup', $datos);
-    }
-  }
-
   public function agregarUsuario() {
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
+    session_start();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
@@ -103,13 +40,18 @@ class UsuarioController extends Controlador {
         $datos['password'] = $passwordHash;
 
         if ($this->usuarioModelo->agregarUsuario($datos)) {
-          $usuarios = $this->usuarioModelo->obtenerUsuarios();
-          $datos = [
-            'usuarios' => $usuarios
-          ];
-
-          $this->vista('paginas/usuario/listar', $datos);
-
+      
+          if (!isset($_SESSION['usuario_id'])) {
+            redireccionar('/paginas/login');
+          } else {
+            $usuarios = $this->usuarioModelo->obtenerUsuarios();
+            $datos = [
+              'usuarios' => $usuarios
+            ];
+            
+            $this->vista('paginas/usuario/listar', $datos);
+          }
+          
         } else {
           die ('No se pudo agregar el usuario');
         }          
@@ -217,7 +159,12 @@ class UsuarioController extends Controlador {
       $id = $_POST['id'];
 
       if($this->usuarioModelo->borrarUsuario($id)) {
-        redireccionar('/paginas/usuario/listar');
+        $usuarios = $this->usuarioModelo->obtenerUsuarios();
+        $datos = [
+          'usuarios' => $usuarios
+        ];
+
+        $this->vista('paginas/usuario/listar', $datos);
       } else {
         die('Algo salio mal');
       }

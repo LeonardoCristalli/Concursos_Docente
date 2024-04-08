@@ -41,7 +41,7 @@
             </div>
             <div class="col-lg-4">
               <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Login</a>
-              <a href="<?php echo RUTA_URL; ?>/paginas/signup" class="btn btn-warning">Sign-up</a>
+              <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-warning">Sign-up</a>
             </div>
           </div>
         </div>

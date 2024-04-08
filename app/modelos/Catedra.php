@@ -16,9 +16,9 @@
     }
 
     public function agregarCatedra($datos) {
-      $this->db->query('INSERT INTO catedras (nombre, descrip, plan, ano_cursado, hs_semanales,
-                        tipo_cursado, electiva, titulacion, area_id) VALUES (:nombre, :descrip, :plan, 
-                        :ano_cursado, :hs_semanales, :tipo_cursado, :electiva, :titulacion, :area_id)');
+      $this->db->query('INSERT INTO catedras (nombre, descrip, [plan], ano_cursado, hs_semanales,
+                        tipo_cursado, electiva, area_id) VALUES (:nombre, :descrip, :plan, 
+                        :ano_cursado, :hs_semanales, :tipo_cursado, :electiva, :area_id)');
 
       $this->db->bind(':nombre', $datos['nombre']);
       $this->db->bind(':descrip', $datos['descrip']);
@@ -27,7 +27,6 @@
       $this->db->bind(':hs_semanales', $datos['hs_semanales']);
       $this->db->bind(':tipo_cursado', $datos['tipo_cursado']);
       $this->db->bind(':electiva', $datos['electiva']);
-      $this->db->bind(':titulacion', $datos['titulacion']);
       $this->db->bind(':area_id', $datos['area_id']);
       
       if ($this->db->execute()) {
@@ -48,10 +47,9 @@
 
     public function actualizarCatedra($datos) {
   
-      $this->db->query('UPDATE catedras SET nombre = :nombre, descrip = :descrip, plan = :plan,
+      $this->db->query('UPDATE catedras SET nombre = :nombre, descrip = :descrip, [plan] = :plan,
                       ano_cursado = :ano_cursado, hs_semanales = :hs_semanales, 
-                      tipo_cursado = :tipo_cursado, electiva = :electiva, 
-                      titulacion = :titulacion, area_id = :area_id 
+                      tipo_cursado = :tipo_cursado, electiva = :electiva, area_id = :area_id 
                       WHERE id = :id');
 
       $this->db->bind(':id', $datos['id']);
@@ -62,7 +60,6 @@
       $this->db->bind(':hs_semanales', $datos['hs_semanales']);
       $this->db->bind(':tipo_cursado', $datos['tipo_cursado']);
       $this->db->bind(':electiva', $datos['electiva']);
-      $this->db->bind(':titulacion', $datos['titulacion']);
       $this->db->bind(':area_id', $datos['area_id']);
 
       if ($this->db->execute()) {

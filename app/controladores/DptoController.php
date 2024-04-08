@@ -1,5 +1,6 @@
 <?php 
   class DptoController extends Controlador {
+    
     public function __construct() {
       $this->dptoModelo = $this->modelo('Dpto');
     }

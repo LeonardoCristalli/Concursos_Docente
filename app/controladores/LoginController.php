@@ -24,8 +24,8 @@
           if ($usuario) {
 
             if (password_verify($password, $usuario->password)) {
-              $_SESSION["usuario_id"] = $usuario->id;
-              redireccionar('/paginas/inicio');
+              $_SESSION['usuario_id'] = $usuario->id;
+              redireccionar('/paginas/adminPanel');
             } else {
               $_SESSION["mensaje_error"] = "Nombre de usuario o contraseña incorrectos";
               redireccionar('/login');

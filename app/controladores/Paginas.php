@@ -19,15 +19,17 @@
       $this->vista('paginas/login');
     }
 
-    public function signUp() {
-      $this->vista('paginas/signup');
+    public function adminPanel() {
+      session_start();
+
+      if (!isset($_SESSION['usuario_id'])) {
+        redireccionar('/paginas/login');
+      }
+
+      $this->vista('paginas/adminPanel');
     }
 
-    public function inicio() {
-      $this->vista('paginas/inicio');
-    }
-
-    public function vacantes() {
+    public function listarVacantes() {
       $vacantes = $this->vacanteModelo->obtenerVacantes();
       $datos = [
         'vacantes' => $vacantes
@@ -87,6 +89,15 @@
             ];
 
             $this->vista('paginas/estado/listar', $datos);
+          break;
+
+          case 'vacantes':
+            $vacantes = $this->vacanteModelo->obtenerVacantes();
+            $datos = [
+              'vacantes' => $vacantes
+            ];
+
+            $this->vista('paginas/vacante/listar', $datos);
           break;
 
           default:

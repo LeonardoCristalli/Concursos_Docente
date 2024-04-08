@@ -18,7 +18,6 @@
           'hs_semanales' => trim($_POST['hs_semanales']),
           'tipo_cursado' => trim($_POST['tipo_cursado']),
           'electiva' => trim($_POST['electiva']),
-          'titulacion' => trim($_POST['titulacion']),
           'area_id' => trim($_POST['area_id']),
         ];
 
@@ -43,7 +42,6 @@
           'hs_semanales' => '',
           'tipo_cursado' => '',
           'electiva' => '',
-          'titulacion' => '',
           'area_id' => '',
         ];
 
@@ -64,7 +62,6 @@
           'hs_semanales' => trim($_POST['hs_semanales']),
           'tipo_cursado' => trim($_POST['tipo_cursado']),
           'electiva' => trim($_POST['electiva']),
-          'titulacion' => trim($_POST['titulacion']),
           'area_id' => trim($_POST['area_id']),    
         ];
 
@@ -93,7 +90,6 @@
           'tipo_cursado' => $catedra->tipo_cursado,
           'ano_cursado' => $catedra->ano_cursado,
           'electiva' => $catedra->electiva,
-          'titulacion' => $catedra->titulacion,
           'area_id' => $catedra->area_id,
         ];
 
