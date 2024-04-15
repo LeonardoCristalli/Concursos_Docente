@@ -1,7 +1,13 @@
 <?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
-<div class="container fondo">
-  <a href="<?php echo RUTA_URL;?>/paginas" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+<main class="main-container w-100 m-auto">
+
+  <div class="row mb-4">
+    <div class="col">
+      <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
+    </div>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="table-responsive">
@@ -15,7 +21,6 @@
               <th class="text-center">Requerimientos</th>
               <th class="text-center">Duración</th>
               <th class="text-center">Experiencia</th>
-              <th class="text-center">Motivo</th>
               <th class="text-center">Estado</th>
               <th class="text-center">Cátedra</th>        
               <th> </th>
@@ -32,7 +37,6 @@
               <td><?php echo $vacante->req; ?></td>
               <td><?php echo $vacante->tiempo; ?></td>
               <td><?php echo $vacante->exp; ?></td>
-              <td><?php echo $vacante->motivo_id; ?></td>
               <td><?php echo $vacante->estado_id; ?></td>
               <td><?php echo $vacante->catedra_id; ?></td>
            

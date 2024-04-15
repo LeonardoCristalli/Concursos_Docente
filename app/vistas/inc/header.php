@@ -6,6 +6,8 @@
   <title> <?php echo isset($titulo) ? $titulo : 'Inicio'; ?> </title>
   <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/estilos.css">
+  <script src="<?php echo RUTA_URL; ?>/public/js/main.js"></script>
+  <script src="<?php echo RUTA_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
   <header class="p-3 text-bg-dark">
@@ -23,7 +25,7 @@
             <div class="col-lg-10">
               <ul class="nav justify-content-center">
                 <li><a href="<?php echo RUTA_URL; ?>/index" class="nav-link text-secondary">Home</a></li>
-                <li><a href="#" class="nav-link text-white">Vacantes</a></li>
+                <li><a href="<?php echo RUTA_URL; ?>/vacanteController/vacanteUsuario" class="nav-link text-white">Vacantes</a></li>
                 <li><a href="#" class="nav-link text-white">About</a></li>
                 <li><a href="#" class="nav-link text-white">Contact</a></li>
               </ul>

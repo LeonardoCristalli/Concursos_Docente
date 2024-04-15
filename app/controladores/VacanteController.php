@@ -17,9 +17,10 @@
           'req' => trim($_POST['req']),
           'tiempo' => trim($_POST['tiempo']),
           'exp' => trim($_POST['exp']),
-          'motivo_id' => trim($_POST['motivo_id']),
           'estado_id' => trim($_POST['estado_id']),
           'catedra_id' => trim($_POST['catedra_id']),
+          'fecha_desde' => trim($_POST['fecha_desde']),
+          'observacion' => trim($_POST['observacion']),
         ];
 
         if ($this->vacanteModelo->agregarVacante($datos)) {
@@ -31,7 +32,7 @@
 
             $this->vista('paginas/vacante/listar', $datos);
         } else {
-          die ('No se pudo agregar el Área');
+          die ('No se pudo crear la Vacante');
         }          
       } else {
         
@@ -41,8 +42,7 @@
           'fecha_fin' => '',
           'req' => '',
           'tiempo' => '',
-          'exp' => '',
-          'motivo_id' => '',
+          'exp' => '',  
           'estado_id' => '',
           'catedra_id' => '',
         ];
@@ -63,7 +63,6 @@
           'req' => trim($_POST['req']),
           'tiempo' => trim($_POST['tiempo']),
           'exp' => trim($_POST['exp']),
-          'motivo_id' => trim($_POST['motivo_id']),
           'estado_id' => trim($_POST['estado_id']),
           'catedra_id' => trim($_POST['catedra_id']),   
         ];
@@ -75,14 +74,14 @@
             'vacantes' => $vacantes
           ];
 
-          $this->vista('paginas/vacantes/listar', $datos);
+          $this->vista('paginas/vacante/listar', $datos);
 
         } else {
           die('Algo salio mal');        
         }
 
       } else {
-        $vacantes = $this->vacanteModelo->obtenerVacanteId($id);
+        $vacante = $this->vacanteModelo->obtenerVacanteId($id);
         $datos = [
           'id' => $vacante->id,
           'descrip' => $vacante->descrip,          
@@ -91,12 +90,11 @@
           'req' => $vacante->req,
           'tiempo' => $vacante->tiempo,
           'exp' => $vacante->exp,
-          'motivo_id' => $vacante->motivo_id,
           'estado_id' => $vacante->estado_id,
           'catedra_id' => $vacante->catedra_id,
         ];
 
-         $this->vista('paginas/catedra/editar', $datos);
+         $this->vista('paginas/vacante/editar', $datos);
       }
     }
 
@@ -113,5 +111,15 @@
         }
       }
     }
+
+    public function vacanteUsuario() {
+      $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
+      $datos = [
+        'vacantes' => $vacantes,
+      ];
+
+      $this->vista('paginas/vacante/vacanteUsuario', $datos);
+    }
+
   }
 ?>

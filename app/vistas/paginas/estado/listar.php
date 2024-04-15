@@ -1,7 +1,7 @@
 <?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
 <div class="container fondo">
-  <a href="<?php echo RUTA_URL;?>/paginas" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+  <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-light">Volver</a>
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="table-responsive">
@@ -17,7 +17,8 @@
           <tbody>
             <?php foreach($datos['estados'] as $estado) : ?>
             <tr>
-              <td><?php echo $estado->descrip; ?></td>
+              <td><?php echo $estado->id; ?></td>
+              <td><?php echo $estado->descrip; ?></td>              
                             
               <td><a href="<?php echo RUTA_URL; ?>/estadocontroller/editarEstado/<?php echo $estado->id; ?>">Editar</a></td>
               <td>
