@@ -24,8 +24,18 @@
           if ($usuario) {
 
             if (password_verify($password, $usuario->password)) {
+
               $_SESSION['usuario_id'] = $usuario->id;
-              redireccionar('/paginas/adminPanel');
+
+              switch ($usuario->tipo_usu) {
+                case 'Usuario':
+                  redireccionar('/vacanteController/vacanteUsuario');
+                  break;
+                default:
+                  redireccionar('/paginas/adminPanel');
+                  break;
+              }
+
             } else {
               $_SESSION["mensaje_error"] = "Nombre de usuario o contraseña incorrectos";
               redireccionar('/login');
