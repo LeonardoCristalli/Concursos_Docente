@@ -15,24 +15,25 @@
     }
 
     public function agregarUsuario($datos) {
-      $this->db->query('INSERT INTO usuarios (nombre, apellido, sexo, direccion, telefono, 
-                        cuil, email, fecha_nac, tipo_usu, nro_legajo, usuario, password, nro_dni) 
-                        VALUES (:nombre, :apellido, :sexo, :direccion, :telefono, :cuil, :email, 
-                        :fecha_nac, :tipo_usu, :nro_legajo, :usuario, :password, :nro_dni)');
+      $this->db->query('INSERT INTO usuarios (nombre, apellido, fecha_nac, sexo, direccion, telefono, nro_dni, email 
+                        cuil, tipo_usu, nro_legajo, usuario, password, cv) 
+                        VALUES (:nombre, :apellido, :fecha_nac, :sexo, :direccion, :telefono, :nro_dni, :email, :cuil, 
+                        :tipo_usu, :nro_legajo, :usuario, :password, cv)');
 
       $this->db->bind(':nombre', $datos['nombre']);
       $this->db->bind(':apellido', $datos['apellido']);
+      $this->db->bind(':fecha_nac', $datos['fecha_nac']);
       $this->db->bind(':sexo', $datos['sexo']);
       $this->db->bind(':direccion', $datos['direccion']);
       $this->db->bind(':telefono', $datos['telefono']);
-      $this->db->bind(':cuil', $datos['cuil']);
+      $this->db->bind(':nro_dni', $datos['nro_dni']);
       $this->db->bind(':email', $datos['email']);
-      $this->db->bind(':fecha_nac', $datos['fecha_nac']);
+      $this->db->bind(':cuil', $datos['cuil']);
       $this->db->bind(':tipo_usu', $datos['tipo_usu']);
       $this->db->bind(':nro_legajo', $datos['nro_legajo']);
       $this->db->bind(':usuario', $datos['usuario']);
       $this->db->bind(':password', $datos['password']);
-      $this->db->bind(':nro_dni', $datos['nro_dni']);
+      $this->db->bind(':cv', $datos['cv']);
 
       if ($this->db->execute()) {
         return true;
@@ -52,26 +53,26 @@
 
     public function actualizarUsuario($datos) {
   
-      $this->db->query('UPDATE usuarios SET nombre = :nombre, apellido = :apellido, sexo = :sexo,
-            direccion = :direccion, telefono = :telefono, cuil = :cuil, email = :email,
-            fecha_nac = :fecha_nac, tipo_usu = :tipo_usu, nro_legajo = :nro_legajo,
-            usuario = :usuario, password = :password, nro_dni = :nro_dni
-            WHERE id = :id');
+      $this->db->query('UPDATE usuarios SET nombre = :nombre, apellido = :apellido, fecha_nac = :fecha_nac, sexo = :sexo,
+                        direccion = :direccion, telefono = :telefono, nro_dni = :nro_dni, email = :email, cuil = :cuil,  
+                        tipo_usu = :tipo_usu, nro_legajo = :nro_legajo, usuario = :usuario, password = :password, cv = :cv
+                        WHERE id = :id');
 
       $this->db->bind(':id', $datos['id']);
       $this->db->bind(':nombre', $datos['nombre']);
       $this->db->bind(':apellido', $datos['apellido']);
+      $this->db->bind(':fecha_nac', $datos['fecha_nac']);
       $this->db->bind(':sexo', $datos['sexo']);
       $this->db->bind(':direccion', $datos['direccion']);
       $this->db->bind(':telefono', $datos['telefono']);
-      $this->db->bind(':cuil', $datos['cuil']);
+      $this->db->bind(':nro_dni', $datos['nro_dni']);     
       $this->db->bind(':email', $datos['email']);
-      $this->db->bind(':fecha_nac', $datos['fecha_nac']);
+      $this->db->bind(':cuil', $datos['cuil']);      
       $this->db->bind(':tipo_usu', $datos['tipo_usu']);
       $this->db->bind(':nro_legajo', $datos['nro_legajo']);
       $this->db->bind(':usuario', $datos['usuario']);
       $this->db->bind(':password', $datos['password']);
-      $this->db->bind(':nro_dni', $datos['nro_dni']);
+      $this->db->bind(':cv', $datos['cv']);
 
       if ($this->db->execute()) {
         return true;

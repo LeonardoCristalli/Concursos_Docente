@@ -69,7 +69,12 @@
         var btnInscribirse = document.getElementById('btn-inscribirse');
 
         btnInscribirse.addEventListener('click', function () {
-            window.location.href = '/Concursos_Docente/paginas/login';
+            <?php if (!isset($_SESSION['usuario_id'])): ?>
+                window.location.href = '/Concursos_Docente/paginas/login';
+            <?php else: ?>
+                var vacante_id = <?php echo isset($_GET['vacante_id']) ? $_GET['vacante_id'] : 'null'; ?>;
+                window.location.href = '/Concursos_Docente/paginas/inscripcion?vacante_id=' + vacante_id;
+            <?php endif; ?>
         });
     });
 </script>

@@ -2,11 +2,21 @@
 
 <main class="main-container w-100 m-auto">
 
-  <div class="row mb-4">
-    <div class="col">
-      <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>
+  <?php if (!isset($_SESSION['usuario_id'])): ?>
+
+    <div class="row mb-4">
+      <div class="col">
+        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>
+      </div>
     </div>
-  </div>
+
+  <?php else: ?>
+    <div class="row mb-4">
+      <div class="col">
+        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>
+      </div>
+    </div>
+  <?php endif; ?>
 
   <form action="<?php echo RUTA_URL;?>/usuarioController/agregarUsuario" method="POST" class="form-signup">
 
@@ -17,17 +27,17 @@
       <div class="col-md-6">
 
         <div class="form-group">
-          <label for="nombre">Nombre: <sup>*</sup></label>
+          <label for="nombre" class="form-label">Nombre: <sup>*</sup></label>
           <input type="text" id="nombre" name="nombre" class="form-control">
         </div>
 
         <div class="form-group">
-          <label for="apellido">Apellido: <sup>*</sup></label>
+          <label for="apellido" class="form-label">Apellido: <sup>*</sup></label>
           <input type="text" id="apellido" name="apellido" class="form-control form-control-lg">
         </div>
 
         <div class="form-group">
-          <label for="fecha_nac">Fecha de Nacimiento: <sup>*</sup></label>
+          <label for="fecha_nac" class="form-label">Fecha de Nacimiento: <sup>*</sup></label>
           <input type="date" id="fecha_nac" name="fecha_nac" class="form-control form-control-lg">
         </div>
 
@@ -44,17 +54,17 @@
         </div>
 
         <div class="form-group">
-          <label for="direccion">Dirección: <sup>*</sup></label>
+          <label for="direccion" class="form-label">Dirección: <sup>*</sup></label>
           <input type="text" id="direccion" name="direccion" class="form-control form-control-lg">
         </div>
 
         <div class="form-group">
-          <label for="telefono">Teléfono: <sup>*</sup></label>
+          <label for="telefono" class="form-label">Teléfono: <sup>*</sup></label>
           <input type="tel" id="telefono" name="telefono" class="form-control form-control-lg">
         </div>
 
         <div class="form-group">
-          <label for="nro_dni">DNI: <sup>*</sup></label>
+          <label for="nro_dni" class="form-label">DNI: <sup>*</sup></label>
           <input type="text" id="nro_dni" name="nro_dni" class="form-control form-control-lg">
         </div>
 
@@ -63,40 +73,52 @@
       <div class="col-md-6">
 
         <div class="form-group">
-          <label for="email">Email: <sup>*</sup></label>
+          <label for="email" class="form-label">Email: <sup>*</sup></label>
           <input type="email" id="email" name="email" class="form-control form-control-lg">
         </div>
 
         <div class="form-group">
-          <label for="cuil">Cuil: <sup>*</sup></label>
+          <label for="cuil" class="form-label">Cuil: <sup>*</sup></label>
           <input type="text" id="cuil" name="cuil" class="form-control form-control-lg">
         </div>
 
-        <div class="form-group">
-          <label for="tipo_usu">Tipo de Usuario: </label>
-          <input type="text" id="tipo_usu" name="tipo_usu" class="form-control form-control-lg">
-        </div>
+        <fieldset>
+          <div class="form-group">
+            <label for="tipo_usu" class="form-label">Tipo de Usuario: </label>
+            <input type="text" id="tipo_usu" name="tipo_usu" class="form-control form-control-lg">
+          </div>
 
-        <div class="form-group">
-          <label for="nro_legajo">Número de Legajo: </label>
-          <input type="text" id="nro_legajo" name="nro_legajo" class="form-control form-control-lg">
-        </div>
+          <div class="form-group">
+            <label for="nro_legajo" class="form-label">Número de Legajo: </label>
+            <input type="text" id="nro_legajo" name="nro_legajo" class="form-control form-control-lg">
+          </div>
+        </fieldset>
+      
+        <fieldset>
+          <div class="form-group">
+            <label for="usuario" class="form-label">Usuario: <sup>*</sup></label>
+            <input type="text" id="usuario" name="usuario" class="form-control form-control-lg">
+          </div>
 
-        <div class="form-group">
-          <label for="usuario">Usuario: <sup>*</sup></label>
-          <input type="text" id="usuario" name="usuario" class="form-control form-control-lg">
-        </div>
+          <div class="form-group">
+            <label for="password" class="form-label">Password: <sup>*</sup></label>
+            <input type="password" id="password" name="password" class="form-control form-control-lg">
+            <div id="passwordHelpBlock" class="form-text">
+              La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
+            </div>
+          </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="password">Password: <sup>*</sup></label>
-          <input type="password" id="password" name="password" class="form-control form-control-lg">
+        <div class="mb-3">
+          <label for="cv" class="form-label">CV:</label>
+          <input class="form-control" type="file" id="cv">
         </div>
-
+        
       </div>
 
     </div>
 
-    <button type="submit" name="submit" value="submit">Crear Usuario</button>
+    <button class="btn btn-primary" type="submit" name="submit" value="submit">Crear Usuario</button>
   </form>
 
 </main>

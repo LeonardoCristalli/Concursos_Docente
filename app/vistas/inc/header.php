@@ -6,10 +6,9 @@
   <title> <?php echo isset($titulo) ? $titulo : 'Inicio'; ?> </title>
   <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/estilos.css">
-  <script src="<?php echo RUTA_URL; ?>/public/js/main.js"></script>
-  <script src="<?php echo RUTA_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
   <header class="text-bg-dark">
     <div class="container">
       <div class="row align-items-center">
@@ -32,10 +31,24 @@
           <form class="col-lg-auto me-3">
             <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
           </form>
-          <div class="col-lg-auto">
-            <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Login</a>
-            <a href="<?php echo RUTA_URL; ?>/usuarioController/agregarUsuario" class="btn btn-warning">Sign-up</a>
-          </div>          
+          <?php if (!isset($_SESSION['usuario_id'])): ?>            
+            <div class="col-lg-auto">
+              <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Login</a>
+              <a href="<?php echo RUTA_URL; ?>/usuarioController/agregarUsuario" class="btn btn-warning">Sign-up</a>
+            </div>  
+          <?php else: ?>
+            <div class="col-lg-auto">
+              <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Ajustes
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="">Perfil</a></li>
+                    <li><a class="dropdown-item" href="<?php echo RUTA_URL; ?>/paginas/logout">Cerrar Sesión</a></li>
+                  </ul>
+              </div>
+            </div>          
+          <?php endif; ?>
         </div>
 
       </div>

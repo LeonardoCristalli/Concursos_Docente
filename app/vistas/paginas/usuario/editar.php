@@ -1,6 +1,6 @@
 <?php require RUTA_APP . '/vistas/inc/header.php'; ?>
 
-<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-light">Volver</a>
 
 <div class="card card-body bg-light mt-5">
 
@@ -65,15 +65,17 @@
       <input type="text" id="cuil" name="cuil" class="form-control form-control-lg" value="<?php echo $datos['cuil']; ?>">
     </div>
 
-    <div class="form-group">
-      <label for="tipo_usu">Tipo de Usuario: <sup>*</sup></label>
-      <input type="text" id="tipo_usu" name="tipo_usu" class="form-control form-control-lg" value="<?php echo $datos['tipo_usu']; ?>">
-    </div>
+    <fieldset>
+      <div class="form-group">
+        <label for="tipo_usu">Tipo de Usuario: <sup>*</sup></label>
+        <input type="text" id="tipo_usu" name="tipo_usu" class="form-control form-control-lg" value="<?php echo $datos['tipo_usu']; ?>">
+      </div>
 
-    <div class="form-group">
-      <label for="nro_legajo">Número de Legajo: <sup>*</sup></label>
-      <input type="text" id="nro_legajo" name="nro_legajo" class="form-control form-control-lg" value="<?php echo $datos['nro_legajo']; ?>">
-    </div>
+      <div class="form-group">
+        <label for="nro_legajo">Número de Legajo: <sup>*</sup></label>
+        <input type="text" id="nro_legajo" name="nro_legajo" class="form-control form-control-lg" value="<?php echo $datos['nro_legajo']; ?>">
+      </div>
+    </fieldset>
 
     <div class="form-group">
       <label for="usuario">Usuario: <sup>*</sup></label>

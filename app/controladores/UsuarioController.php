@@ -23,7 +23,8 @@ class UsuarioController extends Controlador {
         'tipo_usu' => trim($_POST['tipo_usu']),
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
-        'password' => trim($_POST['password']),          
+        'password' => trim($_POST['password']),
+        'cv' => trim($_POST['cv']),          
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
@@ -44,6 +45,7 @@ class UsuarioController extends Controlador {
           if (!isset($_SESSION['usuario_id'])) {
             redireccionar('/paginas/login');
           } else {
+
             $usuarios = $this->usuarioModelo->obtenerUsuarios();
             $datos = [
               'usuarios' => $usuarios
@@ -75,6 +77,7 @@ class UsuarioController extends Controlador {
         'nro_legajo' => '',
         'usuario' => '',
         'password' => '',          
+        'cv' => '',  
       ];
 
       $this->vista('paginas/usuario/agregar', $datos);
@@ -99,7 +102,8 @@ class UsuarioController extends Controlador {
         'tipo_usu' => trim($_POST['tipo_usu']),
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
-        'password' => trim($_POST['password']),          
+        'password' => trim($_POST['password']),    
+        'cv' => trim($_POST['cv']),         
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
@@ -144,7 +148,8 @@ class UsuarioController extends Controlador {
         'tipo_usu' => $usuario->tipo_usu,
         'nro_legajo' => $usuario->nro_legajo,
         'usuario' => $usuario->usuario,
-        'password' => $usuario->password,          
+        'password' => $usuario->password,
+        'cv' => $usuario->cv,
       ];
 
         $this->vista('paginas/usuario/editar', $datos);
@@ -237,6 +242,10 @@ class UsuarioController extends Controlador {
       return $errores;
     } else {
       return true;
+    }
+
+    if (empty($datos['cv'])) {
+      $errores[] = 'La carga del CV es obligatoria';
     }
   }
 

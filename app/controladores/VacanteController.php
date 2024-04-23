@@ -113,6 +113,7 @@
     }
 
     public function vacanteUsuario() {
+      session_start();
       $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
       $datos = [
         'vacantes' => $vacantes,

@@ -16,6 +16,8 @@
 
         </div>
       </div>
-    </footer>
+    </footer> 
+    <script type="text/javascript" src="<?php echo RUTA_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="<?php echo RUTA_URL; ?>/public/js/main.js"></script>
   </body>
 </html> 
