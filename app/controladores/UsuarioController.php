@@ -1,6 +1,6 @@
 <?php 
-
 class UsuarioController extends Controlador {
+  private $usuarioModelo;
 
   public function __construct() {
     $this->usuarioModelo = $this->modelo('Usuario');
@@ -8,7 +8,9 @@ class UsuarioController extends Controlador {
 
   public function agregarUsuario() {
     session_start();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $rutaArchivo = '';
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
@@ -24,44 +26,64 @@ class UsuarioController extends Controlador {
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
-        'cv' => trim($_POST['cv']),          
+        'cv' => $rutaArchivo,     
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
-
       if (is_array($datosValidados)) {
-
         foreach ($datosValidados as $error) {
           echo $error . "<br/>";
         }
-
       } elseif ($datosValidados === true) {
+        if (!empty($_FILES['cv']['tmp_name']) && file_exists($_FILES['cv']['tmp_name'])) {
+          $file = $_FILES['cv'];
+          $fileName = $_FILES['cv']['name'];
+          $fileTmpName = $_FILES['cv']['tmp_name'];
+          $fileSize = $_FILES['cv']['size'];
+          $fileError = $_FILES['cv']['error'];
+          $fileType = $_FILES['cv']['type'];
+          $fileExt = explode('.', $fileName);
+          $fileActualExt = strtolower(end($fileExt));
+          $allow = array('jpg', 'jpeg', 'png', 'pdf');
+          if (in_array($fileActualExt, $allow)) {
+            if ($fileError === 0) {
+              if ($fileSize < 1000000) {
+                $fileNameNew = uniqid('', true).".".$fileActualExt;
+                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/uploads/' . $fileNameNew;
+                if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                  $rutaArchivo = 'http://localhost/Concursos_Docente/uploads/' . $fileNameNew;
+                } else {
+                  echo "Error al subir el archivo.";
+                }
+              } else {
+                echo "Tu archivo es muy grande!";
+              }
+            } else {
+              echo "Ocurrió un error al cargar el archivo!";
+            }
+          } else {
+            echo "No puede subir archivos de ese tipo!";
+          }
+        } 
 
         $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
         $datos['password'] = $passwordHash;
-
         if ($this->usuarioModelo->agregarUsuario($datos)) {
-      
           if (!isset($_SESSION['usuario_id'])) {
             redireccionar('/paginas/login');
           } else {
-
             $usuarios = $this->usuarioModelo->obtenerUsuarios();
             $datos = [
               'usuarios' => $usuarios
-            ];
-            
+            ];            
             $this->vista('paginas/usuario/listar', $datos);
           }
-          
         } else {
           die ('No se pudo agregar el usuario');
         }          
-
       } else {
         die('Datos de usuario no válidos');
-      }
-      
+      }      
     } else {
       $datos = [
         'nombre' => '',
@@ -86,6 +108,8 @@ class UsuarioController extends Controlador {
 
   public function editarUsuario($id) {
 
+    session_start();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [
@@ -102,9 +126,14 @@ class UsuarioController extends Controlador {
         'tipo_usu' => trim($_POST['tipo_usu']),
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
-        'password' => trim($_POST['password']),    
-        'cv' => trim($_POST['cv']),         
+        'password' => trim($_POST['password']), 
       ];
+
+      if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+        $contenidoArchivo = file_get_contents($_FILES['cv']['tmp_name']);
+        $cvCodificado = base64_encode($contenidoArchivo);
+        $datos['cv'] = $cvCodificado;
+      }
 
       $datosValidados = $this->validarDatosUsuario($datos);
 
@@ -177,9 +206,7 @@ class UsuarioController extends Controlador {
   }
 
   private function validarDatosUsuario($datos) {
-
     $errores = [];
-
     if (empty($datos['nombre'])) {
       $errores[] = 'El nombre es obligatorio';
     }
@@ -224,10 +251,12 @@ class UsuarioController extends Controlador {
 
     if (empty($datos['password'])) {
       $errores[] = 'La contraseña es obligatoria';
-    } elseif (strlen($datos['password']) < 8) {
-      $errores[] = 'La contraseña debe tener al menos 8 caracteres';
-    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/', $datos['password'])) {
-      $errores[] = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
+    } else {
+      if (strlen($datos['password']) < 8) {
+        $errores[] = 'La contraseña debe tener al menos 8 caracteres';
+      } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/', $datos['password'])) {
+        $errores[] = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
+      }
     }
 
     if (empty($datos['nro_dni'])) {
@@ -238,16 +267,18 @@ class UsuarioController extends Controlador {
       $errores[] = 'El número de DNI debe tener exactamente 8 dígitos';
     }
 
+    if (empty($errores)) {
+      if(empty($datos['cv'])) {
+        $errores[] = 'La carga del CV es obligatoria';
+      }
+    }
+
     if (!empty($errores)){
       return $errores;
     } else {
       return true;
     }
 
-    if (empty($datos['cv'])) {
-      $errores[] = 'La carga del CV es obligatoria';
-    }
   }
-
 }
 ?>

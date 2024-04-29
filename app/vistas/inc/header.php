@@ -43,7 +43,7 @@
                       Ajustes
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="">Perfil</a></li>
+                    <li><a class="dropdown-item" href="<?php echo RUTA_URL; ?>/usuarioController/editarUsuario/<?php echo $_SESSION['usuario_id']; ?>">Perfil</a></li>
                     <li><a class="dropdown-item" href="<?php echo RUTA_URL; ?>/paginas/logout">Cerrar Sesión</a></li>
                   </ul>
               </div>

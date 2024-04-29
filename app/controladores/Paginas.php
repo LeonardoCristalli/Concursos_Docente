@@ -128,22 +128,55 @@ class Paginas extends Controlador {
     session_start();
     $usuario_id = $_SESSION['usuario_id'];
     $date = date('Y-m-d');
-    $vacante_id = isset($_GET['vacante_id']) ? $_GET['vacante_id'] : null;
 
-    if ($vacante_id !== null) {
+    $usuario = $this->usuarioModelo->obtenerUsuarioId($usuario_id);
+
+    if($usuario->cv == null) {
+
+      $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
       $datos = [
-        'vacante_id' => $vacante_id,
-        'usuario_id' => $usuario_id,
-        'fecha' => $date,
+        'toast' => 'error',
+        'vacantes' => $vacantes,
       ];
 
-      if ($this->inscripcionModelo->crearInscripcion($datos)) {
+      $this->vista('paginas/vacante/vacanteUsuario', $datos);
       
-      } else {
-        die('No se pudo crear la inscripción');
-      }
     } else {
-      die ('Falta el parámetro vacante_id en la URL');
+      $vacante_id = isset($_GET['vacante_id']) ? $_GET['vacante_id'] : null;
+
+      if ($vacante_id !== null) {
+
+        if ($this->inscripcionModelo->estaInscripto($usuario_id, $vacante_id)) {
+          $vacantes = $this->vacanteModelo->obtenerVacantes();
+          $datos = [
+            'vacantes' => $vacantes,
+            'toast' => 'yaInscripto',
+          ];
+
+          $this->vista('paginas/vacante/vacanteUsuario', $datos);      
+        } else {
+          $datos = [
+            'vacante_id' => $vacante_id,
+            'usuario_id' => $usuario_id,
+            'fecha' => $date,
+          ];
+
+          if ($this->inscripcionModelo->crearInscripcion($datos)) {
+            $vacantes = $this->vacanteModelo->obtenerVacantes();
+            $datos = [
+              'vacantes' => $vacantes,
+              'toast' => 'exito',
+            ];
+
+            $this->vista('paginas/vacante/vacanteUsuario', $datos);
+          } else {
+            die('No se pudo crear la inscripción');
+          }
+        }
+
+      } else {
+        die ('Falta el parámetro vacante_id en la URL');
+      }      
     }
   }
 }

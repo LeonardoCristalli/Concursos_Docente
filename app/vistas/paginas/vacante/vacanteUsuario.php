@@ -46,11 +46,24 @@
                     <p class="card-text">Requerimientos: <?php echo isset($vacanteSeleccionada) ? $vacanteSeleccionada->req : 'N/A'; ?></p>
                     <p class="card-text">Tiempo: <?php echo isset($vacanteSeleccionada) ? $vacanteSeleccionada->tiempo : 'N/A';; ?></p> 
                     <p class="card-text">Experiencia: <?php echo isset($vacanteSeleccionada) ? $vacanteSeleccionada->exp : 'N/A';; ?></p>  
-                    <button id="btn-inscribirse" class="btn btn-primary btn-sm float-right">Inscribirse</button>
+                    <button type="button" id="btn-inscribirse" class="btn btn-primary btn-sm float-right">Inscribirse</button>
                 </div>
             </div>
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+                    <div class="toast-content">
+                        <span class="close-toast">&times;</span>
+                        <p id="toast-message"></p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
+
+    
+    
 </main>
 
 <script>
@@ -58,7 +71,7 @@
         var detallesVacante = document.getElementById("detalles-vacante");
         var vacanteId = <?php echo isset($_GET['vacante_id']) ? $_GET['vacante_id'] : 'null'; ?>;
         
-        if (!vacanteId) {
+        if (detallesVacante && !vacanteId) {
             detallesVacante.style.display = "none";
         }
     });
@@ -77,6 +90,40 @@
             <?php endif; ?>
         });
     });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toast = document.getElementById('toast');
+        var toastMessage = document.getElementById('toast-message');
+        var closeToast = document.querySelector('.close-toast');
+
+        // Función para mostrar el toast
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(function () {
+                toast.style.display = 'none';
+            }, 3000); // El toast se ocultará después de 3 segundos
+        }
+
+        // Evento para cerrar el toast
+        closeToast.addEventListener('click', function () {
+            toast.style.display = 'none';
+        });
+
+        <?php if(isset($datos)): ?>
+            if(<?php echo json_encode($datos['toast']); ?> === 'error') {
+                showToast('¡Error! Necesitas cargar un CV.');
+            } else if (<?php echo json_encode($datos['toast']); ?> === 'exito') {
+                showToast('¡Inscripción exitosa!');
+            } else if (<?php echo json_encode($datos['toast']); ?> === 'yaInscripto') {
+                showToast('Ya se encuentra inscripto en esta vacante.');
+            }
+        <?php endif; ?>
+
+    });
+
 </script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>
