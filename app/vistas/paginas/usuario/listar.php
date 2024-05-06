@@ -1,4 +1,7 @@
-<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php 
+  $titulo = 'Listar Usuarios';
+  require RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
 <div class="container fondo">
   <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
@@ -20,7 +23,8 @@
               <th class="text-center">Tipo_Usu</th>
               <th class="text-center">Nro_Legajo</th>
               <th class="text-center">Usuario</th>
-              <th class="text-center">Contraseña</th>             
+              <th class="text-center">Contraseña</th>
+              <th class="text-center">CV</th>           
               <th> </th>
               <th> </th>
             </tr>              
@@ -41,6 +45,7 @@
               <td><?php echo $usuario->nro_legajo; ?></td>
               <td><?php echo $usuario->usuario; ?></td>
               <td><?php echo $usuario->password; ?></td>
+              <td><?php echo $usuario->cv; ?></td>
               
               <td><a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>">Editar</a></td>
               <td>

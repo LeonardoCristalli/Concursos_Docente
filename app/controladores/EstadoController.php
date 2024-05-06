@@ -1,5 +1,7 @@
 <?php 
   class EstadoController extends Controlador {
+    private $estadoModelo;
+
     public function __construct() {
       $this->estadoModelo = $this->modelo('Estado');
     }

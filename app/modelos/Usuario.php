@@ -8,18 +8,17 @@
     }
 
     public function obtenerUsuarios() {
-
       $this->db->query('SELECT * FROM usuarios');
-      $resultados = $this->db->registros();
+      $resultados = $this->db->registros();      
       return $resultados;
     }
 
     public function agregarUsuario($datos) {
       $pdo = $this->db->obtenerConexionPDO();
       $stmt = $pdo->prepare('INSERT INTO usuarios (nombre, apellido, fecha_nac, sexo, direccion, telefono, nro_dni, email, 
-                                                  cuil, tipo_usu, nro_legajo, usuario, password, cv) 
+                                                  cuil, tipo_usu, nro_legajo, usuario, password, cv_name, cv_path) 
                               VALUES (:nombre, :apellido, :fecha_nac, :sexo, :direccion, :telefono, :nro_dni, :email, :cuil, 
-                                      :tipo_usu, :nro_legajo, :usuario, :password, CONVERT(varbinary(max), :cv))');
+                                      :tipo_usu, :nro_legajo, :usuario, :password, :cv_name, :cv_path)');
 
       $stmt->bindParam(':nombre', $datos['nombre']);
       $stmt->bindParam(':apellido', $datos['apellido']);
@@ -34,7 +33,8 @@
       $stmt->bindParam(':nro_legajo', $datos['nro_legajo']);
       $stmt->bindParam(':usuario', $datos['usuario']);   
       $stmt->bindParam(':password', $datos['password']);  
-      $stmt->bindParam(':cv', $datos['cv']);
+      $stmt->bindParam(':cv_name', $datos['cv_name']);
+      $stmt->bindParam(':cv_path', $datos['cv_path']);  
 
       if ($stmt->execute()) {
         return true;

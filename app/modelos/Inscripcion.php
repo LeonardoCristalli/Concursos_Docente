@@ -8,8 +8,8 @@ class Inscripcion {
   }
 
   public function obtenerInscripciones() {
-
     $this->db->query('SELECT * FROM inscripciones');
+
     $resultados = $this->db->registros();
     return $resultados;
   }
@@ -55,10 +55,11 @@ class Inscripcion {
     }
   }
 
-  public function borrarInscripcion($id) {
-    $this->db->query('DELETE FROM inscripciones WHERE id = :id');
+  public function borrarInscripcion($vacante_id, $usuario_id) {
+    $this->db->query('DELETE FROM inscripciones WHERE vacante_id = :vacante_id AND usuario_id = :usuario_id');
     
-    $this->db->bind(':id', $id);
+    $this->db->bind(':vacante_id', $vacante_id);
+    $this->db->bind(':usuario_id', $usuario_id);
 
     if ($this->db->execute()) {
       return true;
@@ -68,7 +69,7 @@ class Inscripcion {
     
   }
 
-  public function estaInscrito($usuario_id, $vacante_id) {
+  public function estaInscripto($usuario_id, $vacante_id) {
     $this->db->query('SELECT * FROM inscripciones WHERE usuario_id = :usuario_id AND vacante_id = :vacante_id');
     $this->db->bind(':usuario_id', $usuario_id);
     $this->db->bind(':vacante_id', $vacante_id);
@@ -82,6 +83,18 @@ class Inscripcion {
     }
   }
 
-}
+  public function obtenerDetallesInscripPorVacanteId($vacante_id) {
+    $this->db->query('SELECT i.*,  u.nombre, u.apellido, u.usuario, u.cv
+                      FROM inscripciones i 
+                      INNER JOIN usuarios u 
+                        ON i.usuario_id = u.id 
+                      WHERE i.vacante_id = :vacante_id');
 
+    $this->db->bind(':vacante_id', $vacante_id);
+
+    $resultados = $this->db->registros();
+    return $resultados;
+  }
+
+}
 ?>

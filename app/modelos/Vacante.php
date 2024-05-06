@@ -8,20 +8,39 @@
       $this->db = new Base;   
     }
 
-    public function obtenerVacantes() {
+    public function obtenerDetalleVacantes () {
+      $this->db->query('SELECT v.*, c.nombre AS nombre_catedra, e.descrip AS estado_descrip
+                        FROM vacantes v 
+                        INNER JOIN catedras c
+                          ON v.catedra_id = c.id
+                        INNER JOIN vacantes_estados ve 
+                          ON v.id = ve.vacante_id
+                        INNER JOIN estados e 
+                          ON ve.estado_id = e.id');
 
-      $this->db->query('SELECT * FROM vacantes');
+      $resultados = $this->db->registros();
+      return $resultados;                                 
+    }
+    
+    public function obtenerVacantes() {
+      $this->db->query('SELECT vacantes.*, catedras.nombre AS nombre_catedra 
+                        FROM vacantes
+                        INNER JOIN catedras ON vacantes.catedra_id = catedras.id');
+
       $resultados = $this->db->registros();
       return $resultados;
     }
 
     public function obtenerVacantesAbiertas() {
-      $this->db->query('SELECT vacantes.*, catedras.nombre AS nombre_catedra 
-                        FROM vacantes 
-                        INNER JOIN catedras ON vacantes.catedra_id = catedras.id 
-                        WHERE vacantes.estado_id = 2');
+      $this->db->query('SELECT v.*, c.nombre AS nombre_catedra
+                        FROM vacantes v
+                        INNER JOIN catedras c 
+                          ON v.catedra_id = c.id
+                        INNER JOIN vacantes_estados ve 
+                          ON v.id = ve.vacante_id
+                        WHERE ve.estado_id = 2');
                         
-    return $this->db->registros();
+      return $this->db->registros();
     }
 
     public function agregarVacante($datos) {
@@ -30,7 +49,7 @@
 
       $this->db->bind(':descrip', $datos['descrip']);
       $this->db->bind(':fecha_ini', $datos['fecha_ini']);
-      $this->db->bind(':fecha_fin', isset($datos['fecha_fin']) ? $datos['fecha_fin'] : null, PDO::PARAM_NULL);
+      $this->db->bind(':fecha_fin', !empty(trim($datos['fecha_fin'])) ? $datos['fecha_fin'] : null);
       $this->db->bind(':req', $datos['req']);
       $this->db->bind(':tiempo', $datos['tiempo']);
       $this->db->bind(':exp', $datos['exp']);

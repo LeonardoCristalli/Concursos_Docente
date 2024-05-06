@@ -1,6 +1,7 @@
 <?php 
 
   class CatedraController extends Controlador {
+    private $catedraModelo;
 
     public function __construct() {
       $this->catedraModelo = $this->modelo('Catedra');

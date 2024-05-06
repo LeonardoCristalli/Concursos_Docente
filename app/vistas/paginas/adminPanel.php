@@ -16,6 +16,7 @@
           <option value="catedras">Cátedras</option>
           <option value="vacantes">Vacantes</option>
           <option value="estados">Estados</option>
+          <option value="inscripciones">Inscripciones</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Ir al CRUD</button>

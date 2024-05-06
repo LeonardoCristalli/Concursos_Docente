@@ -10,7 +10,6 @@ class UsuarioController extends Controlador {
     session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $rutaArchivo = '';
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
@@ -26,32 +25,37 @@ class UsuarioController extends Controlador {
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
-        'cv' => $rutaArchivo,     
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
+
       if (is_array($datosValidados)) {
         foreach ($datosValidados as $error) {
           echo $error . "<br/>";
         }
       } elseif ($datosValidados === true) {
+
         if (!empty($_FILES['cv']['tmp_name']) && file_exists($_FILES['cv']['tmp_name'])) {
-          $file = $_FILES['cv'];
           $fileName = $_FILES['cv']['name'];
           $fileTmpName = $_FILES['cv']['tmp_name'];
           $fileSize = $_FILES['cv']['size'];
           $fileError = $_FILES['cv']['error'];
-          $fileType = $_FILES['cv']['type'];
           $fileExt = explode('.', $fileName);
+
           $fileActualExt = strtolower(end($fileExt));
-          $allow = array('jpg', 'jpeg', 'png', 'pdf');
+          $allow = array('pdf');
+
           if (in_array($fileActualExt, $allow)) {
             if ($fileError === 0) {
               if ($fileSize < 1000000) {
-                $fileNameNew = uniqid('', true).".".$fileActualExt;
-                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/uploads/' . $fileNameNew;
+
+                $fileNewName = uniqid('', true).".".$fileActualExt;                
+                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/uploads/' . $fileNewName;
+
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                  $rutaArchivo = 'http://localhost/Concursos_Docente/uploads/' . $fileNameNew;
+
+                  $datos['cv'] = $fileNewName;
+
                 } else {
                   echo "Error al subir el archivo.";
                 }
@@ -68,19 +72,25 @@ class UsuarioController extends Controlador {
 
         $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
         $datos['password'] = $passwordHash;
+
         if ($this->usuarioModelo->agregarUsuario($datos)) {
+          
           if (!isset($_SESSION['usuario_id'])) {
             redireccionar('/paginas/login');
           } else {
             $usuarios = $this->usuarioModelo->obtenerUsuarios();
             $datos = [
               'usuarios' => $usuarios
-            ];            
+            ];
+
             $this->vista('paginas/usuario/listar', $datos);
-          }
+          }                      
         } else {
-          die ('No se pudo agregar el usuario');
-        }          
+          if (file_exists($fileDestination)) {
+            unlink($fileDestination);
+          }
+          echo "No se pudo agregar el usuario.";
+        }
       } else {
         die('Datos de usuario no válidos');
       }      
@@ -98,8 +108,8 @@ class UsuarioController extends Controlador {
         'tipo_usu' => '',
         'nro_legajo' => '',
         'usuario' => '',
-        'password' => '',          
-        'cv' => '',  
+        'password' => '',                  
+        'cv' => '',
       ];
 
       $this->vista('paginas/usuario/agregar', $datos);
@@ -107,7 +117,6 @@ class UsuarioController extends Controlador {
   }
 
   public function editarUsuario($id) {
-
     session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -127,25 +136,56 @@ class UsuarioController extends Controlador {
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']), 
+        'cv' => trim($_POST['cv']),
       ];
-
-      if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
-        $contenidoArchivo = file_get_contents($_FILES['cv']['tmp_name']);
-        $cvCodificado = base64_encode($contenidoArchivo);
-        $datos['cv'] = $cvCodificado;
-      }
-
+      
       $datosValidados = $this->validarDatosUsuario($datos);
 
       if (is_array($datosValidados)) {
-
         foreach ($datosValidados as $error) {
           echo $error . "<br/>";
         }
-
       } elseif ($datosValidados === true) {
 
-        if($this->usuarioModelo->actualizarUsuario($datos)) {            
+        if (!empty($_FILES['cv']['tmp_name']) && file_exists($_FILES['cv']['tmp_name'])) {
+          $fileName = $_FILES['cv']['name'];
+          $fileTmpName = $_FILES['cv']['tmp_name'];
+          $fileSize = $_FILES['cv']['size'];
+          $fileError = $_FILES['cv']['error'];
+          $fileExt = explode('.', $fileName);
+
+          $fileActualExt = strtolower(end($fileExt));
+          $allow = array('pdf');
+
+          if (in_array($fileActualExt, $allow)) {
+            if ($fileError === 0) {
+              if ($fileSize < 1000000) {
+
+                $fileNewName = uniqid('', true).".".$fileActualExt;                
+                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/public/uploads/' . $fileNewName;
+
+                if (move_uploaded_file($fileTmpName, $fileDestination)) {
+
+                  $datos['cv'] = $fileNewName;
+
+                } else {
+                  echo "Error al subir el archivo.";
+                }
+              } else {
+                echo "Tu archivo es muy grande!";
+              }
+            } else {
+              echo "Ocurrió un error al cargar el archivo!";
+            }
+          } else {
+            echo "No puede subir archivos de ese tipo!";
+          }
+        }
+
+        $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
+        $datos['password'] = $passwordHash;
+
+        if ($this->usuarioModelo->actualizarUsuario($datos)) {   
           $usuarios = $this->usuarioModelo->obtenerUsuarios();
           $datos = [
             'usuarios' => $usuarios
@@ -154,6 +194,9 @@ class UsuarioController extends Controlador {
           $this->vista('paginas/usuario/listar', $datos);
 
         } else {
+          if (file_exists($fileDestination)) {
+            unlink($fileDestination);
+          }
           die('Algo salio mal');        
         }
 
@@ -267,18 +310,43 @@ class UsuarioController extends Controlador {
       $errores[] = 'El número de DNI debe tener exactamente 8 dígitos';
     }
 
-    if (empty($errores)) {
-      if(empty($datos['cv'])) {
-        $errores[] = 'La carga del CV es obligatoria';
-      }
-    }
-
     if (!empty($errores)){
       return $errores;
     } else {
       return true;
     }
 
+  }
+
+  public function descargarCV($cv) { 
+    session_start();
+
+    $file_path = 'C:\xampp\htdocs\Concursos_Docente\public\uploads\\' . $cv;
+     echo $file_path;
+
+     $rta1 = !empty($cv);
+     
+     $rta2 = file_exists($file_path);
+     var_dump($rta1);
+     var_dump($rta2);
+
+    if(!empty($cv) && file_exists($file_path)) {
+      
+      header('Cache-Control: public');
+      header('Content-Description: File Transfer');
+      header('Content-Type: application/pdf');
+      header('Content-Disposition: attachment; filename="' . $cv . '"');
+      header('Content-Length: ' . filesize($file_path));
+      header('Content-Transfer-Encoding: binary');
+
+      readfile($file_path);
+      exit;
+      
+
+    } else {
+      echo "El archivo no existe.";
+      redireccionar('/paginas/RAPanel');
+    }
   }
 }
 ?>

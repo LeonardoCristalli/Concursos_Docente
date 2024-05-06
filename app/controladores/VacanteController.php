@@ -1,6 +1,7 @@
 <?php 
 
   class VacanteController extends Controlador {
+    private $vacanteModelo; 
 
     public function __construct() {
       $this->vacanteModelo = $this->modelo('Vacante');
@@ -105,7 +106,12 @@
         $id = $_POST['id'];
 
         if($this->vacanteModelo->borrarVacante($id)) {
-          redireccionar('/paginas/vacante/listar');
+          $vacantes = $this->vacanteModelo->obtenerVacantes();
+          $datos = [
+            'vacantes' => $vacantes,
+          ];
+
+          $this->vista('paginas/vacante/listar', $datos);
         } else {
           die('Algo salio mal');
         }

@@ -1,4 +1,3 @@
-
 <?php 
     $titulo = "Vacantes Disponibles";
     require RUTA_APP . '/vistas/inc/header.php'; 
@@ -20,13 +19,9 @@
         </div>
 
         <div class="col-md-8">
-
             <?php 
-
                 if (isset($_GET['vacante_id'])) {
-
-                    $vacante_id = $_GET['vacante_id'];
-                    
+                    $vacante_id = $_GET['vacante_id'];                
                     $vacanteSeleccionada = null;
 
                     foreach($datos['vacantes'] as $vacante) {
@@ -60,10 +55,7 @@
             </div>
             
         </div>
-    </div>
-
-    
-    
+    </div>    
 </main>
 
 <script>

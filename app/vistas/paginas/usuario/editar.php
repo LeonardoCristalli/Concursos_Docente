@@ -103,12 +103,13 @@
 
         <div class="form-group mb-3">
           <label for="cv" class="form-label">CV:</label>
-          <?php if (!empty($datos['cv'])): ?>
-            <span><?php echo $datos['cv']; ?></span>
-          <a href="ruta_al_archivo/<?php echo $datos['cv']; ?>" download>Descargar</a>
-          <?php else: ?>
-            <input class="form-control" type="file" id="cv" name="cv" value="<?php echo isset($datos['cv']) ? $datos['cv'] : ''; ?>">
+          <?php if (isset($datos['cv'])): ?>
+            <?php if (!empty($datos['cv'])): ?>
+             <span><?php echo $datos['cv']; ?></span>
+             <input type="hidden" name="cv" value="<?php echo $datos['cv']; ?>">
+            <?php endif; ?>
           <?php endif; ?>
+            <input class="form-control" type="file" id="cv" name="cv" value="<?php echo isset($datos['cv']) ? $datos['cv'] : ''; ?>">
         </div>
 
         <div class="d-flex justify-content-center">

@@ -1,6 +1,7 @@
 <?php 
 
 class AreaController extends Controlador {
+  private $areaModelo;
 
   public function __construct() {
     $this->areaModelo = $this->modelo('Area');

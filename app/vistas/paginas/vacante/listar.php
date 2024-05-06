@@ -1,4 +1,7 @@
-<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php 
+  $titulo = "Listar Vacantes";
+  require RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
 <main class="main-container w-100 m-auto">
 
@@ -64,6 +67,6 @@
       </div>
     </div>
   </div>
-</div>
+</main>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

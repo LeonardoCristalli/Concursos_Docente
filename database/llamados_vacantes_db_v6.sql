@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [llamados_vacantes]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Database [llamados_vacantes]    Script Date: 6/5/2024 18:07:59 ******/
 CREATE DATABASE [llamados_vacantes]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,10 +80,10 @@ ALTER DATABASE [llamados_vacantes] SET QUERY_STORE = OFF
 GO
 USE [llamados_vacantes]
 GO
-/****** Object:  User [llamados_vacantes_login]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  User [llamados_vacantes_login]    Script Date: 6/5/2024 18:07:59 ******/
 CREATE USER [llamados_vacantes_login] FOR LOGIN [llamados_vacantes_login] WITH DEFAULT_SCHEMA=[db_accessadmin]
 GO
-/****** Object:  Table [dbo].[areas]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[areas]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[areas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[catedras]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[catedras]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[catedras](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[dptos]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[dptos]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[dptos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[estados]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[estados]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[estados](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[inscripciones]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[inscripciones]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +164,7 @@ CREATE TABLE [dbo].[inscripciones](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[jefes_catedras]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[jefes_catedras]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +180,7 @@ CREATE TABLE [dbo].[jefes_catedras](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuarios]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[usuarios]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -198,9 +198,9 @@ CREATE TABLE [dbo].[usuarios](
 	[tipo_usu] [varchar](50) NULL,
 	[nro_legajo] [varchar](50) NULL,
 	[usuario] [varchar](50) NOT NULL,
-	[password] [varchar](256) NULL,
+	[password] [varchar](255) NOT NULL,
 	[nro_dni] [char](8) NOT NULL,
-	[cv] [varbinary](max) NULL,
+	[cv] [varchar](255) NULL,
  CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -209,9 +209,9 @@ CREATE TABLE [dbo].[usuarios](
 (
 	[usuario] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vacantes]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[vacantes]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -224,7 +224,6 @@ CREATE TABLE [dbo].[vacantes](
 	[req] [varchar](1000) NULL,
 	[tiempo] [varchar](50) NULL,
 	[exp] [varchar](1000) NULL,
-	[estado_id] [int] NOT NULL,
 	[catedra_id] [int] NOT NULL,
  CONSTRAINT [PK_vacantes] PRIMARY KEY CLUSTERED 
 (
@@ -232,7 +231,7 @@ CREATE TABLE [dbo].[vacantes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vacantes_estados]    Script Date: 15/4/2024 12:33:44 ******/
+/****** Object:  Table [dbo].[vacantes_estados]    Script Date: 6/5/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -267,6 +266,7 @@ ALTER TABLE [dbo].[inscripciones] CHECK CONSTRAINT [FK_inscripciones_usuarios]
 GO
 ALTER TABLE [dbo].[inscripciones]  WITH CHECK ADD  CONSTRAINT [FK_inscripciones_vacantes] FOREIGN KEY([vacante_id])
 REFERENCES [dbo].[vacantes] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[inscripciones] CHECK CONSTRAINT [FK_inscripciones_vacantes]
 GO
@@ -285,18 +285,14 @@ REFERENCES [dbo].[catedras] ([id])
 GO
 ALTER TABLE [dbo].[vacantes] CHECK CONSTRAINT [FK_vacantes_catedras]
 GO
-ALTER TABLE [dbo].[vacantes]  WITH CHECK ADD  CONSTRAINT [FK_vacantes_estados] FOREIGN KEY([estado_id])
-REFERENCES [dbo].[estados] ([id])
-GO
-ALTER TABLE [dbo].[vacantes] CHECK CONSTRAINT [FK_vacantes_estados]
-GO
 ALTER TABLE [dbo].[vacantes_estados]  WITH CHECK ADD  CONSTRAINT [FK_vacantes_estados_estados] FOREIGN KEY([estado_id])
 REFERENCES [dbo].[estados] ([id])
 GO
 ALTER TABLE [dbo].[vacantes_estados] CHECK CONSTRAINT [FK_vacantes_estados_estados]
 GO
-ALTER TABLE [dbo].[vacantes_estados]  WITH CHECK ADD  CONSTRAINT [FK_vacantes_estados_vacantes] FOREIGN KEY([vacante_id])
+ALTER TABLE [dbo].[vacantes_estados]  WITH NOCHECK ADD  CONSTRAINT [FK_vacantes_estados_vacantes] FOREIGN KEY([vacante_id])
 REFERENCES [dbo].[vacantes] ([id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[vacantes_estados] CHECK CONSTRAINT [FK_vacantes_estados_vacantes]
 GO
