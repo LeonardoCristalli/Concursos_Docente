@@ -3,16 +3,18 @@
 <main class="main-container d-flex justify-content-around">
 
   <div class="index-intro">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dignissimos labore nihil ex corporis repudiandae ea optio quidem iste, itaque quibusdam dolorum, animi corrupti assumenda adipisci deleniti atque omnis earum.</p>
-    <h2>We make professionals</h2>
-    <a href="#">NEWS HERE</a>
+    <h1>UTN: Abierta la inscripción al concurso docente 2024</h1>
+    <div>
+      <img src="<?php echo RUTA_URL; ?>/img/banner-concursos.jpg" alt="concursos-banner">
+    </div>
   </div>
 
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 15rem;">
+  <img src="<?php echo RUTA_URL; ?>/img/F.Aditiva - Miniatura.png" alt="curso-3d" class="card-image">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">Novedades</h5>
+      <p class="card-text">Curso de Fabricación Aditiva</p>
+      <a href="#" class="btn btn-primary">Ver Más</a>
     </div>
   </div>
 

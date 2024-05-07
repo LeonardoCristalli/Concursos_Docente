@@ -228,6 +228,18 @@ class Paginas extends Controlador {
     $this->vista('paginas/RAPanel');
   }
 
+   public function about() {
+    session_start();
+
+    $this->vista('paginas/about');
+   }
+
+   public function contacto() {
+    session_start();
+
+    $this->vista('paginas/contacto');
+   }
+
 }
 
 ?>

@@ -28,8 +28,9 @@ header {
 }
 
 .index-intro {
+  text-align: center;
   max-width: 600px;
-  margin: 0 auto;
+  margin-bottom: 30px;
 }
 
 .index-intro h2 {
@@ -73,4 +74,22 @@ footer iframe {
 #error-message {
   max-width: 400px;
   margin: 20px auto;
+}
+
+.index-intro img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+}
+
+.text-container {
+  margin-top: auto;
 }
