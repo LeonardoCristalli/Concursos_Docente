@@ -50,11 +50,6 @@
         </div>
 
         <div class="form-group">
-          <label for="estado_id">Estado:<sup>*</sup></label>
-          <input type="number" id="estado_id" name="estado_id" class="form-control form-control-lg"></input>
-        </div>
-
-        <div class="form-group">
           <label for="catedra_id">Catedra:<sup>*</sup></label>
           <input type="number" id="catedra_id" name="catedra_id" class="form-control form-control-lg"></input>
         </div>

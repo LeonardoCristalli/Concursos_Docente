@@ -20,7 +20,7 @@
               <td><?php echo $dpto->id; ?></td>
               <td><?php echo $dpto->nombre; ?></td>
               <td>
-                <a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>">Editar</a>
+                <a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>" class="btn btn-warning">Editar</a>
               </td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/dptocontroller/borrarDpto/<?php echo $dpto->id; ?>" method="POST">

@@ -20,7 +20,7 @@
               <td><?php echo $estado->id; ?></td>
               <td><?php echo $estado->descrip; ?></td>              
                             
-              <td><a href="<?php echo RUTA_URL; ?>/estadocontroller/editarEstado/<?php echo $estado->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/estadocontroller/editarEstado/<?php echo $estado->id; ?>" class="btn btn-warning">Editar</a></td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/estadocontroller/borrarEstado/<?php echo $estado->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $estado->id; ?>">

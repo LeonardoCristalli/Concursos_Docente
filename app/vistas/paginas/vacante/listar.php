@@ -7,7 +7,9 @@
 
   <div class="row mb-4">
     <div class="col">
-      <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
+      <?php if ($_SESSION['tipo_usu'] == 'Admin'): ?>
+        <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
+      <?php endif; ?>
     </div>
   </div>
 
@@ -40,16 +42,19 @@
               <td><?php echo $vacante->req; ?></td>
               <td><?php echo $vacante->tiempo; ?></td>
               <td><?php echo $vacante->exp; ?></td>
-              <td><?php echo $vacante->estado_id; ?></td>
-              <td><?php echo $vacante->catedra_id; ?></td>
-           
-              <td><a href="<?php echo RUTA_URL; ?>/vacantecontroller/editarVacante/<?php echo $vacante->id; ?>">Editar</a></td>
+              <td><?php echo $vacante->estado_descrip; ?></td>
+              <td><?php echo $vacante->nombre_catedra; ?></td>
+              <td>
+                <a href="<?php echo RUTA_URL; ?>/vacantecontroller/editarVacante/<?php echo $vacante->id; ?>" class="btn btn-warning">
+                  Editar
+                </a>
+              </td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/vacantecontroller/borrarVacante/<?php echo $vacante->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $vacante->id; ?>">
                   <input type="submit" class="btn btn-danger" value="Borrar">
                 </form>
-              </td>
+              </td>              
             </tr>
             <?php endforeach; ?>
           </tbody>

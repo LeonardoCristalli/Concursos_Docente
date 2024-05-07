@@ -22,7 +22,7 @@
               <td><?php echo $area->nombre; ?></td>
               <td><?php echo $area->dpto_id; ?></td>
                             
-              <td><a href="<?php echo RUTA_URL; ?>/areacontroller/editarArea/<?php echo $area->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/areacontroller/editarArea/<?php echo $area->id; ?>" class="btn btn-warning">Editar</a></td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/areacontroller/borrarArea/<?php echo $area->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $area->id; ?>">

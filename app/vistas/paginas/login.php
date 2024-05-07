@@ -34,8 +34,26 @@
       </div>
     </div>
 
+    <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+    
   </div>
-  
+
 </main>
+
+<script>
+  <?php if(isset($_SESSION["mensaje_error"])): ?>
+    var errorMessage = "<?php echo $_SESSION["mensaje_error"]; ?>";
+    <?php unset($_SESSION["mensaje_error"]); ?>
+  <?php else: ?>
+    var errorMessage = "";
+  <?php endif; ?>
+
+  if(errorMessage !== "") {
+    var errorMessageElement = document.getElementById("error-message");
+    errorMessageElement.textContent = errorMessage;
+    errorMessageElement.classList.remove("d-none"); 
+  }
+</script>
+
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?> 

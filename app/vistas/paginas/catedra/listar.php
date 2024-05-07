@@ -33,7 +33,7 @@
               <td><?php echo $catedra->electiva; ?></td>
               <td><?php echo $catedra->area_id; ?></td>
                             
-              <td><a href="<?php echo RUTA_URL; ?>/catedracontroller/editarCatedra/<?php echo $catedra->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/catedracontroller/editarCatedra/<?php echo $catedra->id; ?>" class="btn btn-warning">Editar</a></td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/catedracontroller/borrarCatedra/<?php echo $catedra->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $catedra->id; ?>">

@@ -39,18 +39,20 @@
 
             } else {
               $_SESSION["mensaje_error"] = "Nombre de usuario o contraseña incorrectos";
-              redireccionar('/login');
+                      redireccionar('/paginas/login');
+
             }
 
           } else {
             $_SESSION["mensaje_error"] = "Nombre de usuario o contraseña incorrectos";
-            redireccionar('/login');
+                    redireccionar('/paginas/login');
+
           } 
         }
 
       } else {
         $_SESSION["mensaje_error"] = "El método de solicitud no es POST";
-        redireccionar('/login');
+        redireccionar('/paginas/login');
       }
     } 
     

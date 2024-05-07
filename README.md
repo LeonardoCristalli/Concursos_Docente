@@ -4,7 +4,7 @@
 
 Para importar la base de datos en tu entorno local, sigue estos pasos:
 
-1. Descarga el archivo llamados_vacantes_db_v5.sql de la carpeta database de este repositorio.
+1. Descarga el archivo llamados_vacantes_db_v6.sql de la carpeta database de este repositorio.
 
 2. Conéctate a tu servidor local utilizando las credenciales adecuadas. Si aún no tienes un login creado para la base de datos llamados_vacantes, sigue estos pasos:
 

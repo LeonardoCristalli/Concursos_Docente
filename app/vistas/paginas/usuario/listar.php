@@ -47,7 +47,7 @@
               <td><?php echo $usuario->password; ?></td>
               <td><?php echo $usuario->cv; ?></td>
               
-              <td><a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>">Editar</a></td>
+              <td><a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>" class="btn btn-warning">Editar</a></td>
               <td>
                 <form action="<?php echo RUTA_URL;?>/usuariocontroller/borrarUsuario/<?php echo $usuario->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $usuario->id; ?>">

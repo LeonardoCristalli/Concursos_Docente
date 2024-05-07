@@ -25,6 +25,8 @@ class Paginas extends Controlador {
   }
 
   public function login() {
+    session_start();
+
     $this->vista('paginas/login');
   }
 
@@ -127,7 +129,7 @@ class Paginas extends Controlador {
         break;
 
         case 'vacantes':
-          $vacantes = $this->vacanteModelo->obtenerVacantes();
+          $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
           $datos = [
             'vacantes' => $vacantes
           ];

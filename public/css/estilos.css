@@ -69,3 +69,8 @@ footer iframe {
   max-width: 800px;
   margin: 0 auto;
 }
+
+#error-message {
+  max-width: 400px;
+  margin: 20px auto;
+}

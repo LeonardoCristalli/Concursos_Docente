@@ -44,8 +44,8 @@
     }
 
     public function agregarVacante($datos) {
-      $this->db->query('INSERT INTO vacantes (descrip, fecha_ini, fecha_fin, req, tiempo, exp, estado_id, catedra_id) 
-                        VALUES (:descrip, :fecha_ini, :fecha_fin, :req, :tiempo, :exp, :estado_id, :catedra_id)');
+      $this->db->query('INSERT INTO vacantes (descrip, fecha_ini, fecha_fin, req, tiempo, exp, catedra_id) 
+                        VALUES (:descrip, :fecha_ini, :fecha_fin, :req, :tiempo, :exp, :catedra_id)');
 
       $this->db->bind(':descrip', $datos['descrip']);
       $this->db->bind(':fecha_ini', $datos['fecha_ini']);
@@ -53,7 +53,6 @@
       $this->db->bind(':req', $datos['req']);
       $this->db->bind(':tiempo', $datos['tiempo']);
       $this->db->bind(':exp', $datos['exp']);
-      $this->db->bind(':estado_id', $datos['estado_id']);
       $this->db->bind(':catedra_id', $datos['catedra_id']); 
 
       if ($this->db->execute()) {

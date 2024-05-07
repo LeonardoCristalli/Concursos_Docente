@@ -8,6 +8,7 @@
     }
 
     public function agregarVacante() {
+      session_start();
 
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
@@ -18,15 +19,15 @@
           'req' => trim($_POST['req']),
           'tiempo' => trim($_POST['tiempo']),
           'exp' => trim($_POST['exp']),
-          'estado_id' => trim($_POST['estado_id']),
           'catedra_id' => trim($_POST['catedra_id']),
+          'estado_id' => 1002,
           'fecha_desde' => trim($_POST['fecha_desde']),
-          'observacion' => trim($_POST['observacion']),
+          'observacion' => trim($_POST['observacion']),          
         ];
 
         if ($this->vacanteModelo->agregarVacante($datos)) {
 
-          $vacantes = $this->vacanteModelo->obtenerVacantes();
+          $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
           $datos = [
             'vacantes' => $vacantes,            
           ];
@@ -127,6 +128,28 @@
 
       $this->vista('paginas/vacante/vacanteUsuario', $datos);
     }
+
+    public function cambiarEstadoVacantes() {
+      $vacantes = $this->vacanteModelo->obtenerVacantes();
+      
+      // Iterar sobre cada vacante
+      foreach ($vacantes as $vacante) {
+          // Verificar si la fecha de inicio ha sido alcanzada
+          if (strtotime($vacante->fecha_ini) <= strtotime('now')) {
+              // Cambiar el estado de la vacante a "Abierta"
+              $datos = [
+                  'vacante_id' => $vacante->id,
+                  'estado_id' => 1003, // ID del estado "Abierta"
+                  'fecha_desde' => date('Y-m-d H:i:s'), // Fecha actual
+                  'observacion' => 'La vacante ha sido abierta.',
+              ];
+              
+              // Agregar el nuevo estado a la tabla vacantes_estados
+              $this->vacanteModelo->agregarEstadoVacante($datos);
+          }
+      }
+    }
+
 
   }
 ?>
