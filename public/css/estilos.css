@@ -13,11 +13,15 @@ body {
 }
 
 header {
-  padding: 20px;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #343a40;
+}
+
+header .nav-link {
+  color: #fff;
+}
+
+header .nav-link.text-secondary {
+  color: #ccc;
 }
 
 .main-container {
