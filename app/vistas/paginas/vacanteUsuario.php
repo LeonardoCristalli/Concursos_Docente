@@ -4,18 +4,25 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
     <div class="row">
         <div class="col-md-4">
             <h2>Vacantes Disponibles</h2>
-            <ul class="list-group">
-                <?php foreach($datos['vacantes'] as $vacante): ?>
-                    <li class="list-group-item">
-                        <a href="?vacante_id=<?php echo $vacante->id; ?>">
-                            <?php echo $vacante->nombre_catedra; ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+            <?php if (empty($datos['vacantes'])): ?>
+                <div class="alert alert-info text-center">
+                    No hay vacantes disponibles en este momento. Por favor, vuelva a intentarlo más tarde.
+                </div>
+            <?php else: ?>
+                <ul class="list-group">
+                    <?php foreach($datos['vacantes'] as $vacante): ?>
+                        <li class="list-group-item">
+                            <a href="?vacante_id=<?php echo $vacante->id; ?>">
+                                <?php echo $vacante->nombre_catedra; ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </div>
 
         <div class="col-md-8">

@@ -26,8 +26,7 @@
               <th class="text-center">Requerimientos</th>
               <th class="text-center">Duración</th>
               <th class="text-center">Experiencia</th>
-              <th class="text-center">Estado</th>
-              <th class="text-center">Cátedra</th>        
+              <th class="text-center">Cátedra Id</th>        
               <th> </th>
               <th> </th>
             </tr>              
@@ -42,8 +41,7 @@
               <td><?php echo $vacante->req; ?></td>
               <td><?php echo $vacante->tiempo; ?></td>
               <td><?php echo $vacante->exp; ?></td>
-              <td><?php echo $vacante->estado_descrip; ?></td>
-              <td><?php echo $vacante->nombre_catedra; ?></td>
+              <td><?php echo $vacante->catedra_id; ?></td>
               <td>
                 <a href="<?php echo RUTA_URL; ?>/vacantecontroller/editarVacante/<?php echo $vacante->id; ?>" class="btn btn-warning">
                   Editar

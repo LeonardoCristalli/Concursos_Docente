@@ -3,10 +3,17 @@
   require RUTA_APP . '/vistas/inc/header.php'; 
 ?>
 
-<div class="container fondo">
-  <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
+<main class="main-container w-100 m-auto"> 
+
+  <div class="row mb-4">
+    <div class="col">
+      <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
+    </div>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-md-10">
+      <h2>Usuarios</h2>
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <thead class="thead-dark">
@@ -62,15 +69,30 @@
     </div>
   </div>
 
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <?php if ($datos['totalPaginas'] > 1): ?>
+            <?php for($i = 1; $i <= $datos['totalPaginas']; $i++): ?>
+              <li class="page-item <?php echo ($i == $datos['paginaActual']) ? 'active' : ''; ?>">
+                <a class="page-link" href="?entidad=usuarios&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+              </li>
+            <?php endfor; ?>
+          <?php endif; ?>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-2 offset-10">
       <div>
-        <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-primary w-100">
-          <i class="bi bi-plus-circle-fill"></i> Crear
-        </a>
+        <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-primary w-100">Agregar Usuario</a>
       </div>
     </div>
   </div>
-</div>
+  
+</main> 
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

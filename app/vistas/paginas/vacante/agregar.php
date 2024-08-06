@@ -1,4 +1,7 @@
-<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php 
+ $titulo = 'Crear Usuario';
+ require RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
 <main class="main-container w-100 m-auto">
 

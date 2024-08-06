@@ -20,7 +20,7 @@
       </div>
     </div>
   <?php endif; ?>
-
+  
   <form action="<?php echo RUTA_URL;?>/usuarioController/agregarUsuario" method="POST" enctype="multipart/form-data" class="form-signup">
     <h2 class="mt-3 mb-4">Crear Usuario</h2>
     <div class="row">

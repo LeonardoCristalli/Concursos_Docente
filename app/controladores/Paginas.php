@@ -1,4 +1,5 @@
 <?php
+require_once RUTA_APP . '/controladores/UsuarioController.php';
 
 class Paginas extends Controlador {
   private $usuarioModelo;
@@ -84,12 +85,8 @@ class Paginas extends Controlador {
       switch($entidad) {
 
         case 'usuarios':
-          $usuarios = $this->usuarioModelo->obtenerUsuarios();
-          $datos = [
-            'usuarios' => $usuarios
-          ];
-
-          $this->vista('paginas/usuario/listar', $datos);
+          $usuarioController = new UsuarioController();  
+          $usuarioController->listarUsuarios();
         break;
 
         case 'dptos':

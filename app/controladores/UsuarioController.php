@@ -25,6 +25,7 @@ class UsuarioController extends Controlador {
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
+        'cv' => ''
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
@@ -53,9 +54,7 @@ class UsuarioController extends Controlador {
                 $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/uploads/' . $fileNewName;
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
-
                   $datos['cv'] = $fileNewName;
-
                 } else {
                   echo "Error al subir el archivo.";
                 }
@@ -248,6 +247,23 @@ class UsuarioController extends Controlador {
     }
   }
 
+  public function listarUsuarios() {
+    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+    $registrosPorPagina = 3;
+    $totalRegistros = $this->usuarioModelo->contarUsuarios();
+    $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+    $usuarios = $this->usuarioModelo->obtenerUsuariosPaginados($pagina, $registrosPorPagina);
+
+    $datos = [
+      'usuarios' => $usuarios,
+      'totalPaginas' => $totalPaginas,
+      'paginaActual' => $pagina
+    ];
+
+    $this->vista('paginas/usuario/listar', $datos);
+  }
+
   private function validarDatosUsuario($datos) {
     $errores = [];
     if (empty($datos['nombre'])) {
@@ -315,7 +331,6 @@ class UsuarioController extends Controlador {
     } else {
       return true;
     }
-
   }
 
   public function descargarCV($cv) { 
@@ -349,4 +364,3 @@ class UsuarioController extends Controlador {
     }
   }
 }
-?>

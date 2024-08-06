@@ -1,5 +1,5 @@
 <?php 
-  $titulo = "Panel de Administración del Responsable Administrativo";
+  $titulo = "Panel Administrativo";
   require_once RUTA_APP . '/vistas/inc/header.php'; 
 ?>
 

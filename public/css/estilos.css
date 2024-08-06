@@ -97,3 +97,11 @@ footer iframe {
 .text-container {
   margin-top: auto;
 }
+
+.table-responsive {
+  margin-bottom: 20px;
+}
+
+.btn-container {
+  margin-top: 20px;
+}
