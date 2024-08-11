@@ -239,7 +239,7 @@ class UsuarioController extends Controlador {
 
   public function listarUsuarios() {
     $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-    $registrosPorPagina = 3;
+    $registrosPorPagina = 4;
     $totalRegistros = $this->usuarioModelo->contarUsuarios();
     $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 

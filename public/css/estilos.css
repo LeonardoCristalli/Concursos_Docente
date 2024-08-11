@@ -24,6 +24,7 @@ header .nav-link.text-secondary {
   color: #ccc;
 }
 
+/* Contenido principal */
 .main-container {
   padding: 20px;
   overflow-y: hidden;
@@ -44,6 +45,7 @@ header .nav-link.text-secondary {
   line-height: 1.6;
 }
 
+/* Footer */
 footer {
   margin-top: auto;
   padding: 10px 0;
@@ -64,14 +66,18 @@ footer iframe {
   height: 100px;
 }
 
+/* Formularios */
+.form-login,
+.form-signup {
+  margin: 0 auto;
+}
+
 .form-login {
   max-width: 400px;
-  margin: 0 auto;
 }
 
 .form-signup {
   max-width: 1000px;
-  margin: 0 auto;
   overflow: visible;
   height: auto;
 }
@@ -81,7 +87,9 @@ footer iframe {
   margin: 20px auto;
 }
 
-.index-intro img {
+/* Imágenes */
+.index-intro img,
+.card-image {
   max-width: 100%;
   height: auto;
 }
@@ -90,23 +98,20 @@ footer iframe {
   flex: 1;
 }
 
-.card-image {
-  width: 100%;
-  height: auto;
-}
-
+/* Contenedores y botones */
 .text-container {
   margin-top: auto;
-}
-
-.table-responsive {
-  margin-bottom: 20px;
 }
 
 .btn-container {
   margin-top: 20px;
 }
 
+.btn-container a {
+  margin-bottom: 20px;
+}
+
+/* Grillas y columnas */
 .row {
   margin-right: 0;
   margin-left: 0;
@@ -117,6 +122,32 @@ footer iframe {
   padding-right: 0;
 }
 
-.btn-container a {
+/* Tablas */
+.table-responsive {
   margin-bottom: 20px;
+}
+
+.table thead th.sticky-col,
+.table tbody td.sticky-col {
+  position: sticky;
+  right: 0;
+  background-color: #f8f9fa;
+  z-index: 3;
+}
+
+.table tbody td.sticky-col a,
+.table tbody td.sticky-col form {
+  z-index: 4;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.actions-cell a,
+.actions-cell form {
+  margin: 0;
+  display: inline;
 }
