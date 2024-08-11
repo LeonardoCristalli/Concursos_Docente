@@ -8,3 +8,4 @@ define('DB_NOMBRE', 'llamados_vacantes');
 define('RUTA_APP', dirname(dirname(__FILE__)));
 define('RUTA_URL', 'http://localhost/Concursos_Docente');
 define('NOMBRE_SITIO', 'Concursos Docentes');
+date_default_timezone_set('America/Argentina/Buenos_Aires');

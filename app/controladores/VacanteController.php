@@ -10,7 +10,12 @@ class VacanteController extends Controlador {
   public function agregarVacante() {
     session_start();
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
+
+      $fecha_ini = trim($_POST['fecha_ini']);
+      $hoy = date('Y-m-d');
+      
+      $estado_id = ($fecha_ini == $hoy) ? 2 : 1002; // 2 = Abierta, 1002 = Nueva
 
       $datos = [
         'descrip' => trim($_POST['descrip']),  
@@ -20,7 +25,7 @@ class VacanteController extends Controlador {
         'tiempo' => trim($_POST['tiempo']),
         'exp' => trim($_POST['exp']),
         'catedra_id' => trim($_POST['catedra_id']),
-        'estado_id' => 1002, // Nueva
+        'estado_id' => $estado_id, 
         'fecha_desde' => trim($_POST['fecha_desde']),
         'observacion' => trim($_POST['observacion']),          
       ];
@@ -100,7 +105,8 @@ class VacanteController extends Controlador {
     }
   }
 
-    public function borrarVacante($id) {
+  public function borrarVacante($id) {
+    session_start();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       
@@ -132,7 +138,6 @@ class VacanteController extends Controlador {
   public function cambiarEstadoVacantes() {
     $vacantes = $this->vacanteModelo->obtenerVacantes();
     
-    // Iterar sobre cada vacante
     foreach ($vacantes as $vacante) {
         // Verificar si la fecha de inicio ha sido alcanzada
         if (strtotime($vacante->fecha_ini) <= strtotime('now')) {

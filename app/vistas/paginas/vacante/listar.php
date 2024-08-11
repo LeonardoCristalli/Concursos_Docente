@@ -65,7 +65,7 @@
     <div class="col-2 offset-10">
       <div>
         <a href="<?php echo RUTA_URL; ?>/vacantecontroller/agregarVacante" class="btn btn-primary w-100">
-          <i class="bi bi-plus-circle-fill"></i> Crear
+          Crear
         </a>
       </div>
     </div>

@@ -1,21 +1,37 @@
-<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php 
+  $titulo = 'Editar Departamento';
+  require RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
-<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=dptos" class="btn btn-light"><i class="fa fa-backward"></i>Volver</a>
+<main class="main-container w-100 m-auto">
+  <?php if (!isset($_SESSION['usuario_id'])): ?>
 
-<div class="card card-body bg-light mt-5">
+    <div class="row mb-4">
+      <div class="col">
+        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>
+      </div>
+    </div>
 
-  <h2>Editar Departamento</h2>
+  <?php else: ?>
+    <div class="row mb-4">
+      <div class="col">
+        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=dptos" class="btn btn-secondary btn-sm">Volver</a>
+      </div>
+    </div>
+  <?php endif; ?>
 
   <form action="<?php echo RUTA_URL;?>/dptocontroller/editarDpto/<?php echo $datos['id']?>" method="POST">
-
-    <div class="form-group">
-      <label for="nombre">Nombre: <sup>*</sup></label>
-      <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" value="<?php echo $datos['nombre']; ?>">
+    <h2 class="mt-3 mb-4">Editar Departamento</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="nombre" class="form-label">Nombre:<sup>*</sup></label>
+          <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $datos['nombre']; ?>">
+        </div>
+      </div>
     </div>
-    
-    <input type="submit" class="btn btn-success" value="Editar Departamento">
-
+    <button class="btn btn-primary" type="submit" name="submit" value="submit">Editar Departamento</button>
   </form>  
-</div>
+</main>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

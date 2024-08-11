@@ -72,17 +72,12 @@ class UsuarioController extends Controlador {
         $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
         $datos['password'] = $passwordHash;
 
-        if ($this->usuarioModelo->agregarUsuario($datos)) {
-          
+          if ($this->usuarioModelo->agregarUsuario($datos)) {
+            
           if (!isset($_SESSION['usuario_id'])) {
             redireccionar('/paginas/login');
           } else {
-            $usuarios = $this->usuarioModelo->obtenerUsuarios();
-            $datos = [
-              'usuarios' => $usuarios
-            ];
-
-            $this->vista('paginas/usuario/listar', $datos);
+            redireccionar('/usuariocontroller/listarUsuarios');
           }                      
         } else {
           if (file_exists($fileDestination)) {
@@ -235,12 +230,7 @@ class UsuarioController extends Controlador {
       $id = $_POST['id'];
 
       if($this->usuarioModelo->borrarUsuario($id)) {
-        $usuarios = $this->usuarioModelo->obtenerUsuarios();
-        $datos = [
-          'usuarios' => $usuarios
-        ];
-
-        $this->vista('paginas/usuario/listar', $datos);
+        redireccionar('/usuariocontroller/listarUsuarios');
       } else {
         die('Algo salio mal');
       }

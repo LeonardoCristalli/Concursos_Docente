@@ -89,8 +89,8 @@
           </form>
           <?php if (!isset($_SESSION['usuario_id'])): ?>
             <div class="btn-group">
-              <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Login</a>
-              <a href="<?php echo RUTA_URL; ?>/usuarioController/agregarUsuario" class="btn btn-warning">Sign-up</a>
+              <a href="<?php echo RUTA_URL; ?>/paginas/login" class="btn btn-outline-light me-2">Iniciar sesión</a>
+              <a href="<?php echo RUTA_URL; ?>/usuarioController/agregarUsuario" class="btn btn-warning">Registrarse</a>
             </div>
           <?php else: ?>
             <div class="dropdown">

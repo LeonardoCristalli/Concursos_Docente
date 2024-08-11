@@ -20,15 +20,15 @@
             <tr>
               <th class="text-center">Nombre</th>
               <th class="text-center">Apellido</th>
-              <th class="text-center">Fecha_Nac</th>
+              <th class="text-center">Fecha de Nacimiento</th>
               <th class="text-center">Sexo</th>
               <th class="text-center">Dirección</th>
               <th class="text-center">Teléfono</th>
               <th class="text-center">Email</th>
-              <th class="text-center">Nro_Dni</th>
+              <th class="text-center">Dni</th>
               <th class="text-center">Cuil</th>
-              <th class="text-center">Tipo_Usu</th>
-              <th class="text-center">Nro_Legajo</th>
+              <th class="text-center">Rol</th>
+              <th class="text-center">Legajo</th>
               <th class="text-center">Usuario</th>
               <th class="text-center">Contraseña</th>
               <th class="text-center">CV</th>           

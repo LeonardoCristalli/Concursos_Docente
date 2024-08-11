@@ -25,10 +25,9 @@ header .nav-link.text-secondary {
 }
 
 .main-container {
-  flex-grow: 1;
   padding: 20px;
-  overflow-y: auto;
-  height: calc(100vh - 100px);
+  overflow-y: hidden;
+  min-height: calc(100vh - 100px);
 }
 
 .index-intro {
@@ -71,8 +70,10 @@ footer iframe {
 }
 
 .form-signup {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
+  overflow: visible;
+  height: auto;
 }
 
 #error-message {
@@ -104,4 +105,18 @@ footer iframe {
 
 .btn-container {
   margin-top: 20px;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.col {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.btn-container a {
+  margin-bottom: 20px;
 }

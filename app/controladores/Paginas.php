@@ -1,5 +1,6 @@
 <?php
 require_once RUTA_APP . '/controladores/UsuarioController.php';
+require_once RUTA_APP . '/controladores/DptoController.php';
 
 class Paginas extends Controlador {
   private $usuarioModelo;
@@ -90,12 +91,8 @@ class Paginas extends Controlador {
         break;
 
         case 'dptos':
-          $dptos = $this->dptoModelo->obtenerDptos();
-          $datos = [
-            'dptos' => $dptos
-          ];
-
-          $this->vista('paginas/dpto/listar', $datos);
+          $dptoController = new DptoController();  
+          $dptoController->listarDptos();
         break;
 
         case 'areas':
@@ -176,7 +173,7 @@ class Paginas extends Controlador {
               'toast' => 'yaInscripto',
             ];
 
-            $this->vista('paginas/vacante/vacanteUsuario', $datos);
+            $this->vista('paginas/vacanteUsuario', $datos);
           } else {
             $datos = [
               'vacante_id' => $vacante_id,
@@ -191,7 +188,7 @@ class Paginas extends Controlador {
                 'toast' => 'exito',
               ];
 
-              $this->vista('paginas/vacante/vacanteUsuario', $datos);
+              $this->vista('paginas/vacanteUsuario', $datos);
             } else {
               die('No se pudo crear la inscripción');
             }
@@ -211,7 +208,7 @@ class Paginas extends Controlador {
         'vacantes' => $vacantes,
       ];
 
-      $this->vista('paginas/vacante/vacanteUsuario', $datos);
+      $this->vista('paginas/vacanteUsuario', $datos);
     }
   }
 
@@ -238,5 +235,3 @@ class Paginas extends Controlador {
    }
 
 }
-
-?>
