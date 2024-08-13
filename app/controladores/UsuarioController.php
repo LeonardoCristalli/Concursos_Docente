@@ -115,6 +115,8 @@ class UsuarioController extends Controlador {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+      $usuario = $this->usuarioModelo->obtenerUsuarioId($id);
+
       $datos = [
         'id' => $id,
         'nombre' => trim($_POST['nombre']),
@@ -129,11 +131,15 @@ class UsuarioController extends Controlador {
         'tipo_usu' => trim($_POST['tipo_usu']),
         'nro_legajo' => trim($_POST['nro_legajo']),
         'usuario' => trim($_POST['usuario']),
-        'password' => trim($_POST['password']), 
-        'cv' => trim($_POST['cv']),
+        'password' => !empty(trim($_POST['password'])) ? trim($_POST['password']) : $usuario->password, 
+        'cv' => isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK ? $_FILES['cv']['name'] : $usuario->cv, 
       ];
-      
-      $datosValidados = $this->validarDatosUsuario($datos);
+
+      if (!empty($_POST['password'])) {
+        $datosValidados = $this->validarDatosUsuario($datos);
+      } else {
+        $datosValidados = $this->validarDatosUsuarioSinPassword($datos);
+      }
 
       if (is_array($datosValidados)) {
         foreach ($datosValidados as $error) {
@@ -176,17 +182,13 @@ class UsuarioController extends Controlador {
           }
         }
 
-        $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
-        $datos['password'] = $passwordHash;
+        if (!empty($_POST['password'])) {
+          $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
+          $datos['password'] = $passwordHash;
+        }
 
         if ($this->usuarioModelo->actualizarUsuario($datos)) {   
-          $usuarios = $this->usuarioModelo->obtenerUsuarios();
-          $datos = [
-            'usuarios' => $usuarios
-          ];
-
-          $this->vista('paginas/usuario/listar', $datos);
-
+          $this->listarUsuarios();
         } else {
           if (file_exists($fileDestination)) {
             unlink($fileDestination);
@@ -306,6 +308,66 @@ class UsuarioController extends Controlador {
       } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/', $datos['password'])) {
         $errores[] = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
       }
+    }
+
+    if (empty($datos['nro_dni'])) {
+      $errores[] = 'El número de DNI es obligatorio';
+    } elseif (!ctype_digit($datos['nro_dni'])) {
+      $errores[] = 'El número de DNI debe contener solo dígitos numéricos';
+    } elseif (strlen($datos['nro_dni']) !== 8) {
+      $errores[] = 'El número de DNI debe tener exactamente 8 dígitos';
+    }
+
+    if (!empty($errores)){
+      return $errores;
+    } else {
+      return true;
+    }
+  }
+
+  private function validarDatosUsuarioSinPassword($datos) {
+    $errores = [];
+
+    if (empty($datos['nombre'])) {
+      $errores[] = 'El nombre es obligatorio';
+    }
+
+    if (empty($datos['apellido'])) {
+      $errores[] = 'El apellido es obligatorio';
+    }
+
+    if (empty($datos['sexo'])) {
+      $errores[] = 'El sexo es obligatorio';
+    }
+
+    if (empty($datos['direccion'])) {
+      $errores[] = 'La direccion es obligatoria';
+    }
+
+    if (empty($datos['telefono'])) {
+      $errores[] = 'El telefono es obligatorio';
+    }
+
+    if (empty($datos['cuil'])) {
+      $errores[] = 'El cuil es obligatorio';
+    } elseif (strlen($datos['cuil']) !== 11) {
+      $errores[] = 'El número de cuil debe tener exactamente 11 dígitos';
+    }
+
+    if (empty($datos['email'])) {
+      $errores[] = 'El email es obligatorio';
+    } elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
+      $errores[] = 'El correo electrónico no tiene un formato válido';
+    }
+
+    if (empty($datos['fecha_nac'])) {
+      $errores[] = 'La fecha de nacimiento es obligatoria';
+    }
+
+    if (empty($datos['usuario'])) {
+      $errores[] = 'El nombre de usuario es obligatorio';
+    } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', $datos['usuario'])) {
+      $errores[] = 'El nombre de usuario solo puede contener letras, números y guiones bajos';
     }
 
     if (empty($datos['nro_dni'])) {

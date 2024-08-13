@@ -5,14 +5,13 @@
 
 <main class="main-container w-100 m-auto"> 
 
-  <div class="row mb-4">
-    <div class="col">
+  <div class="row mb-4 g-0">
+
+    <div class="col-md-1">
       <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
     </div>
-  </div>
 
-  <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-11">
       <h2>Departamentos</h2>
       <div class="table-responsive">
         <table class="table table-bordered table-striped">

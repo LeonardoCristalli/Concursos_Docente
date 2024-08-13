@@ -76,8 +76,9 @@ class DptoController extends Controlador {
   }
 
   public function listarDptos() {
+    session_start();
     $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-    $registrosPorPagina = 3;
+    $registrosPorPagina = 4;
     $totalRegistros = $this->dptoModelo->contarDptos();
     $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 

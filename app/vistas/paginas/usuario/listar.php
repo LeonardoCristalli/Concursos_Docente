@@ -6,10 +6,11 @@
 <main class="main-container w-100 m-auto"> 
 
   <div class="row mb-4 g-0">
-    <!-- Fila sin separación entre columnas -->
+
     <div class="col-md-1">
       <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
     </div>
+    
     <div class="col-md-11">
       <h2>Usuarios</h2>
       <div class="table-responsive">
