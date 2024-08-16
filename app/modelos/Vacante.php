@@ -136,4 +136,17 @@ class Vacante {
     
   }
 
+  public function contarVacantes() {
+    $this->db->query("SELECT COUNT(*) AS total FROM vacantes");
+    return $this->db->registro()->total;
+  }
+
+  public function obtenerVacantesPaginados($pagina, $registrosPorPagina) {
+    $inicio = ($pagina - 1) * $registrosPorPagina;
+    $this->db->query("SELECT * FROM vacantes ORDER BY id OFFSET :inicio ROWS FETCH NEXT :registrosPorPagina ROWS ONLY");    
+    $this->db->bind(':inicio', $inicio, PDO::PARAM_INT);
+    $this->db->bind(':registrosPorPagina', $registrosPorPagina, PDO::PARAM_INT);
+
+    return $this->db->registros();
+  }
 }

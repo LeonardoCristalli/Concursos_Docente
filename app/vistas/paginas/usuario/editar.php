@@ -7,8 +7,10 @@
 
   <div class="row mb-4 g-0">
 
-    <div class="col-1">
-      <?php if ($datos['tipo_usu'] === 'Admin'): ?>
+    <div class="col-md-1">
+      <?php if (!isset($_SESSION['usuario_id'])): ?>
+        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>    
+      <?php else: ?>
         <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>
       <?php endif; ?>
     </div>
@@ -114,7 +116,6 @@
               <button class="btn btn-primary mb-3" type="submit" name="submit" value="submit">Editar Usuario</button>
             </div>
           </div>
-
         </div>
       </form>
     </div>

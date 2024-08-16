@@ -14,24 +14,22 @@
     <div class="col-md-11">
       <h2>Departamentos</h2>
       <div class="table-responsive">
-        <table class="table table-bordered table-striped">
+        <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
               <th class="text-center">ID</th>
               <th class="text-center">Nombre</th>           
-              <th> </th>
-              <th> </th>
+              <th class="text-center sticky-col" colpasn="2">Acciones</th>
             </tr>              
           </thead>  
           <tbody>
             <?php foreach($datos['dptos'] as $dpto) : ?>
             <tr>
-              <td><?php echo $dpto->id; ?></td>
-              <td><?php echo $dpto->nombre; ?></td>
-              <td>
+              <td class="text-center"><?php echo $dpto->id; ?></td>
+              <td class="text-center"><?php echo $dpto->nombre; ?></td>
+
+              <td class="sticky-col actions-cell">
                 <a href="<?php echo RUTA_URL; ?>/dptocontroller/editarDpto/<?php echo $dpto->id; ?>" class="btn btn-warning">Editar</a>
-              </td>
-              <td>
                 <form action="<?php echo RUTA_URL;?>/dptocontroller/borrarDpto/<?php echo $dpto->id; ?>" method="POST">
                   <input type="hidden" name="id" value="<?php echo $dpto->id; ?>">
                   <input type="submit" class="btn btn-danger" value="Borrar">
@@ -52,7 +50,7 @@
           <?php if ($datos['totalPaginas'] > 1): ?>
             <?php for($i = 1; $i <= $datos['totalPaginas']; $i++): ?>
               <li class="page-item <?php echo ($i == $datos['paginaActual']) ? 'active' : ''; ?>">
-                <a class="page-link" href="?entidad=dptos&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <a class="page-link" href="<?php echo RUTA_URL; ?>/dptocontroller/listardptos?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
               </li>
             <?php endfor; ?>
           <?php endif; ?>

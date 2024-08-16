@@ -38,14 +38,7 @@ class DptoController extends Controlador {
       ];
 
       if ($this->dptoModelo->actualizarDpto($datos)) {  
-
-        $dptos = $this->dptoModelo->obtenerDptos();
-        $datos = [
-          'dptos' => $dptos
-        ];
-
-        $this->vista('paginas/dpto/listar', $datos);
-
+        $this->listarDptos();
       } else {
         die('Algo salio mal');        
       }
@@ -76,7 +69,10 @@ class DptoController extends Controlador {
   }
 
   public function listarDptos() {
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+    }
+
     $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
     $registrosPorPagina = 4;
     $totalRegistros = $this->dptoModelo->contarDptos();
@@ -92,5 +88,4 @@ class DptoController extends Controlador {
 
     $this->vista('paginas/dpto/listar', $datos);
   }
-
 }

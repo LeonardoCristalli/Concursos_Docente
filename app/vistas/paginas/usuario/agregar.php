@@ -17,7 +17,7 @@
 
     <div class="col-md-11">
       <h2 class="mt-3 mb-4">Crear Usuario</h2>    
-      <form action="<?php echo RUTA_URL;?>/usuarioController/agregarUsuario" method="POST" enctype="multipart/form-data" class="form-signup">
+      <form action="<?php echo RUTA_URL;?>/usuarioController/agregarUsuario" method="POST" enctype="multipart/form-data">
         <div class="row">
           <div class="col-md-4">
             <fieldset>

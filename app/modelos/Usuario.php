@@ -91,7 +91,6 @@ class Usuario {
     } else {
       return false;
     }
-    
   }
 
   public function obtenerUsuarioPorNombre($nombreUsuario) {

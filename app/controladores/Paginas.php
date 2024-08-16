@@ -1,6 +1,10 @@
 <?php
 require_once RUTA_APP . '/controladores/UsuarioController.php';
 require_once RUTA_APP . '/controladores/DptoController.php';
+require_once RUTA_APP . '/controladores/AreaController.php';
+require_once RUTA_APP . '/controladores/CatedraController.php';
+require_once RUTA_APP . '/controladores/VacanteController.php';
+require_once RUTA_APP . '/controladores/EstadoController.php';
 
 class Paginas extends Controlador {
   private $usuarioModelo;
@@ -96,39 +100,23 @@ class Paginas extends Controlador {
         break;
 
         case 'areas':
-          $areas = $this->areaModelo->obtenerAreas();
-          $datos = [
-            'areas' => $areas
-          ];
-
-          $this->vista('paginas/area/listar', $datos);
+          $areaController = new AreaController();  
+          $areaController->listarAreas();
         break;
 
         case 'catedras':
-          $catedras = $this->catedraModelo->obtenerCatedras();
-          $datos = [
-            'catedras' => $catedras
-          ];
-
-          $this->vista('paginas/catedra/listar', $datos);
+          $catedraController = new CatedraController();  
+          $catedraController->listarCatedras();
         break;
 
         case 'estados':
-          $estados = $this->estadoModelo->obtenerEstados();
-          $datos = [
-            'estados' => $estados
-          ];
-
-          $this->vista('paginas/estado/listar', $datos);
+          $estadoController = new EstadoController();  
+          $estadoController->listarEstados();
         break;
 
         case 'vacantes':
-          $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
-          $datos = [
-            'vacantes' => $vacantes
-          ];
-
-          $this->vista('paginas/vacante/listar', $datos);
+          $vacanteController = new VacanteController();  
+          $vacanteController->listarVacantes();
         break;
 
         case 'inscripciones':

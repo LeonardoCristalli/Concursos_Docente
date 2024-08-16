@@ -1,6 +1,7 @@
 <?php 
   $titulo = "Panel de Administrador";
-  require_once RUTA_APP . '/vistas/inc/header.php'; ?>
+  require_once RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
 <main class="main-container w-100 m-auto">
   <div class="container">

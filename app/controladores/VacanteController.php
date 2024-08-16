@@ -31,13 +31,7 @@ class VacanteController extends Controlador {
       ];
 
       if ($this->vacanteModelo->agregarVacante($datos)) {
-
-        $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
-        $datos = [
-          'vacantes' => $vacantes,            
-        ];
-
-          $this->vista('paginas/vacante/listar', $datos);
+        redireccionar('/vacantecontroller/listarvacantes');
       } else {
         die ('No se pudo crear la Vacante');
       }          
@@ -59,6 +53,7 @@ class VacanteController extends Controlador {
   }
 
   public function editarVacante($id) {
+    session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -75,14 +70,7 @@ class VacanteController extends Controlador {
       ];
 
       if ($this->vacanteModelo->actualizarVacante($datos)) {  
-
-        $vacantes = $this->vacanteModelo->obtenerVacantes();
-        $datos = [
-          'vacantes' => $vacantes
-        ];
-
-        $this->vista('paginas/vacante/listar', $datos);
-
+        redireccionar('/vacantecontroller/listarvacantes');
       } else {
         die('Algo salio mal');        
       }
@@ -113,12 +101,7 @@ class VacanteController extends Controlador {
       $id = $_POST['id'];
 
       if($this->vacanteModelo->borrarVacante($id)) {
-        $vacantes = $this->vacanteModelo->obtenerVacantes();
-        $datos = [
-          'vacantes' => $vacantes,
-        ];
-
-        $this->vista('paginas/vacante/listar', $datos);
+        redireccionar('/vacantecontroller/listarvacantes');
       } else {
         die('Algo salio mal');
       }
@@ -139,20 +122,37 @@ class VacanteController extends Controlador {
     $vacantes = $this->vacanteModelo->obtenerVacantes();
     
     foreach ($vacantes as $vacante) {
-        // Verificar si la fecha de inicio ha sido alcanzada
-        if (strtotime($vacante->fecha_ini) <= strtotime('now')) {
-            // Cambiar el estado de la vacante a "Abierta"
-            $datos = [
-                'vacante_id' => $vacante->id,
-                'estado_id' => 1003, // ID del estado "Abierta"
-                'fecha_desde' => date('Y-m-d H:i:s'), // Fecha actual
-                'observacion' => 'La vacante ha sido abierta.',
-            ];
-            
-            // Agregar el nuevo estado a la tabla vacantes_estados
-            $this->vacanteModelo->agregarEstadoVacante($datos);
-        }
+      if (strtotime($vacante->fecha_ini) <= strtotime('now')) {
+        $datos = [
+            'vacante_id' => $vacante->id,
+            'estado_id' => 1003, // ID del estado "Abierta"
+            'fecha_desde' => date('Y-m-d H:i:s'), 
+            'observacion' => 'La vacante ha sido abierta.',
+        ];
+        $this->vacanteModelo->agregarEstadoVacante($datos);
+      }
     }
+  }
+
+  public function listarVacantes() {
+    if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+    }
+
+    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+    $registrosPorPagina = 2;
+    $totalRegistros = $this->vacanteModelo->contarVacantes();
+    $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+    $vacantes = $this->vacanteModelo->obtenerVacantesPaginados($pagina, $registrosPorPagina);
+
+    $datos = [
+      'vacantes' => $vacantes,
+      'totalPaginas' => $totalPaginas,
+      'paginaActual' => $pagina
+    ];
+
+    $this->vista('paginas/vacante/listar', $datos);
   }
 
 }

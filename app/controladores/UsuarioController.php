@@ -240,6 +240,10 @@ class UsuarioController extends Controlador {
   }
 
   public function listarUsuarios() {
+    if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+    }
+
     $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
     $registrosPorPagina = 4;
     $totalRegistros = $this->usuarioModelo->contarUsuarios();

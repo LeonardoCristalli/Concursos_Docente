@@ -1,26 +1,43 @@
-<?php require RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php 
+  $titulo = 'Editar Área';
+  require RUTA_APP . '/vistas/inc/header.php'; 
+?>
 
-<a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=areas" class="btn btn-secondary btn-sm">Volver</a>
-
-<div class="card card-body bg-light mt-5">
-
-  <h2>Editar Área</h2>
-
-  <form action="<?php echo RUTA_URL;?>/areacontroller/editarArea/<?php echo $datos['id']?>" method="POST">
-    
-    <div class="form-group">
-      <label for="nombre">Nombre: <sup>*</sup></label>
-      <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" value="<?php echo $datos['nombre']; ?>">
+<main class="main-container w-100 m-auto">
+  <div class="row mb-4 g-0">
+    <div class="col-1">
+      <?php if (!isset($_SESSION['usuario_id'])): ?>
+        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>
+      <?php else: ?>
+        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=areas" class="btn btn-secondary btn-sm">Volver</a>       
+      <?php endif; ?>
     </div>
 
-    <div class="form-group">
-      <label for="dpto_id">Departamento: <sup>*</sup></label>
-      <input type="number" id="dpto_id" name="dpto_id" class="form-control form-control-lg" value="<?php echo $datos['dpto_id']; ?>">
-    </div>
-    
-    <input type="submit" class="btn btn-success" value="Editar Área">
+    <div class="col-md-11">
+      <h2 class="mt-3 mb-4">Editar Área</h2>
+      <form action="<?php echo RUTA_URL;?>/areacontroller/editararea/<?php echo $datos['id']?>" method="POST">        
+        <div class="row">
+          <div class="col-md-6">
 
-  </form>  
-</div>
+            <div class="form-group mb-3">
+              <label for="nombre" class="form-label">Nombre:<sup>*</sup></label>
+              <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $datos['nombre']; ?>">
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="dpto_id">Departamento:<sup>*</sup></label>
+              <input type="number" id="dpto_id" name="dpto_id" class="form-control form-control-lg" value="<?php echo $datos['dpto_id']; ?>">
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" type="submit" name="submit" value="submit">Editar Área</button>
+            </div>
+
+          </div>
+        </div>       
+      </form>
+    </div>
+  </div>
+</main>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

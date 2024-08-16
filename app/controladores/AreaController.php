@@ -1,5 +1,4 @@
 <?php 
-
 class AreaController extends Controlador {
   private $areaModelo;
 
@@ -8,6 +7,8 @@ class AreaController extends Controlador {
   }
 
   public function agregarArea() {
+    session_start();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
       $datos = [
@@ -16,22 +17,14 @@ class AreaController extends Controlador {
       ];
 
       if ($this->areaModelo->agregarArea($datos)) {
-
-        $areas = $this->areaModelo->obtenerAreas();
-        $datos = [
-          'areas' => $areas,            
-        ];
-
-          $this->vista('paginas/area/listar', $datos);
-          
+        redireccionar('/areacontroller/listarAreas');          
       } else {
         die ('No se pudo agregar el Área');
       }          
-    } else {
-      
+    } else {      
       $datos = [
         'nombre' => '',       
-        'dpto_id' => '', 
+        'dpto_id' => '',
       ];
 
       $this->vista('paginas/area/agregar', $datos);
@@ -39,6 +32,7 @@ class AreaController extends Controlador {
   }
 
   public function editarArea($id) {
+    session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -49,14 +43,7 @@ class AreaController extends Controlador {
       ];
 
       if ($this->areaModelo->actualizarArea($datos)) {  
-
-        $areas = $this->areaModelo->obtenerAreas();
-        $datos = [
-          'areas' => $areas
-        ];
-
-        $this->vista('paginas/area/listar', $datos);
-
+        $this->listarAreas();
       } else {
         die('Algo salio mal');        
       }
@@ -73,17 +60,39 @@ class AreaController extends Controlador {
     }
   }
 
-    public function borrarArea($id) {
+  public function borrarArea($id) {
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       
       $id = $_POST['id'];
 
       if($this->areaModelo->borrarArea($id)) {
-        redireccionar('/paginas/area/listar');
+        redireccionar('/areacontroller/listarAreas');
       } else {
         die('Algo salio mal');
       }
     }
   }
+
+  public function listarAreas() {
+    if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+    }
+
+    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+    $registrosPorPagina = 4;
+    $totalRegistros = $this->areaModelo->contarAreas();
+    $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+    $areas = $this->areaModelo->obtenerAreasPaginados($pagina, $registrosPorPagina);
+
+    $datos = [
+      'areas' => $areas,
+      'totalPaginas' => $totalPaginas,
+      'paginaActual' => $pagina
+    ];
+
+    $this->vista('paginas/area/listar', $datos);
+  }
+  
 }

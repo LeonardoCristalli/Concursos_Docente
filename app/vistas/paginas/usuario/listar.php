@@ -14,7 +14,7 @@
     <div class="col-md-11">
       <h2>Usuarios</h2>
       <div class="table-responsive">
-        <table class="table table-bordered table-striped">
+        <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
               <th class="text-center">Nombre</th>
@@ -37,20 +37,20 @@
           <tbody>
             <?php foreach($datos['usuarios'] as $usuario) : ?>
             <tr>
-              <td><?php echo $usuario->nombre; ?></td>
-              <td><?php echo $usuario->apellido; ?></td>
-              <td><?php echo $usuario->fecha_nac; ?></td>
-              <td><?php echo $usuario->sexo; ?></td>
-              <td><?php echo $usuario->direccion; ?></td>
-              <td><?php echo $usuario->telefono; ?></td>
-              <td><?php echo $usuario->email; ?></td>
-              <td><?php echo $usuario->nro_dni; ?></td>
-              <td><?php echo $usuario->cuil; ?></td>
-              <td><?php echo $usuario->tipo_usu; ?></td>
-              <td><?php echo $usuario->nro_legajo; ?></td>
-              <td><?php echo $usuario->usuario; ?></td>
-              <td><?php echo $usuario->password; ?></td>
-              <td><?php echo $usuario->cv; ?></td>
+              <td class="text-center"><?php echo $usuario->nombre; ?></td>
+              <td class="text-center"><?php echo $usuario->apellido; ?></td>
+              <td class="text-center"><?php echo $usuario->fecha_nac; ?></td>
+              <td class="text-center"><?php echo $usuario->sexo; ?></td>
+              <td class="text-center"><?php echo $usuario->direccion; ?></td>
+              <td class="text-center"><?php echo $usuario->telefono; ?></td>
+              <td class="text-center"><?php echo $usuario->email; ?></td>
+              <td class="text-center"><?php echo $usuario->nro_dni; ?></td>
+              <td class="text-center"><?php echo $usuario->cuil; ?></td>
+              <td class="text-center"><?php echo $usuario->tipo_usu; ?></td>
+              <td class="text-center"><?php echo $usuario->nro_legajo; ?></td>
+              <td class="text-center"><?php echo $usuario->usuario; ?></td>
+              <td class="text-center"><?php echo $usuario->password; ?></td>
+              <td class="text-center"><?php echo $usuario->cv; ?></td>
               
               <td class="sticky-col actions-cell">
                 <a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>" class="btn btn-warning">Editar</a>
@@ -74,7 +74,7 @@
           <?php if ($datos['totalPaginas'] > 1): ?>
             <?php for($i = 1; $i <= $datos['totalPaginas']; $i++): ?>
               <li class="page-item <?php echo ($i == $datos['paginaActual']) ? 'active' : ''; ?>">
-                <a class="page-link" href="?entidad=usuarios&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <a class="page-link" href="<?php echo RUTA_URL; ?>/usuariocontroller/listarUsuarios?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
               </li>
             <?php endfor; ?>
           <?php endif; ?>
