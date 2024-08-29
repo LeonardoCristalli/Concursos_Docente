@@ -119,4 +119,97 @@ class Usuario {
     return $this->db->registros();
   }
 
+  public function obtenerUsuarioPorEmail($email) {
+    try {
+      $this->db->query('SELECT * FROM usuarios WHERE email = :email');
+      $this->db->bind(':email', $email);
+      $this->db->execute();
+      
+      return $this->db->registro();
+    } catch (PDOException $e) {
+        error_log('Error al obtener usuario por email: ' . $e->getMessage());
+      return null;
+    }
+  }
+
+  public function guardarTokenDeRecuperacion($idUsuario, $token) {
+    $fechaExp = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    $this->db->query("SELECT COUNT(*) as count FROM tokens_recuperacion WHERE id_usuario = :id_usuario");
+    $this->db->bind(':id_usuario', $idUsuario);
+    $row = $this->db->single();
+
+    if ($row->count > 0) {
+        $this->db->query("UPDATE tokens_recuperacion 
+                          SET token = :token, fecha_creacion = GETDATE(), fecha_exp = :fecha_exp 
+                          WHERE id_usuario = :id_usuario");
+    } else {
+        $this->db->query("INSERT INTO tokens_recuperacion (id_usuario, token, fecha_creacion, fecha_exp) 
+                          VALUES (:id_usuario, :token, GETDATE(), :fecha_exp)");
+    }
+
+    $this->db->bind(':id_usuario', $idUsuario);
+    $this->db->bind(':token', $token);
+    $this->db->bind(':fecha_exp', $fechaExp);
+
+    if ($this->db->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  public function obtenerUsuarioPorToken($token) {
+    try {
+      $this->db->query('SELECT id_usuario FROM tokens_recuperacion WHERE token = :token AND fecha_exp > GETDATE()');
+
+      $this->db->bind(':token', $token);
+      $tokenData = $this->db->registro();
+
+      if (!$tokenData) {
+        return null;
+      }
+
+      $idUsuario = $tokenData->id_usuario;
+
+      $this->db->query('SELECT * FROM usuarios WHERE id = :id');
+      $this->db->bind(':id', $idUsuario);
+
+      $usuario = $this->db->registro();
+
+      return $usuario;
+
+    } catch (PDOException $e) {
+      error_log('Error al obtener usuario por token: ' . $e->getMessage());
+      return null;
+    }
+  }
+
+  public function actualizarPW($token, $nuevaPassword) {
+    try {
+      $this->db->query('SELECT id_usuario FROM tokens_recuperacion WHERE token = :token AND fecha_exp > GETDATE()');
+      $this->db->bind(':token', $token);
+      $tokenData = $this->db->registro();
+
+      if (!$tokenData) {
+        return false;
+      }
+
+      $idUsuario = $tokenData->id_usuario;
+
+      $this->db->query('UPDATE usuarios SET password = :password WHERE id = :id');
+      $this->db->bind(':id', $idUsuario);
+      $this->db->bind(':password', $nuevaPassword);
+
+      if ($this->db->execute()) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (PDOException $e) {
+      error_log('Error al actualizar la contraseña: ' . $e->getMessage());
+      return false;
+    }
+  }
+
 }

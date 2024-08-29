@@ -222,4 +222,8 @@ class Paginas extends Controlador {
     $this->vista('paginas/contacto');
    }
 
+   public function recuperarPW() {
+    $this->vista('paginas/forgotPW');
+   }
+
 }
