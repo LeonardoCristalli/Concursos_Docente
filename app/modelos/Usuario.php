@@ -140,9 +140,9 @@ class Usuario {
     $row = $this->db->single();
 
     if ($row->count > 0) {
-        $this->db->query("UPDATE tokens_recuperacion 
-                          SET token = :token, fecha_creacion = GETDATE(), fecha_exp = :fecha_exp 
-                          WHERE id_usuario = :id_usuario");
+      $this->db->query("UPDATE tokens_recuperacion 
+                        SET token = :token, fecha_creacion = GETDATE(), fecha_exp = :fecha_exp 
+                        WHERE id_usuario = :id_usuario");
     } else {
         $this->db->query("INSERT INTO tokens_recuperacion (id_usuario, token, fecha_creacion, fecha_exp) 
                           VALUES (:id_usuario, :token, GETDATE(), :fecha_exp)");
@@ -152,11 +152,8 @@ class Usuario {
     $this->db->bind(':token', $token);
     $this->db->bind(':fecha_exp', $fechaExp);
 
-    if ($this->db->execute()) {
-        return true;
-    } else {
-        return false;
-    }
+
+    return $this->db->execute();
   }
 
   public function obtenerUsuarioPorToken($token) {

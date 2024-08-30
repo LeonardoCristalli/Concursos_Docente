@@ -48,12 +48,11 @@ class Base {
   public function execute() {
     try {
       return $this->stmt->execute();
-    }
-    
-    catch (PDOException $e) {
-      echo "Error PDO: " . $e->getMessage();
+    } catch (PDOException $e) {
+      error_log("Error PDO: " . $e->getMessage());
+      echo "Error en la consulta: " . $this->stmt->queryString;
       throw $e;
-      }
+    }
   }
   
   public function registros() {

@@ -5,7 +5,7 @@
 
 <main class="main-container w-100 m-auto d-flex flex-column align-items-center">
   <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-    <form action="<?php echo RUTA_URL;?>/logincontroller/forgotpassword" method="POST" class="form-forgot-password">
+    <form action="<?php echo RUTA_URL;?>/logincontroller/forgotpw" method="POST" class="form-forgot-password">
       <h1 class="h4 mb-4 text-center">Recuperar Contraseña</h1>
 
       <div class="form-floating mb-3">
