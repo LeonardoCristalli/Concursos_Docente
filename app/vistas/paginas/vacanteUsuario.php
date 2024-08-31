@@ -97,7 +97,6 @@
         var toastMessage = document.getElementById('toast-message');
         var closeToast = document.querySelector('.close-toast');
 
-        // Función para mostrar el toast
         function showToast(message) {
             toastMessage.textContent = message;
             toast.style.display = 'block';
@@ -106,20 +105,22 @@
             }, 3000); // El toast se ocultará después de 3 segundos
         }
 
-        // Evento para cerrar el toast
         closeToast.addEventListener('click', function () {
             toast.style.display = 'none';
         });
 
-        <?php if(isset($datos)): ?>
-            if(<?php echo json_encode($datos['toast']); ?> === 'error') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const toastParam = urlParams.get('toast');
+
+        if (toastParam) {
+            if (toastParam === 'error') {
                 showToast('¡Error! Necesitas cargar un CV.');
-            } else if (<?php echo json_encode($datos['toast']); ?> === 'exito') {
+            } else if (toastParam === 'exito') {
                 showToast('¡Inscripción exitosa!');
-            } else if (<?php echo json_encode($datos['toast']); ?> === 'yaInscripto') {
+            } else if (toastParam === 'yaInscripto') {
                 showToast('Ya se encuentra inscripto en esta vacante.');
             }
-        <?php endif; ?>
+        }
 
     });
 

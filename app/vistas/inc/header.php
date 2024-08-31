@@ -34,7 +34,7 @@
             ?>                
               <ul class="nav justify-content-center">
                 <li><a href="<?php echo RUTA_URL; ?>/index" class="nav-link text-secondary">Inicio</a></li>
-                <li><a href="<?php echo RUTA_URL; ?>/vacanteController/vacanteUsuario" class="nav-link text-white">Vacantes</a></li>
+                <li><a href="<?php echo RUTA_URL; ?>/vacantecontroller/vacanteusuario" class="nav-link text-white">Vacantes</a></li>
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/about" class="nav-link text-white">Sobre Nosotros</a></li>
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/contacto" class="nav-link text-white">Contacto</a></li>
               </ul>   

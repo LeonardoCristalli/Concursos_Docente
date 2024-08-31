@@ -155,13 +155,9 @@ class Paginas extends Controlador {
         if ($vacante_id !== null) {
 
           if ($this->inscripcionModelo->estaInscripto($usuario_id, $vacante_id)) {
-            $vacantes = $this->vacanteModelo->obtenerVacantes();
-            $datos = [
-              'vacantes' => $vacantes,
-              'toast' => 'yaInscripto',
-            ];
-
-            $this->vista('paginas/vacanteUsuario', $datos);
+            $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
+            $_SESSION['vacantes'] = $vacantes;
+            redireccionar('/vacantecontroller/vacanteusuario?toast=yaInscripto');
           } else {
             $datos = [
               'vacante_id' => $vacante_id,
@@ -170,13 +166,9 @@ class Paginas extends Controlador {
             ];
 
             if ($this->inscripcionModelo->crearInscripcion($datos)) {
-              $vacantes = $this->vacanteModelo->obtenerVacantes();
-              $datos = [
-                'vacantes' => $vacantes,
-                'toast' => 'exito',
-              ];
-
-              $this->vista('paginas/vacanteUsuario', $datos);
+              $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
+              $_SESSION['vacantes'] = $vacantes;
+              redireccionar('/vacantecontroller/vacanteusuario?toast=exito');
             } else {
               die('No se pudo crear la inscripción');
             }
@@ -191,12 +183,8 @@ class Paginas extends Controlador {
 
     } else {
       $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
-      $datos = [
-        'toast' => 'error',
-        'vacantes' => $vacantes,
-      ];
-
-      $this->vista('paginas/vacanteUsuario', $datos);
+      $_SESSION['vacantes'] = $vacantes;
+      redireccionar('/vacantecontroller/vacanteusuario?toast=error');
     }
   }
 

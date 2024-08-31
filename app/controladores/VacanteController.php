@@ -31,6 +31,7 @@ class VacanteController extends Controlador {
       ];
 
       if ($this->vacanteModelo->agregarVacante($datos)) {
+        $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
         redireccionar('/vacantecontroller/listarvacantes');
       } else {
         die ('No se pudo crear la Vacante');
