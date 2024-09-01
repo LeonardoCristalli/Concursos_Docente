@@ -119,22 +119,6 @@ class VacanteController extends Controlador {
     $this->vista('paginas/vacanteUsuario', $datos);
   }
 
-  public function cambiarEstadoVacantes() {
-    $vacantes = $this->vacanteModelo->obtenerVacantes();
-    
-    foreach ($vacantes as $vacante) {
-      if (strtotime($vacante->fecha_ini) <= strtotime('now')) {
-        $datos = [
-            'vacante_id' => $vacante->id,
-            'estado_id' => 1003, // ID del estado "Abierta"
-            'fecha_desde' => date('Y-m-d H:i:s'), 
-            'observacion' => 'La vacante ha sido abierta.',
-        ];
-        $this->vacanteModelo->agregarEstadoVacante($datos);
-      }
-    }
-  }
-
   public function listarVacantes() {
     if (session_status() == PHP_SESSION_NONE) {
       session_start();

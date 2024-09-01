@@ -393,27 +393,21 @@ class UsuarioController extends Controlador {
     session_start();
 
     $file_path = 'C:\xampp\htdocs\Concursos_Docente\public\uploads\\' . $cv;
-     echo $file_path;
-
-     $rta1 = !empty($cv);
-     
-     $rta2 = file_exists($file_path);
-     var_dump($rta1);
-     var_dump($rta2);
 
     if(!empty($cv) && file_exists($file_path)) {
-      
+      if (ob_get_length()) {
+        ob_end_clean();
+      }  
       header('Cache-Control: public');
       header('Content-Description: File Transfer');
       header('Content-Type: application/pdf');
-      header('Content-Disposition: attachment; filename="' . $cv . '"');
+      header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
       header('Content-Length: ' . filesize($file_path));
       header('Content-Transfer-Encoding: binary');
 
       readfile($file_path);
       exit;
       
-
     } else {
       echo "El archivo no existe.";
       redireccionar('/paginas/RAPanel');
