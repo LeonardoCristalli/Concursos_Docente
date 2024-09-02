@@ -1,15 +1,24 @@
 <?php 
 class UsuarioController extends Controlador {
   private $usuarioModelo;
+  private $catedraModelo;
+
 
   public function __construct() {
     $this->usuarioModelo = $this->modelo('Usuario');
+    $this->catedraModelo = $this->modelo('Catedra');
   }
 
   public function agregarUsuario() {
     session_start();
 
+    $catedras = $this->catedraModelo->obtenerCatedras();
+
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $tipo_usu = isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin') ? trim($_POST['tipo_usu']) : 'Usuario';
+      $nro_legajo = isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin') ? trim($_POST['nro_legajo']) : null;
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
@@ -21,11 +30,12 @@ class UsuarioController extends Controlador {
         'email' => trim($_POST['email']),  
         'nro_dni' => trim($_POST['nro_dni']),      
         'cuil' => trim($_POST['cuil']),                    
-        'tipo_usu' => trim($_POST['tipo_usu']),
-        'nro_legajo' => trim($_POST['nro_legajo']),
+        'tipo_usu' => $tipo_usu,
+        'nro_legajo' => $nro_legajo,
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
-        'cv' => ''
+        'cv' => '',
+        'catedra_id' => $tipo_usu === 'JC' ? $_POST['catedra_id'] : null 
       ];
 
       $datosValidados = $this->validarDatosUsuario($datos);
@@ -72,8 +82,8 @@ class UsuarioController extends Controlador {
         $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
         $datos['password'] = $passwordHash;
 
-          if ($this->usuarioModelo->agregarUsuario($datos)) {
-            
+        if ($this->usuarioModelo->agregarUsuario($datos)) {
+
           if (!isset($_SESSION['usuario_id'])) {
             redireccionar('/paginas/login');
           } else {
@@ -104,6 +114,7 @@ class UsuarioController extends Controlador {
         'usuario' => '',
         'password' => '',                  
         'cv' => '',
+        'catedras' => $catedras
       ];
 
       $this->vista('paginas/usuario/agregar', $datos);

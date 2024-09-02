@@ -14,12 +14,11 @@ class Usuario {
   }
 
   public function agregarUsuario($datos) {
-
     $this->db->query('INSERT INTO usuarios (nombre, apellido, fecha_nac, sexo, direccion, telefono, nro_dni, email, 
-                                                cuil, tipo_usu, nro_legajo, usuario, password, cv) 
+                                  cuil, tipo_usu, nro_legajo, usuario, password, cv) 
                       VALUES (:nombre, :apellido, :fecha_nac, :sexo, :direccion, :telefono, :nro_dni, :email, :cuil, 
-                                    :tipo_usu, :nro_legajo, :usuario, :password, :cv)');
-
+                              :tipo_usu, :nro_legajo, :usuario, :password, :cv)');
+    
     $this->db->bind(':nombre', $datos['nombre']);
     $this->db->bind(':apellido', $datos['apellido']);
     $this->db->bind(':fecha_nac', $datos['fecha_nac']);
@@ -31,14 +30,34 @@ class Usuario {
     $this->db->bind(':cuil', $datos['cuil']);
     $this->db->bind(':tipo_usu', $datos['tipo_usu']);
     $this->db->bind(':nro_legajo', $datos['nro_legajo']);
-    $this->db->bind(':usuario', $datos['usuario']);   
-    $this->db->bind(':password', $datos['password']);  
+    $this->db->bind(':usuario', $datos['usuario']);
+    $this->db->bind(':password', $datos['password']);
     $this->db->bind(':cv', $datos['cv']);
 
     if ($this->db->execute()) {
-      return true;
+
+      $pdo = $this->db->obtenerConexionPDO();
+      $usuario_id = $pdo->lastInsertId();
+
+      if ($datos['tipo_usu'] === 'JC') {
+        $catedra_id = $datos['catedra_id'];
+        $fecha_desde = date('Y-m-d');  
+
+        $this->db->query('INSERT INTO jefes_catedras (catedra_id, usuario_id, fecha_desde) 
+                          VALUES (:catedra_id, :usuario_id, :fecha_desde)');
+
+        $this->db->bind(':catedra_id', $catedra_id);
+        $this->db->bind(':usuario_id', $usuario_id);
+        $this->db->bind(':fecha_desde', $fecha_desde);
+
+        if (!$this->db->execute()) {
+          return false;  
+        }        
+      }
+      
+      return true;  
     } else {
-      return false;
+      return false;  
     }
   }
 

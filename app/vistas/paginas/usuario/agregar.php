@@ -94,7 +94,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <fieldset>
               <legend>Detalles de Usuario</legend>
 
@@ -110,31 +110,50 @@
                   La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
                 </div>
               </div>
-
             </fieldset>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-3">
             <fieldset>
               <legend>Otros Detalles</legend>
 
-              <div class="form-group mb-3">
-                <label for="tipo_usu" class="form-label">Tipo de Usuario: </label>
-                <input type="text" id="tipo_usu" name="tipo_usu" class="form-control">
-              </div>
+              <?php if (isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin')): ?>
+                <div class="form-group mb-3">
+                  <label for="tipo_usu" class="form-label">Tipo de Usuario: </label>
+                  <select id="tipo_usu" name="tipo_usu" class="form-select" onchange="mostrarCatedra(this.value)">
+                    <option value="" disabled selected></option>
+                    <option value="Usuario">Usuario</option>
+                    <option value="JC">Jefe de Cátedra</option>
+                    <option value="RA">Responsable Académico</option>
+                    <option value="Admin">Administrador</option>
+                  </select>
+                </div>
 
-              <div class="form-group mb-3">
-                <label for="nro_legajo" class="form-label">Número de Legajo: </label>
-                <input type="text" id="nro_legajo" name="nro_legajo" class="form-control">
-              </div>
+                <div class="form-group mb-3" id="catedraSelect" style="display:none;">
+                  <label for="catedra_id" class="form-label">Cátedra:</label>
+                  <select id="catedra_id" name="catedra_id" class="form-select">
+                    <option value="" disabled selected></option>
+                    <?php foreach($datos['catedras'] as $catedra): ?>
+                      <option value="<?php echo $catedra->id; ?>"><?php echo $catedra->nombre; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
 
-              <div class="form-group mb-3">
-                <label for="cv" class="form-label">CV:</label>
-                <input type="file" id="cv" name="cv" class="form-control">
-              </div>  
-
+                <div class="form-group mb-3">
+                  <label for="nro_legajo" class="form-label">Número de Legajo: </label>
+                  <input type="text" id="nro_legajo" name="nro_legajo" class="form-control">
+                </div>
+              <?php endif; ?>               
             </fieldset>
           </div>
+
+          <div class="col-md-5">
+            <div class="form-group mb-3">
+              <label for="cv" class="form-label">CV:</label>
+              <input type="file" id="cv" name="cv" class="form-control">
+            </div>    
+          <div>
+
         </div>
         
         <div class="d-flex justify-content-end mt-3">
@@ -144,5 +163,21 @@
     </div>
   </div>
 </main>
+
+<script>
+  function mostrarCatedra(tipoUsuario) {
+    var catedraSelect = document.getElementById('catedraSelect');
+    if(tipoUsuario === 'JC') {
+      catedraSelect.style.display = 'block';
+    } else {
+      catedraSelect.style.display = 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var tipoUsuario = document.getElementById('tipo_usu').value;
+    mostrarCatedra(tipoUsuario);
+  });
+</script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>
