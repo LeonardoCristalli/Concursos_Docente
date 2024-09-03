@@ -190,28 +190,39 @@ class Paginas extends Controlador {
 
   public function RAPanel() {
     session_start();
+    $tipoUsuario = $_SESSION['tipo_usu'];
+    $usuarioId = $_SESSION['usuario_id'];
 
-    if (!isset($_SESSION['vacantesDetalles'])) {
-      $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
+    if ($tipoUsuario === 'RA') {
+      if (!isset($_SESSION['vacantesDetalles'])) {
+        $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
+      }      
+    } elseif ($tipoUsuario === 'JC') {
+      if (!isset($_SESSION['vacantesDetalles'])) {
+        $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
+      }
+    } else {
+      redireccionar('/paginas/index');
     }
 
     $this->vista('paginas/RAPanel');
   }
 
-   public function about() {
+  public function about() {
     session_start();
 
     $this->vista('paginas/about');
-   }
+  }
 
-   public function contacto() {
+  public function contacto() {
     session_start();
 
     $this->vista('paginas/contacto');
-   }
+  }
 
-   public function recuperarPW() {
+  public function recuperarPW() {
     $this->vista('paginas/forgotPW');
-   }
+  }
+
 
 }

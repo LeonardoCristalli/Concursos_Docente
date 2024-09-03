@@ -30,7 +30,7 @@ class LoginController extends Controlador {
                 redireccionar('/paginas/RAPanel');
               break;
               case 'JC':
-                redireccionar('/paginas/adminPanel');
+                redireccionar('/paginas/RAPanel');
               break;
               default:
                 redireccionar('/paginas/index');

@@ -124,7 +124,7 @@
                     <option value="" disabled selected></option>
                     <option value="Usuario">Usuario</option>
                     <option value="JC">Jefe de Cátedra</option>
-                    <option value="RA">Responsable Académico</option>
+                    <option value="RA">Responsable Administrativo</option>
                     <option value="Admin">Administrador</option>
                   </select>
                 </div>

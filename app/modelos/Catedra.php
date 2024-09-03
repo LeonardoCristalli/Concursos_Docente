@@ -96,4 +96,17 @@ class Catedra {
     return $this->db->registros();
   }
 
+  public function obtenerCatedrasPorUsuarioId($usuarioId) {
+    $this->db->query('SELECT c.*
+                      FROM catedras c
+                      INNER JOIN jefes_catedras jc 
+                        ON c.id = jc.catedra_id
+                      WHERE jc.usuario_id = :usuario_id');
+
+    $this->db->bind(':usuario_id', $usuarioId);
+    
+    $resultados = $this->db->registros();
+    return $resultados;
+  }
+  
 }

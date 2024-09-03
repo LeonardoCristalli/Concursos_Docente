@@ -75,7 +75,7 @@
   <div class="row">
     <div class="col-2 offset-10">
       <div>
-        <a href="<?php echo RUTA_URL; ?>/vacantecontroller/agregarVacante" class="btn btn-primary w-100">Agregar Vacante</a>
+        <a href="<?php echo RUTA_URL; ?>/vacantecontroller/agregarvacante" class="btn btn-primary w-100">Agregar Vacante</a>
       </div>
     </div>
   </div>

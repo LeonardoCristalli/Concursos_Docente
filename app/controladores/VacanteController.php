@@ -2,9 +2,11 @@
 
 class VacanteController extends Controlador {
   private $vacanteModelo; 
+  private $catedraModelo; 
 
   public function __construct() {
     $this->vacanteModelo = $this->modelo('Vacante');
+    $this->catedraModelo = $this->modelo('Catedra');
   }
 
   public function agregarVacante() {
@@ -38,19 +40,31 @@ class VacanteController extends Controlador {
       }          
     } else {
       
-      $datos = [
-        'descrip' => '', 
-        'fecha_ini' => '',
-        'fecha_fin' => '',
-        'req' => '',
-        'tiempo' => '',
-        'exp' => '',  
-        'estado_id' => '',
-        'catedra_id' => '',
-      ];
+      $tipoUsuario = $_SESSION['tipo_usu'];
+      $usuarioId = $_SESSION['usuario_id'];
 
-      $this->vista('paginas/vacante/agregar', $datos);
-    }
+      if ($tipoUsuario === 'Admin' || $tipoUsuario === 'RA') {
+        $catedras = $this->catedraModelo->obtenerCatedras();
+      } elseif ($tipoUsuario === 'JC') {
+        $catedras = $this->catedraModelo->obtenerCatedrasPorUsuarioId($usuarioId);
+      } else {
+        redireccionar('/paginas/index'); 
+      }
+
+        $datos = [
+          'descrip' => '', 
+          'fecha_ini' => '',
+          'fecha_fin' => '',
+          'req' => '',
+          'tiempo' => '',
+          'exp' => '',  
+          'estado_id' => '',
+          'catedra_id' => '',
+          'catedras' => $catedras 
+        ];
+
+        $this->vista('paginas/vacante/agregar', $datos);
+      }
   }
 
   public function editarVacante($id) {

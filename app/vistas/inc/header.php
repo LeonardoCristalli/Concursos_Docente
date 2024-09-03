@@ -47,7 +47,7 @@
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/RAPanel" class="nav-link text-white">Inscripciones</a></li>                  
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/irAlCRUD?entidad=vacantes" class="nav-link text-white">Vacantes</a></li>
                 <li><a href="#" class="nav-link text-white">Usuarios</a></li>
-              </ul>     
+              </ul>
 
             <?php break;
               case 'JC':
@@ -55,8 +55,6 @@
               <ul class="nav justify-content-center">
                 <li><a href="<?php echo RUTA_URL; ?>/index" class="nav-link text-secondary">Inicio</a></li>
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/RAPanel" class="nav-link text-white">Vacantes</a></li>
-                <li><a href="#" class="nav-link text-white">Usuarios</a></li>
-                <li><a href="#" class="nav-link text-white">Otro</a></li>
               </ul>  
 
             <?php break;

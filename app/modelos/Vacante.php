@@ -149,4 +149,30 @@ class Vacante {
 
     return $this->db->registros();
   }
+
+  public function obtenerVacantesPorUsuarioId($usuarioId) {
+    $this->db->query("SELECT v.*, c.nombre AS nombre_catedra, e.descrip AS estado_descrip
+                      FROM vacantes v
+                      INNER JOIN catedras c 
+                        ON v.catedra_id = c.id
+                      INNER JOIN jefes_catedras jc 
+                        ON c.id = jc.catedra_id
+                      INNER JOIN vacantes_estados ve 
+                        ON v.id = ve.vacante_id
+                      INNER JOIN estados e 
+                        ON ve.estado_id = e.id
+                      INNER JOIN (
+                        SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
+                        FROM vacantes_estados
+                        GROUP BY vacante_id
+                      ) ve_max 
+                        ON ve.vacante_id = ve_max.vacante_id 
+                        AND ve.fecha_desde = ve_max.max_fecha_desde
+                      WHERE jc.usuario_id = :usuario_id");
+
+    $this->db->bind(':usuario_id', $usuarioId);
+    $resultados = $this->db->registros();
+    
+    return $resultados;
+  }
 }

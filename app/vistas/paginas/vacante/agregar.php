@@ -4,7 +4,6 @@
 ?>
 
 <main class="main-container w-100 m-auto">
-
   <div class="row mb-4 g-0">
 
     <div class="col-md-1">
@@ -12,10 +11,12 @@
     </div>
 
     <div class="col-md-11">
+
       <h2 class="mt-3 mb-4">Crear Vacante</h2>
       <form action="<?php echo RUTA_URL;?>/vacanteController/agregarVacante" method="POST">
-        <div class="row">
-          <div class="col-md-6">
+        <div class="row justify-content-center">
+
+          <div class="col-md-5">
 
             <div class="form-group mb-3">
               <label for="descrip" class="form-label">Descripción: <sup>*</sup></label>
@@ -43,7 +44,7 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-5">
 
             <div class="form-group mb-3">
               <label for="exp" class="form-label">Experiencia:<sup>*</sup></label>
@@ -52,7 +53,12 @@
 
             <div class="form-group mb-3">
               <label for="catedra_id" class="form-label">Catedra:<sup>*</sup></label>
-              <input type="number" id="catedra_id" name="catedra_id" class="form-control form-control-lg"></input>
+              <select id="catedra_id" name="catedra_id" class="form-select">
+                <option value="" disabled selected></option>
+                <?php foreach($datos['catedras'] as $catedra): ?>
+                  <option value="<?php echo $catedra->id; ?>"><?php echo $catedra->nombre; ?></option>                
+                <?php endforeach; ?>
+              </select>
             </div>
 
             <input type="hidden" name="fecha_desde" value="<?php echo date('Y-m-d'); ?>">
