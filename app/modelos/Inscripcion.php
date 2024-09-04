@@ -96,5 +96,12 @@ class Inscripcion {
     return $resultados;
   }
 
+  public function asignarPuntaje($vacanteId, $usuarioId, $puntaje) {
+    $this->db->query('UPDATE inscripciones SET puntaje = :puntaje WHERE vacante_id = :vacante_id AND usuario_id = :usuario_id');
+    $this->db->bind(':puntaje', $puntaje);
+    $this->db->bind(':vacante_id', $vacanteId);
+    $this->db->bind(':usuario_id', $usuarioId);
+
+    return $this->db->execute();
+  }
 }
-?>

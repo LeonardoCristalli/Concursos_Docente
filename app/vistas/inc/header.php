@@ -55,6 +55,7 @@
               <ul class="nav justify-content-center">
                 <li><a href="<?php echo RUTA_URL; ?>/index" class="nav-link text-secondary">Inicio</a></li>
                 <li><a href="<?php echo RUTA_URL; ?>/paginas/RAPanel" class="nav-link text-white">Vacantes</a></li>
+                <li><a href="<?php echo RUTA_URL; ?>/paginas/OMPanel" class="nav-link text-white">Orden de Mérito</a></li>
               </ul>  
 
             <?php break;

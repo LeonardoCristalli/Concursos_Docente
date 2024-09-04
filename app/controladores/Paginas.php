@@ -223,6 +223,21 @@ class Paginas extends Controlador {
   public function recuperarPW() {
     $this->vista('paginas/forgotPW');
   }
+  
+  public function OMPanel() {
+    session_start();
+    $usuarioId = $_SESSION['usuario_id'];
+    $vacantes = $_SESSION['vacantesDetalles'];
 
+    foreach ($vacantes as $vacante) {
+      $vacante->inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante->id);
+    }
+
+    $datos = [
+      'vacantes' => $vacantes
+    ];
+
+    $this->vista('paginas/OMPanel', $datos);
+  }
 
 }

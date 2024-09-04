@@ -2,9 +2,11 @@
 
 class InscripcionController extends Controlador {
   private $inscripcionModelo;
+  private $vacanteModelo;
 
   public function __construct() {
     $this->inscripcionModelo = $this->modelo('Inscripcion');
+    $this->vacanteModelo = $this->modelo('Vacante');
   }
 
   public function agregarInscripcion() {
@@ -108,5 +110,44 @@ class InscripcionController extends Controlador {
 
     $this->vista('paginas/RAPanel', $datos);
   }
+  
+  public function asignarPuntajes() {
+    session_start();
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $vacanteId = $_POST['vacante_id'];
+      $puntajes = $_POST['puntajes'];
+
+      foreach ($puntajes as $usuarioId => $puntaje) {          
+        if (!$this->inscripcionModelo->asignarPuntaje($vacanteId, $usuarioId, $puntaje)) {
+          die('Algo salió mal al asignar el puntaje');
+        }
+      }
+
+      $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
+      redireccionar('/paginas/OMPanel');
+    } else {
+      redireccionar('/paginas/index');
+    }
+  }
+
+  public function obtenerDetallesParaOMPanel($vacante_id) {
+    session_start();
+
+    $vacante = $this->vacanteModelo->obtenerVacanteId($vacante_id);
+    $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
+
+    if (!$vacante) {
+      die('Vacante no encontrada.');
+    }
+
+    $datos = [
+      'vacante_id' => $vacante_id,
+      'vacante_nombre' => $vacante->descrip,
+      'inscripciones' => $inscripciones, 
+    ];
+
+    $this->vista('paginas/OMPanel', $datos);
+  }
+
 }
-?>
