@@ -226,7 +226,7 @@ class Vacante {
                         GROUP BY vacante_id
                       ) ve_max 
                         ON ve.vacante_id = ve_max.vacante_id AND ve.fecha_desde = ve_max.max_fecha_desde
-                      WHERE v.fecha_ini < :hoy AND ve.estado_id = 1002');
+                      WHERE v.fecha_ini <= :hoy AND ve.estado_id = 1002');
 
     $this->db->bind(':hoy', $hoy);
     $vacantesNuevas = $this->db->registros();
@@ -261,7 +261,7 @@ class Vacante {
                         GROUP BY vacante_id
                       ) ve_max 
                         ON ve.vacante_id = ve_max.vacante_id AND ve.fecha_desde = ve_max.max_fecha_desde
-                      WHERE v.fecha_fin <= :hoy AND ve.estado_id = 2');
+                      WHERE v.fecha_fin < :hoy AND ve.estado_id = 2');
 
     $this->db->bind(':hoy', $hoy);
     $vacantesAbiertas = $this->db->registros();
