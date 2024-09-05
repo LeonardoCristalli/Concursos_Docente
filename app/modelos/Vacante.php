@@ -83,6 +83,12 @@ class Vacante {
       $this->db->bind(':observacion', $datos['observacion']);
 
       if($this->db->execute()) {
+        if (!empty($datos['fecha_fin']) && $datos['fecha_fin'] < date('Y-m-d')) {
+          $this->db->query('INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) VALUES (:vacante_id, 3, :fecha_fin)'); 
+          $this->db->bind(':vacante_id', $vacante_id);
+          $this->db->bind(':fecha_fin', $datos['fecha_fin']);
+          $this->db->execute();
+        }
         return true;
       } else {
         return false;
@@ -93,7 +99,11 @@ class Vacante {
   }
 
   public function obtenerVacanteId($id) {
-    $this->db->query('SELECT * FROM vacantes WHERE id = :id');
+    $this->db->query('SELECT v.*, c.nombre AS nombre_catedra 
+                      FROM vacantes v 
+                      INNER JOIN catedras c 
+                        ON v.catedra_id = c.id
+                      WHERE v.id = :id');
     $this->db->bind(':id', $id);
 
     $fila = $this->db->registro();
@@ -143,7 +153,14 @@ class Vacante {
 
   public function obtenerVacantesPaginados($pagina, $registrosPorPagina) {
     $inicio = ($pagina - 1) * $registrosPorPagina;
-    $this->db->query("SELECT * FROM vacantes ORDER BY id OFFSET :inicio ROWS FETCH NEXT :registrosPorPagina ROWS ONLY");    
+    $sql = "SELECT v.id, v.descrip, v.fecha_ini, v.fecha_fin, v.req, v.tiempo, v.exp, c.nombre as catedra_nombre
+            FROM vacantes v
+            INNER JOIN catedras c 
+              ON v.catedra_id = c.id
+            ORDER BY v.id
+            OFFSET :inicio ROWS FETCH NEXT :registrosPorPagina ROWS ONLY";
+
+    $this->db->query($sql);
     $this->db->bind(':inicio', $inicio, PDO::PARAM_INT);
     $this->db->bind(':registrosPorPagina', $registrosPorPagina, PDO::PARAM_INT);
 
@@ -195,4 +212,77 @@ class Vacante {
     $this->db->bind(':usuario_id', $usuarioId);
     return $this->db->registros();
   }
+
+  public function actualizarVacantesAbiertas() {
+    $hoy = date('Y-m-d');
+
+    $this->db->query('SELECT v.id 
+                      FROM vacantes v
+                      INNER JOIN vacantes_estados ve 
+                        ON v.id = ve.vacante_id
+                      INNER JOIN (
+                        SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
+                        FROM vacantes_estados
+                        GROUP BY vacante_id
+                      ) ve_max 
+                        ON ve.vacante_id = ve_max.vacante_id AND ve.fecha_desde = ve_max.max_fecha_desde
+                      WHERE v.fecha_ini < :hoy AND ve.estado_id = 1002');
+
+    $this->db->bind(':hoy', $hoy);
+    $vacantesNuevas = $this->db->registros();
+
+    foreach ($vacantesNuevas as $vacante) {
+      $this->db->query('SELECT COUNT(*) AS count FROM vacantes_estados WHERE vacante_id = :vacante_id AND estado_id = 2 AND fecha_desde = :hoy');
+      $this->db->bind(':vacante_id', $vacante->id);
+      $this->db->bind(':hoy', $hoy);
+      $count = $this->db->registro()->count;
+
+      if ($count == 0) {
+        $this->db->query('INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) VALUES (:vacante_id, 2, :hoy)');
+        $this->db->bind(':vacante_id', $vacante->id);
+        $this->db->bind(':hoy', $hoy);
+        $this->db->execute();
+      }
+    }
+
+    return true;
+  }
+
+  public function actualizarVacantesCerradas() {
+    $hoy = date('Y-m-d');
+
+    $this->db->query('SELECT v.id 
+                      FROM vacantes v
+                      INNER JOIN vacantes_estados ve 
+                        ON v.id = ve.vacante_id
+                      INNER JOIN (
+                        SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
+                        FROM vacantes_estados
+                        GROUP BY vacante_id
+                      ) ve_max 
+                        ON ve.vacante_id = ve_max.vacante_id AND ve.fecha_desde = ve_max.max_fecha_desde
+                      WHERE v.fecha_fin <= :hoy AND ve.estado_id = 2');
+
+    $this->db->bind(':hoy', $hoy);
+    $vacantesAbiertas = $this->db->registros();
+
+      
+    foreach ($vacantesAbiertas as $vacante) {
+       
+      $this->db->query('SELECT COUNT(*) AS count FROM vacantes_estados WHERE vacante_id = :vacante_id AND estado_id = 3 AND fecha_desde = :hoy');
+      $this->db->bind(':vacante_id', $vacante->id);
+      $this->db->bind(':hoy', $hoy);
+      $count = $this->db->registro()->count;
+
+      if ($count == 0) {
+        $this->db->query('INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) VALUES (:vacante_id, 3, :hoy)');
+        $this->db->bind(':vacante_id', $vacante->id);
+        $this->db->bind(':hoy', $hoy);
+        $this->db->execute();
+      }
+    }
+
+    return true;
+  }
+  
 }

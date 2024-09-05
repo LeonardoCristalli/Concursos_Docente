@@ -5,7 +5,6 @@
 
 <main class="main-container w-100 m-auto">
   <div class="row">
-    <!-- Sección de Vacantes -->
     <div class="col-md-4">
       <h2>Vacantes</h2>
       <table class="table table-striped table-hover table-sm">
@@ -14,6 +13,7 @@
             <th scope="col">#</th>
             <th scope="col">Cátedra</th>  
             <th scope="col">Estado</th>
+            <th scope="col">Acciones</th> 
           </tr>              
         </thead>  
         <tbody>
@@ -22,32 +22,35 @@
             <?php foreach($_SESSION['vacantesDetalles'] as $vacanteDetalle) : ?>
               <tr>
                 <th scope="row"><?php echo $cont++; ?></th>
-                <td>
-                  <!-- Enlace para gestionar la vacante -->
-                  <a href="<?php echo RUTA_URL . '/inscripcionController/obtenerDetallesParaOMPanel/' . $vacanteDetalle->id; ?>" class="btn btn-primary btn-sm">
-                    Gestionar Vacante
-                  </a>
-                </td>
+                <td><?php echo $vacanteDetalle->nombre_catedra; ?></td> 
                 <td><?php echo $vacanteDetalle->estado_descrip; ?></td>
+                <td>
+                  <a href="<?php echo RUTA_URL . '/inscripcionController/obtenerDetallesParaOMPanel/' . $vacanteDetalle->id; ?>" class="btn btn-primary btn-sm">Gestionar Vacante</a>
+                </td> 
               </tr>
             <?php endforeach; ?>
           <?php else : ?>
-            <tr>
-              <td colspan="3">No hay vacantes disponibles.</td>
-            </tr>
+            <tr><td colspan="4">No hay vacantes disponibles.</td></tr> 
           <?php endif; ?>
         </tbody>
       </table>
     </div>
 
-    <!-- Sección de Inscripciones y Asignación de Puntajes -->
     <div class="col-md-8">
       <?php if (isset($datos['inscripciones']) && !empty($datos['inscripciones'])) : ?>
+        <div class="d-flex justify-content-between mb-3">
+          <h2>Inscripciones para la vacante <?php echo $datos['vacante_descrip']; ?></h2> 
+          <div class="p-3 mb-2 bg-light rounded shadow-sm">
+            <h5 class="mb-1">Cátedra: <?php echo $datos['nombre_catedra']; ?></h5>
+            <p class="mb-1">Fecha de Inicio: <?php echo $datos['fecha_ini']; ?></p>
+            <p class="mb-1">Fecha de Cierre: <?php echo $datos['fecha_fin']; ?></p>
+            <p class="mb-1">Requerimientos: <?php echo $datos['req']; ?></p>
+          </div>
+        </div>
+
         <div class="table-responsive" id="inscripciones-vacante">
-          <h2>Inscripciones para <?php echo $datos['vacante_nombre']; ?></h2>
           <form action="<?php echo RUTA_URL; ?>/inscripcionController/asignarPuntajes" method="POST">
             <input type="hidden" name="vacante_id" value="<?php echo $datos['vacante_id']; ?>">
-
             <table class="table table-striped table-hover table-sm">
               <thead class="thead-dark">
                 <tr>
@@ -97,8 +100,6 @@
   function actualizarOpciones() {
     const totalInscripciones = <?php echo count($datos['inscripciones']); ?>;
     let valoresSeleccionados = [];
-
-    // Recoge los valores seleccionados
     for (let i = 1; i <= totalInscripciones; i++) {
       let select = document.getElementById('puntaje_' + i);
       if (select) {
@@ -109,7 +110,6 @@
       }
     }
 
-    // Actualiza las opciones disponibles en cada select
     for (let i = 1; i <= totalInscripciones; i++) {
       let select = document.getElementById('puntaje_' + i);
       if (select) {
@@ -122,7 +122,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    actualizarOpciones(); // Inicializa el formulario con las opciones correctas
+    actualizarOpciones();
   });
 </script>
 

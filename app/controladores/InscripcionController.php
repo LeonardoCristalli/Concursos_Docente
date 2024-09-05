@@ -142,9 +142,13 @@ class InscripcionController extends Controlador {
     }
 
     $datos = [
+      'vacante_descrip' => $vacante->descrip,
+      'inscripciones' => $inscripciones,
       'vacante_id' => $vacante_id,
-      'vacante_nombre' => $vacante->descrip,
-      'inscripciones' => $inscripciones, 
+      'nombre_catedra' => $vacante->nombre_catedra, 
+      'fecha_ini' => $vacante->fecha_ini,
+      'fecha_fin' => $vacante->fecha_fin,
+      'req' => $vacante->req
     ];
 
     $this->vista('paginas/OMPanel', $datos);

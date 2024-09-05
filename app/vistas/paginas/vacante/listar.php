@@ -27,7 +27,7 @@
               <th class="text-center">Requerimientos</th>
               <th class="text-center">Duración</th>
               <th class="text-center">Experiencia</th>
-              <th class="text-center">Cátedra Id</th>        
+              <th class="text-center">Cátedra</th>        
               <th class="text-center sticky-col" colpasn="2">Acciones</th>
             </tr>              
           </thead>  
@@ -41,7 +41,7 @@
               <td class="text-center"><?php echo $vacante->req; ?></td>
               <td class="text-center"><?php echo $vacante->tiempo; ?></td>
               <td class="text-center"><?php echo $vacante->exp; ?></td>
-              <td class="text-center"><?php echo $vacante->catedra_id; ?></td>
+              <td class="text-center"><?php echo $vacante->catedra_nombre; ?></td>
               <td class="sticky-col actions-cell">
                 <a href="<?php echo RUTA_URL; ?>/vacantecontroller/editarVacante/<?php echo $vacante->id; ?>" class="btn btn-warning">Editar</a>
                 <form action="<?php echo RUTA_URL;?>/vacantecontroller/borrarVacante/<?php echo $vacante->id; ?>" method="POST">

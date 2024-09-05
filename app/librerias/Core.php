@@ -6,6 +6,8 @@
 
     public function __construct() {
 
+      $this->actualizarEstadosVacantes();
+
       $url = $this->getUrl();
 
       if (!empty($url)) {        
@@ -40,5 +42,12 @@
       } else {
         return [];
       }
+    }
+
+    public function actualizarEstadosVacantes() {
+      require_once '../app/modelos/Vacante.php';
+      $vacanteModelo = new Vacante();
+      $vacanteModelo->actualizarVacantesAbiertas();
+      $vacanteModelo->actualizarVacantesCerradas();
     }
   }
