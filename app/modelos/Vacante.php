@@ -120,7 +120,7 @@ class Vacante {
     $this->db->bind(':id', $datos['id']);
     $this->db->bind(':descrip', $datos['descrip']);
     $this->db->bind(':fecha_ini', $datos['fecha_ini']);
-    $this->db->bind(':fecha_fin', isset($datos['fecha_fin']) ? $datos['fecha_fin'] : null, PDO::PARAM_NULL);
+    $this->db->bind(':fecha_fin', $datos['fecha_fin']);
     $this->db->bind(':req', $datos['req']);
     $this->db->bind(':tiempo', $datos['tiempo']);
     $this->db->bind(':exp', $datos['exp']);
@@ -194,7 +194,7 @@ class Vacante {
   }
 
   public function obtenerVacantesCerradasPorUsuarioId($usuarioId) {
-    $this->db->query("SELECT v.*, c.nombre AS nombre_catedra 
+    $this->db->query("SELECT v.*, c.nombre AS nombre_catedra, e.descrip AS estado_descrip
                       FROM vacantes v 
                       INNER JOIN catedras c 
                         ON v.catedra_id = c.id
@@ -202,6 +202,8 @@ class Vacante {
                         ON c.id = jc.catedra_id
                       INNER JOIN vacantes_estados ve 
                         ON v.id = ve.vacante_id
+                      INNER JOIN estados e 
+                        ON ve.estado_id = e.id
                       INNER JOIN (
                         SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
                         FROM vacantes_estados
@@ -251,7 +253,7 @@ class Vacante {
   public function actualizarVacantesCerradas() {
     $hoy = date('Y-m-d');
 
-    $this->db->query('SELECT v.id 
+    $this->db->query('SELECT v.id, v.catedra_id, v.descrip
                       FROM vacantes v
                       INNER JOIN vacantes_estados ve 
                         ON v.id = ve.vacante_id
@@ -282,7 +284,52 @@ class Vacante {
       }
     }
 
-    return true;
+    return $vacantesAbiertas;
   }
   
+  public function obtenerEmailJefeCatedra($catedraId) {
+    $this->db->query('SELECT u.email 
+                      FROM jefes_catedras jc
+                      INNER JOIN usuarios u 
+                        ON jc.usuario_id = u.id 
+                      WHERE jc.catedra_id = :catedra_id');
+    $this->db->bind(':catedra_id', $catedraId);
+    $result = $this->db->registro();
+    return $result ? $result->email : null;
+  }
+
+  public function obtenerVacantesCerradasPorCatedraId($catedraId) {
+    $this->db->query("SELECT v.*, c.nombre AS nombre_catedra 
+                      FROM vacantes v 
+                      INNER JOIN catedras c ON v.catedra_id = c.id
+                      INNER JOIN vacantes_estados ve ON v.id = ve.vacante_id
+                      INNER JOIN (
+                          SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
+                          FROM vacantes_estados
+                          GROUP BY vacante_id
+                      ) ve_max ON ve.vacante_id = ve_max.vacante_id AND ve.fecha_desde = ve_max.max_fecha_desde
+                      WHERE ve.estado_id = 3 AND v.catedra_id = :catedra_id");
+    $this->db->bind(':catedra_id', $catedraId);
+    return $this->db->registros();
+  }
+
+  public function esVacanteCerrada($vacante_id) {
+    $this->db->query("SELECT COUNT(*) as total FROM vacantes_estados 
+                      WHERE vacante_id = :vacante_id AND estado_id = 3");
+    $this->db->bind(':vacante_id', $vacante_id);
+    return $this->db->registro()->total > 0;
+  }
+
+  public function actualizarEstadoVacante($vacante_id, $nuevo_estado_id) {
+    $hoy = date('Y-m-d');
+    
+    $this->db->query('INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) 
+                      VALUES (:vacante_id, :estado_id, :fecha_desde)');
+    $this->db->bind(':vacante_id', $vacante_id);
+    $this->db->bind(':estado_id', $nuevo_estado_id);
+    $this->db->bind(':fecha_desde', $hoy);
+
+    return $this->db->execute();
+  }
+
 }

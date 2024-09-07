@@ -4,7 +4,6 @@
 ?>
 
 <main class="main-container w-100 m-auto">
-
   <div class="row mb-4 g-0">
 
     <div class="col-md-1">
@@ -13,7 +12,7 @@
 
     <div class="col-md-11">
       <h2>Editar Vacante</h2>
-      <form action="<?php echo RUTA_URL;?>/vacanteController/editarvacante/<?php echo $datos['id']?>" method="POST">        
+      <form action="<?php echo RUTA_URL;?>/vacanteController/editarvacante/<?php echo $datos['id']?>" method="POST">
         <div class="row">
           <div class="col-md-6">
 

@@ -194,11 +194,11 @@ class Paginas extends Controlador {
     $usuarioId = $_SESSION['usuario_id'];
 
     if ($tipoUsuario === 'RA') {
-      if (!isset($_SESSION['vacantesDetalles'])) {
+      if (!isset($_SESSION['vacantesDetalles']) || empty($_SESSION['vacantesDetalles'])) {
         $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
       }      
     } elseif ($tipoUsuario === 'JC') {
-      if (!isset($_SESSION['vacantesDetalles'])) {
+      if (!isset($_SESSION['vacantesDetalles']) || empty($_SESSION['vacantesDetalles'])) {
         $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
       }
     } else {
@@ -227,14 +227,24 @@ class Paginas extends Controlador {
   public function OMPanel() {
     session_start();
     $usuarioId = $_SESSION['usuario_id'];
-    $vacantes = $_SESSION['vacantesDetalles'];
+    $vacantesCerradas = $this->vacanteModelo->obtenerVacantesCerradasPorUsuarioId($usuarioId);
 
-    foreach ($vacantes as $vacante) {
-      $vacante->inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante->id);
+    $vacanteSeleccionada = null;
+    $inscripciones = [];
+    $vacante_descrip = null;
+
+    if (isset($_GET['vacante_id'])) {
+      $vacante_id = $_GET['vacante_id'];
+      $vacanteSeleccionada = $this->vacanteModelo->obtenerVacanteId($vacante_id);
+      $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
+      $vacante_descrip = $vacanteSeleccionada ? $vacanteSeleccionada->descrip : null;
     }
 
     $datos = [
-      'vacantes' => $vacantes
+      'vacantes' => $vacantesCerradas,
+      'inscripciones' => $inscripciones,     
+      'vacante_descrip' => $vacante_descrip,
+      'vacante_id' => $vacanteSeleccionada ? $vacanteSeleccionada->id : null 
     ];
 
     $this->vista('paginas/OMPanel', $datos);

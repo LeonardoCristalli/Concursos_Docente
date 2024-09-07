@@ -154,4 +154,30 @@ class VacanteController extends Controlador {
     $this->vista('paginas/vacante/listar', $datos);
   }
 
+  public function actualizarVacantesCerradasYNotificar() {
+    $vacantesCerradas = $this->vacanteModelo->actualizarVacantesCerradas();
+
+    foreach ($vacantesCerradas as $vacante) {
+      $jefeEmail = $this->vacanteModelo->obtenerEmailJefeCatedra($vacante->catedra_id);
+      
+      if ($jefeEmail) {
+        $this->enviarNotificacionCierreVacante($jefeEmail, $vacante->descrip);
+      }
+    }
+
+    return true;
+  }
+
+  public function enviarNotificacionCierreVacante($email, $vacanteDescripcion) {
+    $asunto = "Notificación de Cierre de Vacante";
+    $mensaje = "Hola,\n\nQueremos informarte que la vacante con la descripción '{$vacanteDescripcion}' ha sido cerrada.\n\n";
+    $mensaje .= "Si tienes alguna pregunta, por favor contáctanos.\n\nGracias.";
+
+    $cabeceras = "From: no-reply@tusitio.com\r\n" .
+                  "Reply-To: no-reply@tusitio.com\r\n" .
+                  "X-Mailer: PHP/" . phpversion();
+
+    mail($email, $asunto, $mensaje, $cabeceras);
+  }
+
 }

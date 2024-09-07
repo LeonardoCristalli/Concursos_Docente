@@ -115,32 +115,39 @@ class InscripcionController extends Controlador {
     session_start();
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $vacanteId = $_POST['vacante_id'];
-      $puntajes = $_POST['puntajes'];
-
-      foreach ($puntajes as $usuarioId => $puntaje) {          
-        if (!$this->inscripcionModelo->asignarPuntaje($vacanteId, $usuarioId, $puntaje)) {
-          die('Algo salió mal al asignar el puntaje');
+      $vacanteId = filter_input(INPUT_POST, 'vacante_id', FILTER_SANITIZE_NUMBER_INT);
+      $puntajes = filter_input(INPUT_POST, 'puntajes', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        
+      if ($vacanteId && !empty($puntajes)) {
+        foreach ($puntajes as $usuarioId => $puntaje) {
+            if (!$this->inscripcionModelo->asignarPuntaje($vacanteId, $usuarioId, $puntaje)) {
+                $_SESSION['mensaje_error'] = "Hubo un problema al asignar los puntajes. Por favor, intente nuevamente.";
+                redireccionar('/paginas/OMPanel');
+                return;
+            }
         }
-      }
 
-      $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
-      redireccionar('/paginas/OMPanel');
+        $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
+        redireccionar('/paginas/OMPanel');
+      } else {
+        $_SESSION['mensaje_error'] = "Datos incompletos o inválidos.";
+        redireccionar('/paginas/OMPanel');
+      }
     } else {
       redireccionar('/paginas/index');
     }
   }
 
+
   public function obtenerDetallesParaOMPanel($vacante_id) {
     session_start();
-
     $vacante = $this->vacanteModelo->obtenerVacanteId($vacante_id);
-    $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
 
-    if (!$vacante) {
-      die('Vacante no encontrada.');
+    if (!$vacante || !$this->vacanteModelo->esVacanteCerrada($vacante_id)) {
+      die('Vacante no encontrada o no está cerrada.');
     }
 
+    $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
     $datos = [
       'vacante_descrip' => $vacante->descrip,
       'inscripciones' => $inscripciones,
@@ -153,5 +160,4 @@ class InscripcionController extends Controlador {
 
     $this->vista('paginas/OMPanel', $datos);
   }
-
 }

@@ -97,11 +97,38 @@ class Inscripcion {
   }
 
   public function asignarPuntaje($vacanteId, $usuarioId, $puntaje) {
+   
     $this->db->query('UPDATE inscripciones SET puntaje = :puntaje WHERE vacante_id = :vacante_id AND usuario_id = :usuario_id');
     $this->db->bind(':puntaje', $puntaje);
     $this->db->bind(':vacante_id', $vacanteId);
     $this->db->bind(':usuario_id', $usuarioId);
 
-    return $this->db->execute();
+    $resultado = $this->db->execute();
+
+    if ($resultado) {
+      // Verificar si todos los puntajes han sido asignados para la vacante
+      $this->db->query('SELECT COUNT(*) as count FROM inscripciones WHERE vacante_id = :vacante_id AND puntaje IS NULL');
+      $this->db->bind(':vacante_id', $vacanteId);
+      $this->db->execute();
+      $resultado = $this->db->single();
+
+      // Si no hay puntajes pendientes, actualizar el estado de la vacante a 'Evaluada'
+      if ($resultado->count == 0) {
+          
+        $this->db->query('MERGE INTO vacantes_estados AS target
+                          USING (VALUES (:vacante_id, :estado_id, GETDATE())) AS source (vacante_id, estado_id, fecha_desde)
+                            ON target.vacante_id = source.vacante_id AND target.estado_id = source.estado_id
+                          WHEN MATCHED THEN
+                            UPDATE SET estado_id = source.estado_id, fecha_desde = source.fecha_desde
+                          WHEN NOT MATCHED THEN
+                            INSERT (vacante_id, estado_id, fecha_desde)
+                            VALUES (source.vacante_id, source.estado_id, source.fecha_desde);');
+        $this->db->bind(':vacante_id', $vacanteId);
+        $this->db->bind(':estado_id', 1003); // Estado 'Evaluada'
+        $this->db->execute();
+      }
+    }
+
+    return $resultado;
   }
 }

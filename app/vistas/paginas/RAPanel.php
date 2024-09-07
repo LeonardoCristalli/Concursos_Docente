@@ -18,18 +18,17 @@
         </thead>  
         <tbody>
           <?php $cont = 1; ?>
-          <?php if(isset($_SESSION['vacantesDetalles'])) : ?>
+          <?php if (isset($_SESSION['vacantesDetalles']) && !empty($_SESSION['vacantesDetalles'])) : ?>
             <?php foreach($_SESSION['vacantesDetalles'] as $vacanteDetalle) : ?>
               <tr>
-                <th scope="row"><?php echo $cont; ?></th>
+                <th scope="row"><?php echo $cont++; ?></th>
                 <td>
                   <a href="<?php echo RUTA_URL . '/inscripcionController/obtenerDetallesInscripPorVacanteId/' . $vacanteDetalle->id; ?>">
                     <?php echo $vacanteDetalle->nombre_catedra; ?>
                   </a>
                 </td>
-                <td><?php echo $vacanteDetalle->estado_descrip; ?></td>
+                <td><?php echo isset($vacanteDetalle->estado_descrip) ? $vacanteDetalle->estado_descrip : 'Estado desconocido'; ?></td>
               </tr>
-              <?php $cont++; ?>
             <?php endforeach; ?>
           <?php else : ?>
             <tr>
