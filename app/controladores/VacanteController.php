@@ -28,7 +28,7 @@ class VacanteController extends Controlador {
         'exp' => trim($_POST['exp']),
         'catedra_id' => trim($_POST['catedra_id']),
         'estado_id' => $estado_id, 
-        'fecha_desde' => trim($_POST['fecha_desde']),
+        'fecha_desde' => date('Y-m-d H:i:s'),
         'observacion' => trim($_POST['observacion']),          
       ];
 
@@ -178,6 +178,14 @@ class VacanteController extends Controlador {
                   "X-Mailer: PHP/" . phpversion();
 
     mail($email, $asunto, $mensaje, $cabeceras);
+  }
+
+  public function publicarOM($vacanteId) {
+    session_start();
+  
+    $this->vacanteModelo->cambiarEstadoPublicado($vacanteId);
+
+    redireccionar('/paginas/publicar_resultados');
   }
 
 }

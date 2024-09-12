@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [llamados_vacantes]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Database [llamados_vacantes]    Script Date: 12/9/2024 03:13:21 ******/
 CREATE DATABASE [llamados_vacantes]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,10 +80,10 @@ ALTER DATABASE [llamados_vacantes] SET QUERY_STORE = OFF
 GO
 USE [llamados_vacantes]
 GO
-/****** Object:  User [llamados_vacantes_login]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  User [llamados_vacantes_login]    Script Date: 12/9/2024 03:13:21 ******/
 CREATE USER [llamados_vacantes_login] FOR LOGIN [llamados_vacantes_login] WITH DEFAULT_SCHEMA=[db_accessadmin]
 GO
-/****** Object:  Table [dbo].[areas]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[areas]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[areas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[catedras]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[catedras]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[catedras](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[dptos]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[dptos]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[dptos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[estados]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[estados]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[estados](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[inscripciones]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[inscripciones]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +164,7 @@ CREATE TABLE [dbo].[inscripciones](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[jefes_catedras]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[jefes_catedras]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +180,7 @@ CREATE TABLE [dbo].[jefes_catedras](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tokens_recuperacion]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[tokens_recuperacion]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,7 +197,7 @@ CREATE TABLE [dbo].[tokens_recuperacion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuarios]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[usuarios]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +228,7 @@ CREATE TABLE [dbo].[usuarios](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vacantes]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[vacantes]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -248,7 +248,7 @@ CREATE TABLE [dbo].[vacantes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vacantes_estados]    Script Date: 2/9/2024 11:13:33 ******/
+/****** Object:  Table [dbo].[vacantes_estados]    Script Date: 12/9/2024 03:13:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -256,7 +256,7 @@ GO
 CREATE TABLE [dbo].[vacantes_estados](
 	[vacante_id] [int] NOT NULL,
 	[estado_id] [int] NOT NULL,
-	[fecha_desde] [date] NOT NULL,
+	[fecha_desde] [datetime] NOT NULL,
 	[observacion] [varchar](50) NULL,
  CONSTRAINT [PK_vacantes_estados] PRIMARY KEY CLUSTERED 
 (

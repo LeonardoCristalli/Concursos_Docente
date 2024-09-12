@@ -18,8 +18,8 @@
         </thead>  
         <tbody>
           <?php $cont = 1; ?>
-          <?php if (isset($_SESSION['vacantesDetalles']) && !empty($_SESSION['vacantesDetalles'])) : ?>
-            <?php foreach($_SESSION['vacantesDetalles'] as $vacanteDetalle) : ?>
+          <?php if (isset($datos['vacantesDetalles']) && !empty($datos['vacantesDetalles'])) : ?>
+            <?php foreach($datos['vacantesDetalles'] as $vacanteDetalle) : ?>
               <tr>
                 <th scope="row"><?php echo $cont++; ?></th>
                 <td>

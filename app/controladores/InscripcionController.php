@@ -113,31 +113,23 @@ class InscripcionController extends Controlador {
   
   public function asignarPuntajes() {
     session_start();
-    
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $vacanteId = filter_input(INPUT_POST, 'vacante_id', FILTER_SANITIZE_NUMBER_INT);
-      $puntajes = filter_input(INPUT_POST, 'puntajes', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        
-      if ($vacanteId && !empty($puntajes)) {
-        foreach ($puntajes as $usuarioId => $puntaje) {
-            if (!$this->inscripcionModelo->asignarPuntaje($vacanteId, $usuarioId, $puntaje)) {
-                $_SESSION['mensaje_error'] = "Hubo un problema al asignar los puntajes. Por favor, intente nuevamente.";
-                redireccionar('/paginas/OMPanel');
-                return;
-            }
-        }
 
-        $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
-        redireccionar('/paginas/OMPanel');
-      } else {
-        $_SESSION['mensaje_error'] = "Datos incompletos o inválidos.";
-        redireccionar('/paginas/OMPanel');
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $vacante_id = $_POST['vacante_id'];
+      $puntajes = $_POST['puntajes'];
+
+      foreach ($puntajes as $usuario_id => $puntaje) {
+        $this->inscripcionModelo->asignarPuntaje($vacante_id, $usuario_id, $puntaje);
       }
-    } else {
-      redireccionar('/paginas/index');
+
+      $this->vacanteModelo->actualizarEstadoVacante($vacante_id, 1003);
+
+      $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPorJefeCatedraId($_SESSION['usuario_id']);
+
+      $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
+      redireccionar('/paginas/OMPanel');
     }
   }
-
 
   public function obtenerDetallesParaOMPanel($vacante_id) {
     session_start();

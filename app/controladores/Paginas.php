@@ -194,18 +194,19 @@ class Paginas extends Controlador {
     $usuarioId = $_SESSION['usuario_id'];
 
     if ($tipoUsuario === 'RA') {
-      if (!isset($_SESSION['vacantesDetalles']) || empty($_SESSION['vacantesDetalles'])) {
-        $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
-      }      
+      $vacantesDetalles = $this->vacanteModelo->obtenerDetalleVacantes();      
     } elseif ($tipoUsuario === 'JC') {
-      if (!isset($_SESSION['vacantesDetalles']) || empty($_SESSION['vacantesDetalles'])) {
-        $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
-      }
+      $vacantesDetalles = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
     } else {
       redireccionar('/paginas/index');
+      return;
     }
 
-    $this->vista('paginas/RAPanel');
+    $datos = [
+      'vacantesDetalles' => $vacantesDetalles
+    ];
+
+    $this->vista('paginas/RAPanel', $datos);
   }
 
   public function about() {
@@ -227,27 +228,54 @@ class Paginas extends Controlador {
   public function OMPanel() {
     session_start();
     $usuarioId = $_SESSION['usuario_id'];
-    $vacantesCerradas = $this->vacanteModelo->obtenerVacantesCerradasPorUsuarioId($usuarioId);
+    $vacantesCerradasEvaluadas = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPorJefeCatedraId($usuarioId);
 
     $vacanteSeleccionada = null;
     $inscripciones = [];
     $vacante_descrip = null;
+    $estadoVacante = null;
 
     if (isset($_GET['vacante_id'])) {
       $vacante_id = $_GET['vacante_id'];
       $vacanteSeleccionada = $this->vacanteModelo->obtenerVacanteId($vacante_id);
       $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
       $vacante_descrip = $vacanteSeleccionada ? $vacanteSeleccionada->descrip : null;
+      $estadoVacante = $vacanteSeleccionada ? $vacanteSeleccionada->estado_id : null;
     }
 
     $datos = [
-      'vacantes' => $vacantesCerradas,
+      'vacantes' => $vacantesCerradasEvaluadas,
       'inscripciones' => $inscripciones,     
       'vacante_descrip' => $vacante_descrip,
-      'vacante_id' => $vacanteSeleccionada ? $vacanteSeleccionada->id : null 
+      'vacante_id' => $vacanteSeleccionada ? $vacanteSeleccionada->id : null,
+      'estado_vacante' => $estadoVacante
     ];
 
     $this->vista('paginas/OMPanel', $datos);
   }
 
+  public function publicar() {
+    session_start();
+    $usuarioId = $_SESSION['usuario_id'];  
+    $vacantesEvaluadas = $this->vacanteModelo->obtenerVacantesEvaluadasPorUsuarioId($usuarioId);
+
+    $datos = [
+      'vacantes' => $vacantesEvaluadas
+    ];
+
+    $this->vista('paginas/publicar_resultados', $datos);
+  }
+
+  public function publicar_resultados() {
+    session_start();
+    
+    $vacantesPublicadas = $this->vacanteModelo->obtenerVacantesPublicadas();
+    
+    $datos = [
+      'vacantes' => $vacantesPublicadas
+    ];
+
+    $this->vista('paginas/publicar_resultados', $datos);
+  }
+  
 }

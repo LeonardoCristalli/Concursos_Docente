@@ -10,6 +10,12 @@ class LoginController extends Controlador {
 
   public function login() {
     session_start();
+
+    if (!isset($_SESSION['actualizacion_vacantes_realizada'])) {
+      $this->actualizarEstadosVacantes();
+      $_SESSION['actualizacion_vacantes_realizada'] = true;
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST["username"]) && isset($_POST["password"])) {
         $username = $_POST["username"];
@@ -53,6 +59,7 @@ class LoginController extends Controlador {
 
   public function forgotPW() {
     session_start();
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST["email"])) {
         $email = $_POST["email"];
@@ -136,5 +143,16 @@ class LoginController extends Controlador {
                   "X-Mailer: PHP/" . phpversion();
 
     mail($email, $asunto, $mensaje, $cabeceras);
+  }
+
+  public function actualizarEstadosVacantes() {
+    require_once '../app/modelos/Vacante.php';
+    require_once '../app/controladores/VacanteController.php';
+
+    $vacanteModelo = new Vacante();
+    $vacanteController = new VacanteController();
+
+    $vacanteModelo->actualizarVacantesAbiertas();
+    $vacanteController->actualizarVacantesCerradasYNotificar();
   }
 }

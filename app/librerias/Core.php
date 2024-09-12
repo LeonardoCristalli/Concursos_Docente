@@ -6,8 +6,6 @@ class Core {
 
   public function __construct() {
 
-    $this->actualizarEstadosVacantes();
-
     $url = $this->getUrl();
 
     if (!empty($url)) {        
@@ -44,14 +42,4 @@ class Core {
     }
   }
 
-  public function actualizarEstadosVacantes() {
-    require_once '../app/modelos/Vacante.php';
-    require_once '../app/controladores/VacanteController.php';
-
-    $vacanteModelo = new Vacante();
-    $vacanteController = new VacanteController();
-
-    $vacanteModelo->actualizarVacantesAbiertas();
-    $vacanteController->actualizarVacantesCerradasYNotificar();
-  }
 }
