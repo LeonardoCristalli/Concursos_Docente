@@ -4,6 +4,13 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Orden de Mérito</li>
+    </ol>
+  </nav>
   
   <?php if (isset($_SESSION['mensaje_exito'])): ?>
     <div class="alert alert-success">
@@ -49,7 +56,7 @@
       </table>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-7">
       <?php if(isset($datos['vacante_id']) && isset($datos['estado_vacante'])) : ?>
         <?php 
           $estadoId = $datos['estado_vacante'];
@@ -102,14 +109,13 @@
             </form>
           </div>
         <?php elseif ($isEvaluada) : ?>
-          <h6>Orden de Mérito para la vacante: <?php echo $datos['vacante_descrip']; ?></h6>
+          <h4>Orden de Mérito para la vacante: <?php echo $datos['vacante_descrip']; ?></h4>
           <div class="table-responsive">
             <table class="table table-striped table-hover table-sm">
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Inscripto</th>
-                  <th scope="col">Puntaje</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
@@ -119,10 +125,11 @@
                   <tr>
                     <th scope="row"><?php echo $cont++; ?></th>
                     <td><?php echo $inscripcion->usuario; ?></td>
-                    <td><?php echo $inscripcion->puntaje; ?></td>
                     <td>
                       <?php if ($inscripcion->puntaje == 1): ?>
-                        <a href="<?php echo $inscripcion->cv_url; ?>" class="btn btn-info btn-sm" download>Descargar CV</a>
+                        <a href="<?php echo RUTA_URL;?>/usuarioController/descargarCV/<?php echo $inscripcion->cv; ?>"  class="btn btn-sm btn-dark">
+                          Descargar CV
+                        </a> 
                       <?php endif; ?>
                     </td>
                   </tr>

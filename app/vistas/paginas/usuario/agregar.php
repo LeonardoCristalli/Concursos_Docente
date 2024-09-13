@@ -4,16 +4,20 @@
 ?>
 
 <main class="main-container w-100 m-auto">
-
   <div class="row mb-4 g-0">
 
-    <div class="col-md-1">
-      <?php if (!isset($_SESSION['usuario_id'])): ?>
-        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>    
-      <?php else: ?>
+    <?php if (!isset($_SESSION['usuario_id'])): ?>
+      <nav aria-label="breadcrumb" class="align-self-start w-100">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Registro</li>
+        </ol>
+      </nav>
+    <?php else: ?>
+      <div class="col-md-1">
         <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>
-      <?php endif; ?>
-    </div>
+      </div>
+    <?php endif; ?>
 
     <div class="col-md-11">
       <h2 class="mt-3 mb-4">Crear Usuario</h2>    

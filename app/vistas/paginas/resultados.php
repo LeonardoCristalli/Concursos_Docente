@@ -4,6 +4,13 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Resultados</li>
+    </ol>
+  </nav>
   
   <?php if (isset($_SESSION['mensaje_exito'])): ?>
     <div class="alert alert-success">

@@ -5,13 +5,20 @@
 
 <main class="main-container w-100 m-auto">
 
+  <?php if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usu'] !== 'Admin'): ?>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Perfil</li>
+      </ol> 
+    </nav>
+  <?php endif; ?>
+
   <div class="row mb-4 g-0">
 
     <div class="col-md-1">
-      <?php if (!isset($_SESSION['usuario_id'])): ?>
-        <a href="<?php echo RUTA_URL;?>/paginas/index" class="btn btn-secondary btn-sm">Volver</a>    
-      <?php else: ?>
-        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>
+      <?php if (isset($_SESSION['usuario_id']) && $_SESSION['tipo_usu'] === 'Admin'): ?>
+        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=usuarios" class="btn btn-secondary btn-sm">Volver</a>           
       <?php endif; ?>
     </div>
 

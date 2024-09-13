@@ -4,11 +4,24 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
+  <?php if ($_SESSION['tipo_usu'] !== 'Admin'): ?>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=vacantes">Vacantes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear Vacante</li>
+      </ol>
+    </nav>
+  <?php endif; ?>
+  
   <div class="row mb-4 g-0">
 
-    <div class="col-md-1">
-      <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=vacantes" class="btn btn-secondary btn-sm">Volver</a>
-    </div>
+    <?php if ($_SESSION['tipo_usu'] == 'Admin'): ?>
+      <div class="col-md-1">
+        <a href="<?php echo RUTA_URL;?>/paginas/irAlCRUD?entidad=vacantes" class="btn btn-secondary btn-sm">Volver</a>
+      </div>
+    <?php endif; ?>
 
     <div class="col-md-11">
 

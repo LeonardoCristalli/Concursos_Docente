@@ -4,6 +4,14 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Inscriptos</li>
+    </ol>
+  </nav>
+
   <div class="row">
     <div class="col-md-4">
       <h2>Vacantes</h2>

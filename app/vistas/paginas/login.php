@@ -5,6 +5,13 @@
 
 <main class="main-container w-100 m-auto d-flex flex-column align-items-center">
 
+  <nav aria-label="breadcrumb" class="align-self-start w-100">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Iniciar Sesión</li>
+    </ol>
+  </nav>
+  
   <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
     <form action="<?php echo RUTA_URL;?>/logincontroller/login" method="POST" class="form-login">
 
