@@ -74,13 +74,12 @@ class LoginController extends Controlador {
 
           $this->enviarMailRecuperacion($usuario->email, $resetLink);
 
-          $_SESSION["mensaje_exito"] = "Te hemos enviado un correo electrónico con las instrucciones para restablecer tu contraseña.";
-          redireccionar('/paginas/login');
+          $_SESSION["mensaje_exito"] = "Te hemos enviado un correo electrónico con las instrucciones para restablecer tu contraseña.";          
         } else {
           $_SESSION["mensaje_error"] = "Si existe una cuenta con este correo, te enviaremos las instrucciones para restablecer tu contraseña.";
-          redireccionar('/paginas/forgotpw');
         }
       }
+      $this->vista('paginas/forgotPW');
     } else {
       $_SESSION["mensaje_error"] = "El método de solicitud no es POST";
       redireccionar('/paginas/forgotpw');

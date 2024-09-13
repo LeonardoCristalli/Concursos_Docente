@@ -11,6 +11,7 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Catedra</th>  
             <th scope="col">Estado</th>
             <th scope="col"></th>
@@ -22,6 +23,7 @@
             <?php foreach($datos['vacantesDetalles'] as $vacanteDetalle) : ?>
               <tr>
                 <th scope="row"><?php echo $cont++; ?></th>
+                <td><?php echo $vacanteDetalle->id; ?></td>
                 <td>
                   <a href="<?php echo RUTA_URL . '/inscripcionController/obtenerDetallesInscripPorVacanteId/' . $vacanteDetalle->id; ?>">
                     <?php echo $vacanteDetalle->nombre_catedra; ?>

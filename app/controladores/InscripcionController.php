@@ -103,8 +103,10 @@ class InscripcionController extends Controlador {
   public function obtenerDetallesInscripPorVacanteId($vacante_id) {
     session_start();
 
+    $vacantesDetalles = $this->vacanteModelo->obtenerDetalleVacantes();
     $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
     $datos = [
+      'vacantesDetalles' => $vacantesDetalles,
       'inscripciones' => $inscripciones
     ];
 
@@ -124,7 +126,7 @@ class InscripcionController extends Controlador {
 
       $this->vacanteModelo->actualizarEstadoVacante($vacante_id, 1003);
 
-      $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPorJefeCatedraId($_SESSION['usuario_id']);
+      $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPublicadasPorJefeCatedraId($_SESSION['usuario_id']);
 
       $_SESSION['mensaje_exito'] = "Puntajes asignados correctamente.";
       redireccionar('/paginas/OMPanel');

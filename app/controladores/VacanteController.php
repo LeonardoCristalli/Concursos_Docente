@@ -28,7 +28,7 @@ class VacanteController extends Controlador {
         'exp' => trim($_POST['exp']),
         'catedra_id' => trim($_POST['catedra_id']),
         'estado_id' => $estado_id, 
-        'fecha_desde' => date('Y-m-d H:i:s'),
+        //'fecha_desde' => date('Y-m-d H:i:s'),
         'observacion' => trim($_POST['observacion']),          
       ];
 
@@ -182,10 +182,22 @@ class VacanteController extends Controlador {
 
   public function publicarOM($vacanteId) {
     session_start();
-  
+    $usuarioId = $_SESSION['usuario_id'];
     $this->vacanteModelo->cambiarEstadoPublicado($vacanteId);
 
-    redireccionar('/paginas/publicar_resultados');
+    redireccionar('/paginas/OMPanel?vacante_id=' . $vacanteId);
+  }
+
+  public function finalizarVacante($vacanteId) {
+    session_start();
+    
+    if ($this->vacanteModelo->cambiarEstadoVacante($vacanteId, 1005)) {
+      $_SESSION['mensaje_exito'] = 'La vacante ha sido finalizada correctamente.';
+    } else {
+      $_SESSION['mensaje_error'] = 'Hubo un error al finalizar la vacante.';
+    }
+    
+    redireccionar('/paginas/OMPanel');
   }
 
 }

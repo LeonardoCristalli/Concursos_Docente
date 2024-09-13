@@ -19,7 +19,7 @@
 
   <div class="row">
     <div class="col-md-4">
-      <h2>Vacantes Cerradas y/o Evaluadas</h2>
+      <h2>Vacantes</h2>
       <table class="table table-striped table-hover table-sm">
         <thead class="thead-dark">
           <tr>
@@ -54,10 +54,15 @@
         <?php 
           $estadoId = $datos['estado_vacante'];
           $isEvaluada = $estadoId == 1003; 
-          $isCerrada = $estadoId == 3; 
+          $isCerrada = $estadoId == 3 || isset($_GET['editar']); 
         ?>
 
-        <?php if ($isCerrada) : ?>
+        <?php if ($estadoId == 1004) : // Estado "Publicada" ?>
+          <h6>La vacante: <?php echo $datos['vacante_descrip']; ?> está publicada.</h6>
+          <div class="d-flex justify-content-end mt-3">
+            <a href="<?php echo RUTA_URL; ?>/vacanteController/finalizarVacante/<?php echo $datos['vacante_id']; ?>" class="btn btn-danger me-2">Finalizar Vacante</a>
+          </div>
+        <?php elseif ($isCerrada) : ?>
           <h6>Inscripciones para la vacante: <?php echo $datos['vacante_descrip']; ?></h6>
           <div class="table-responsive" id="inscripciones-vacante">
             <form action="<?php echo RUTA_URL; ?>/inscripcionController/asignarPuntajes" method="POST">
@@ -127,7 +132,7 @@
           </div>
           <div class="d-flex justify-content-end mt-3">
             <a href="<?php echo RUTA_URL; ?>/vacanteController/publicarOM/<?php echo $datos['vacante_id']; ?>" class="btn btn-success me-2">Publicar</a>
-            <a href="<?php echo RUTA_URL; ?>/vacanteController/actualizarOM/<?php echo $datos['vacante_id']; ?>" class="btn btn-secondary">Actualizar OM</a>
+            <a href="?vacante_id=<?php echo $datos['vacante_id']; ?>&editar=true" class="btn btn-secondary">Actualizar OM</a>
           </div>
         <?php else : ?>
           <div class="alert alert-info">Selecciona una vacante para ver el detalle.</div>
