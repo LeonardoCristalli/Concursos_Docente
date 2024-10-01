@@ -2,11 +2,12 @@
 class UsuarioController extends Controlador {
   private $usuarioModelo;
   private $catedraModelo;
-
+  private $uploadPath;
 
   public function __construct() {
     $this->usuarioModelo = $this->modelo('Usuario');
     $this->catedraModelo = $this->modelo('Catedra');
+    $this->uploadPath = RUTA_APP . '/uploads/';
   }
 
   public function agregarUsuario() {
@@ -61,7 +62,7 @@ class UsuarioController extends Controlador {
               if ($fileSize < 1000000) {
 
                 $fileNewName = uniqid('', true).".".$fileActualExt;                
-                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/uploads/' . $fileNewName;
+                $fileDestination = $this->uploadPath . $fileNewName;
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
                   $datos['cv'] = $fileNewName;
@@ -173,9 +174,14 @@ class UsuarioController extends Controlador {
               if ($fileSize < 1000000) {
 
                 $fileNewName = uniqid('', true).".".$fileActualExt;                
-                $fileDestination = 'C:/xampp/htdocs/Concursos_Docente/public/uploads/' . $fileNewName;
+                $fileDestination = $this->uploadPath . $fileNewName;
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
+
+                  $oldFilePath = $this->uploadPath . $usuario->cv;
+                  if (!empty($usuario->cv) && file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                  }
 
                   $datos['cv'] = $fileNewName;
 
@@ -201,10 +207,10 @@ class UsuarioController extends Controlador {
         if ($this->usuarioModelo->actualizarUsuario($datos)) {   
           $this->listarUsuarios();
         } else {
-          if (file_exists($fileDestination)) {
+          if (!empty($fileDestination) && file_exists($fileDestination)) {
             unlink($fileDestination);
           }
-          die('Algo salio mal');        
+          die('Algo salió mal al actualizar el usuario');        
         }
 
       } else {
@@ -403,7 +409,12 @@ class UsuarioController extends Controlador {
   public function descargarCV($cv) { 
     session_start();
 
-    $file_path = 'C:\xampp\htdocs\Concursos_Docente\public\uploads\\' . $cv;
+    if ($_SESSION['tipo_usu'] !== 'RA' && $_SESSION['tipo_usu'] !== 'JC') {
+      echo "No tiene permisos para descargar el archivo.";
+      return;
+    }
+
+    $file_path = $this->uploadPath . $cv;
 
     if(!empty($cv) && file_exists($file_path)) {
       if (ob_get_length()) {

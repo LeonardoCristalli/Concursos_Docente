@@ -14,6 +14,7 @@ class Paginas extends Controlador {
   private $vacanteModelo;
   private $estadoModelo;
   private $inscripcionModelo;
+  private $uploadPath; 
 
   public function __construct() {            
     $this->usuarioModelo = $this->modelo('Usuario');
@@ -23,6 +24,7 @@ class Paginas extends Controlador {
     $this->vacanteModelo = $this->modelo('Vacante');
     $this->estadoModelo = $this->modelo('Estado');
     $this->inscripcionModelo = $this->modelo('Inscripcion');
+    $this->uploadPath = RUTA_APP . '/uploads/';
   } 
 
   public function index() {
@@ -145,15 +147,12 @@ class Paginas extends Controlador {
     $usuario = $this->usuarioModelo->obtenerUsuarioId($usuario_id);
 
     if(!empty($usuario->cv)) {
-
-      $file_path = 'C:\xampp\htdocs\Concursos_Docente\public\uploads\\' . $usuario->cv;
+      $file_path = $this->uploadPath . $usuario->cv;
 
       if (file_exists($file_path)) {
-
         $vacante_id = isset($_GET['vacante_id']) ? $_GET['vacante_id'] : null;
 
         if ($vacante_id !== null) {
-
           if ($this->inscripcionModelo->estaInscripto($usuario_id, $vacante_id)) {
             $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
             $_SESSION['vacantes'] = $vacantes;
