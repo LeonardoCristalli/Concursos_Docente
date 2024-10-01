@@ -13,7 +13,7 @@
 
     <div class="col-md-11">
       <h2>Estados</h2>
-      <div class="table-responsive">
+      <div class="table-responsive mb-4">
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>

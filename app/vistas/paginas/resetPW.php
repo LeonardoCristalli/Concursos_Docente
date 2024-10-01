@@ -22,7 +22,7 @@
 
       <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Restablecer Contraseña</button>
 
-      <div id="error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
+      <div id="error-message" class="alert alert-danger d-none my-4" role="alert"></div>
     </form>
   </div>
 </main>

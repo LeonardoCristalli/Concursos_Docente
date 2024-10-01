@@ -57,7 +57,7 @@
     <div class="col-md-8">
       <?php if (isset($datos['vacante_id']) && !empty($datos['inscripciones'])) : ?>
         <h2>Orden de Mérito para: <?php echo $datos['vacanteDetalles']->nombre_catedra; ?></h2>
-        <div class="table-responsive">
+        <div class="table-responsive mb-4">
           <table class="table table-striped table-hover table-sm">
             <thead class="thead-dark">
               <tr>

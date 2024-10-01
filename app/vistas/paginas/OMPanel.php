@@ -71,7 +71,7 @@
           </div>
         <?php elseif ($isCerrada) : ?>
           <h6>Inscripciones para la vacante: <?php echo $datos['vacante_descrip']; ?></h6>
-          <div class="table-responsive" id="inscripciones-vacante">
+          <div class="table-responsive mb-4" id="inscripciones-vacante">
             <form action="<?php echo RUTA_URL; ?>/inscripcionController/asignarPuntajes" method="POST">
               <input type="hidden" name="vacante_id" value="<?php echo $datos['vacante_id']; ?>">
               <table class="table table-striped table-hover table-sm">
@@ -110,7 +110,7 @@
           </div>
         <?php elseif ($isEvaluada) : ?>
           <h4>Orden de Mérito para la vacante: <?php echo $datos['vacante_descrip']; ?></h4>
-          <div class="table-responsive">
+          <div class="table-responsive mb-4">
             <table class="table table-striped table-hover table-sm">
               <thead class="thead-dark">
                 <tr>

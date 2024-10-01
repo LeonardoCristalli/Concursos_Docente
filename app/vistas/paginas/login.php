@@ -38,7 +38,7 @@
         <a href="<?php echo RUTA_URL;?>/paginas/recuperarpw" class="btn btn-link p-0">¿Olvidaste tu contraseña?</a>
       </div>
       
-      <div id="error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
+      <div id="error-message" class="alert alert-danger d-none my-4" role="alert"></div>
 
     </form>
   </div>

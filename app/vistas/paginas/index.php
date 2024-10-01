@@ -17,7 +17,7 @@
       <div class="row d-flex flex-wrap">
         <!-- Card 1 -->
         <div class="col-md-6 d-flex">
-          <div class="card index-card">
+          <div class="card index-card mb-3">
             <img src="<?php echo RUTA_URL; ?>/img/F.Aditiva - Miniatura.png" alt="curso-3d" class="card-img-top">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">Novedades</h5>
@@ -31,7 +31,7 @@
 
         <!-- Card 2 -->
         <div class="col-md-6 d-flex">
-          <div class="card index-card d-flex flex-column">
+          <div class="card index-card mb-3 d-flex flex-column">
             <img src="<?php echo RUTA_URL; ?>/img/angular.png" alt="curso-angular" class="card-img-top">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">Curso Angular</h5>

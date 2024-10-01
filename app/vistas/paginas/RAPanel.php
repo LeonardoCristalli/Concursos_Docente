@@ -50,7 +50,7 @@
     </div>
 
     <div class="col-md-8">
-      <div class="table-responsive" id="inscripciones-vacante">
+      <div class="table-responsive mb-4" id="inscripciones-vacante">
         <h2>Inscripciones</h2>
         <table class="table table-striped table-hover table-sm">
            <thead class="thead-dark">

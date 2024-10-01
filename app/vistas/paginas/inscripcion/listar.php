@@ -14,7 +14,7 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <h2>Inscripciones</h2>
-      <div class="table-responsive">
+      <div class="table-responsive mb-4">
         <table class="table table-bordered table-striped">
           <thead class="thead-dark">
             <tr>

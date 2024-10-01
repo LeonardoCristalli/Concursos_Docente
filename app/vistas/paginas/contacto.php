@@ -11,7 +11,7 @@
     </ol>
   </nav>
 
-  <div class="index-intro text-center mx-auto">
+  <div class="index-intro mb-5 text-center mx-auto">
     <h2>LLAMADO A CONCURSOS DOCENTES: </h2>
     <p>
       Mail: concursos@frro.utn.edu.ar

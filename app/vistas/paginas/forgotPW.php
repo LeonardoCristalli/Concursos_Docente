@@ -19,8 +19,8 @@
         <a href="<?php echo RUTA_URL;?>/logincontroller/index" class="btn btn-link p-0">Volver al inicio de sesión</a>
       </div>
       
-      <div id="success-message" class="alert alert-success d-none mt-3" role="alert"></div>
-      <div id="error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
+      <div id="success-message" class="alert alert-success d-none my-4" role="alert"></div>
+      <div id="error-message" class="alert alert-danger d-none my-4" role="alert"></div>
     </form>
   </div>
 </main>

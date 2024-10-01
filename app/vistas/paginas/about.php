@@ -12,7 +12,7 @@
     </ol>
   </nav>
 
-  <div class="index-intro text-center mx-auto">
+  <div class="index-intro mb-5 text-center mx-auto">
     <p>
       La Universidad Tecnológica Nacional ha sido concebida desde su comienzo como una Institución abierta a todos los hombres capaces de contribuir
       al proceso de desarrollo de la economía argentina, con clara conciencia de su compromiso con el bienestar y la justicia social, su respeto por la ciencia y la cultura, y la necesidad de su aporte al progreso de la Nación y las regiones que la 

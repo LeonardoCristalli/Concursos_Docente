@@ -33,7 +33,6 @@ header .nav-link.text-secondary {
 .index-intro {
   text-align: center;
   max-width: 600px;
-  margin-bottom: 30px;
 }
 
 .index-intro h2 {
@@ -83,7 +82,6 @@ footer iframe {
 
 #error-message {
   max-width: 400px;
-  margin: 20px auto;
 }
 
 /* Imágenes */
@@ -102,14 +100,6 @@ footer iframe {
   margin-top: auto;
 }
 
-.btn-container {
-  margin-top: 20px;
-}
-
-.btn-container a {
-  margin-bottom: 20px;
-}
-
 /* Grillas y columnas */
 .row {
   margin-right: 0;
@@ -124,10 +114,6 @@ footer iframe {
 /* Tablas */
 .table {
   table-layout: auto;
-}
-
-.table-responsive {
-  margin-bottom: 20px;
 }
 
 .table thead th.sticky-col,
@@ -157,20 +143,19 @@ footer iframe {
 }
 
 .index-intro img {
-  margin-top: 30px; /* Más espaciado sobre la imagen */
+  margin-top: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 100%; /* Evitar que sea demasiado grande */
-  height: auto; /* Mantener las proporciones */
+  max-width: 100%;
+  height: auto;
 }
 
 .index-card {
   background-color: #fff;
-  border: 1px solid #ddd; /* Añadir borde a las cards */
+  border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: 12rem; /* Reducir tamaño de la card */
-  margin-bottom: 15px; /* Espaciado entre cards */
+  width: 12rem;
   transition: transform 0.3s ease-in-out;
 }
 
