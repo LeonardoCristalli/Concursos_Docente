@@ -409,9 +409,8 @@ class UsuarioController extends Controlador {
   public function descargarCV($cv) { 
     session_start();
 
-    if ($_SESSION['tipo_usu'] !== 'RA' && $_SESSION['tipo_usu'] !== 'JC') {
-      echo "No tiene permisos para descargar el archivo.";
-      return;
+    if (!isset($_SESSION['tipo_usu']) || !in_array($_SESSION['tipo_usu'], ['RA', 'JC', 'Admin'])) {
+      die("No tiene permisos para descargar este archivo.");
     }
 
     $file_path = $this->uploadPath . $cv;

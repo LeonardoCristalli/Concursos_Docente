@@ -1,0 +1,9 @@
+# app/uploads/.htaccess
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+# Bloquear acceso directo a todos los archivos en este directorio
+
+RewriteRule ^.\*$ - [F,L]
+</IfModule>
