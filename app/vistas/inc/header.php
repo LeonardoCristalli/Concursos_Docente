@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?php echo isset($titulo) ? $titulo : 'Inicio'; ?></title>
-  <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-ECgZrxXP7IrjliTxqdAS2F23pU6zDuvD8VsaXIDbJrxFQ2rsCZslz1URybl3ErfV" crossorigin="anonymous">
   <link rel="stylesheet" href="<?php echo RUTA_URL; ?>/public/css/estilos.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="row align-items-center">
         <div class="col-md-6 d-flex align-items-center">
 
-          <a href="<?php echo RUTA_URL; ?>">
-            <img src="<?php echo RUTA_URL; ?>/img/Logo_UTN.png" alt="Logo de la Facultad" class="img-fluid" style="max-width: 80px;">
+          <a href="<?= RUTA_URL; ?>">
+            <img src="<?= RUTA_URL; ?>/img/Logo_UTN.png" alt="Logo de la Facultad" class="img-fluid" style="max-width: 80px;">
           </a>
 
           <?php if (!isset($_SESSION['usuario_id'])): ?>
