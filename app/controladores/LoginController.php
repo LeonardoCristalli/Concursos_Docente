@@ -9,8 +9,6 @@ class LoginController extends Controlador {
   }
 
   public function login() {
-    session_start();
-
     if (!isset($_SESSION['actualizacion_vacantes_realizada'])) {
       $this->actualizarEstadosVacantes();
       $_SESSION['actualizacion_vacantes_realizada'] = true;
@@ -58,8 +56,6 @@ class LoginController extends Controlador {
   } 
 
   public function forgotPW() {
-    session_start();
-    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST["email"])) {
         $email = $_POST["email"];
@@ -87,8 +83,6 @@ class LoginController extends Controlador {
   }
 
   public function resetPW() {
-    session_start();
-    
     if (isset($_GET['token'])) {
 
       $token = $_GET['token'];

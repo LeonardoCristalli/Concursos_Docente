@@ -7,7 +7,6 @@ class EstadoController extends Controlador {
   }
 
   public function agregarEstado() {
-    session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
       $datos = [
         'descrip' => trim($_POST['descrip']),       
@@ -28,8 +27,6 @@ class EstadoController extends Controlador {
   }
 
   public function editarEstado($id) {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [
@@ -55,8 +52,6 @@ class EstadoController extends Controlador {
   }
 
   public function borrarEstado($id) {
-    session_start();
-
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       
       $id = $_POST['id'];

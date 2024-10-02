@@ -7,7 +7,6 @@ class DptoController extends Controlador {
   }
 
   public function agregarDpto() {
-    session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
       $datos = [
         'nombre' => trim($_POST['nombre']),       
@@ -28,8 +27,6 @@ class DptoController extends Controlador {
   }
 
   public function editarDpto($id) {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [

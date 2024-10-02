@@ -28,26 +28,20 @@ class Paginas extends Controlador {
   } 
 
   public function index() {
-    session_start();
     $this->vista('paginas/index');
   }
 
   public function login() {
-    session_start();
-
     $this->vista('paginas/login');
   }
 
   public function logout() {
-    session_start();
     session_unset();
     session_destroy();
     $this->vista('paginas/index');
   }
 
   public function adminPanel() {
-    session_start();
-
     if (!isset($_SESSION['usuario_id'])) {
       redireccionar('/paginas/login');
     }
@@ -56,8 +50,6 @@ class Paginas extends Controlador {
   }
 
   public function listarVacantes() {
-    session_start();
-
     $vacantes = $this->vacanteModelo->obtenerVacantes();
     $datos = [
       'vacantes' => $vacantes
@@ -67,8 +59,6 @@ class Paginas extends Controlador {
   }
 
   public function listarInscripciones() {
-    session_start();
-
     $inscripciones = $this->inscripcionModelo->obtenerInscripciones();
     $datos = [
       'inscripciones' => $inscripciones
@@ -78,9 +68,6 @@ class Paginas extends Controlador {
   }
 
   public function irAlCRUD() {
-
-    session_start();
-
     if (!isset($_SESSION['usuario_id'])) {
       redireccionar('/paginas/index');
     }
@@ -140,7 +127,6 @@ class Paginas extends Controlador {
   }
   
   public function inscripcion() {
-    session_start();
     $usuario_id = $_SESSION['usuario_id'];
     $date = date('Y-m-d');
 
@@ -188,7 +174,6 @@ class Paginas extends Controlador {
   }
 
   public function RAPanel() {
-    session_start();
     $tipoUsuario = $_SESSION['tipo_usu'];
     $usuarioId = $_SESSION['usuario_id'];
 
@@ -209,14 +194,10 @@ class Paginas extends Controlador {
   }
 
   public function about() {
-    session_start();
-
     $this->vista('paginas/about');
   }
 
   public function contacto() {
-    session_start();
-
     $this->vista('paginas/contacto');
   }
 
@@ -225,7 +206,6 @@ class Paginas extends Controlador {
   }
   
   public function OMPanel() {
-    session_start();
     $usuarioId = $_SESSION['usuario_id'];
     $vacantesCerradasEvaluadas = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPublicadasPorJefeCatedraId($usuarioId);
 
@@ -254,7 +234,6 @@ class Paginas extends Controlador {
   }
 
   public function resultados() {
-    session_start();
     
     $vacantesPublicadas = $this->vacanteModelo->obtenerVacantesPublicadas();
     $vacanteId = isset($_GET['vacante_id']) ? $_GET['vacante_id'] : null;

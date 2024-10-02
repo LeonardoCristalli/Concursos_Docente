@@ -101,8 +101,6 @@ class InscripcionController extends Controlador {
   }
 
   public function obtenerDetallesInscripPorVacanteId($vacante_id) {
-    session_start();
-
     $vacantesDetalles = $this->vacanteModelo->obtenerDetalleVacantes();
     $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
     $datos = [
@@ -114,8 +112,6 @@ class InscripcionController extends Controlador {
   }
   
   public function asignarPuntajes() {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $vacante_id = $_POST['vacante_id'];
       $puntajes = $_POST['puntajes'];
@@ -134,7 +130,6 @@ class InscripcionController extends Controlador {
   }
 
   public function obtenerDetallesParaOMPanel($vacante_id) {
-    session_start();
     $vacante = $this->vacanteModelo->obtenerVacanteId($vacante_id);
 
     if (!$vacante || !$this->vacanteModelo->esVacanteCerrada($vacante_id)) {

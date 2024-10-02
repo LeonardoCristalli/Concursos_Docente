@@ -10,8 +10,6 @@ class VacanteController extends Controlador {
   }
 
   public function agregarVacante() {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
 
       $fecha_ini = trim($_POST['fecha_ini']);
@@ -68,8 +66,6 @@ class VacanteController extends Controlador {
   }
 
   public function editarVacante($id) {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [
@@ -109,8 +105,6 @@ class VacanteController extends Controlador {
   }
 
   public function borrarVacante($id) {
-    session_start();
-
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       
       $id = $_POST['id'];
@@ -124,7 +118,6 @@ class VacanteController extends Controlador {
   }
 
   public function vacanteUsuario() {
-    session_start();
     $vacantes = $this->vacanteModelo->obtenerVacantesAbiertas();
     $datos = [
       'vacantes' => $vacantes,
@@ -181,16 +174,12 @@ class VacanteController extends Controlador {
   }
 
   public function publicarOM($vacanteId) {
-    session_start();
-    $usuarioId = $_SESSION['usuario_id'];
     $this->vacanteModelo->cambiarEstadoPublicado($vacanteId);
 
     redireccionar('/paginas/OMPanel?vacante_id=' . $vacanteId);
   }
 
   public function finalizarVacante($vacanteId) {
-    session_start();
-    
     if ($this->vacanteModelo->cambiarEstadoVacante($vacanteId, 1005)) {
       $_SESSION['mensaje_exito'] = 'La vacante ha sido finalizada correctamente.';
     } else {

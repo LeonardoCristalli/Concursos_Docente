@@ -7,7 +7,6 @@ class AreaController extends Controlador {
   }
 
   public function agregarArea() {
-    session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
@@ -32,8 +31,7 @@ class AreaController extends Controlador {
   }
 
   public function editarArea($id) {
-    session_start();
-
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [

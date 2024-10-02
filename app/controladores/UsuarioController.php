@@ -11,8 +11,6 @@ class UsuarioController extends Controlador {
   }
 
   public function agregarUsuario() {
-    session_start();
-
     $catedras = $this->catedraModelo->obtenerCatedras();
 
 
@@ -123,8 +121,6 @@ class UsuarioController extends Controlador {
   }
 
   public function editarUsuario($id) {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $usuario = $this->usuarioModelo->obtenerUsuarioId($id);
@@ -407,8 +403,6 @@ class UsuarioController extends Controlador {
   }
 
   public function descargarCV($cv) { 
-    session_start();
-
     if (!isset($_SESSION['tipo_usu']) || !in_array($_SESSION['tipo_usu'], ['RA', 'JC', 'Admin'])) {
       die("No tiene permisos para descargar este archivo.");
     }

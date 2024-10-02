@@ -8,8 +8,6 @@ class CatedraController extends Controlador {
   }
 
   public function agregarCatedra() {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
       $datos = [
@@ -46,8 +44,6 @@ class CatedraController extends Controlador {
   }
 
   public function editarCatedra($id) {
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $datos = [
@@ -88,7 +84,6 @@ class CatedraController extends Controlador {
   }
 
   public function borrarCatedra($id) {
-    session_start();
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $id = $_POST['id'];
 
