@@ -32,7 +32,7 @@
         <label class="form-check-label" for="flexCheckDefault">Recordarme</label>
       </div>
 
-      <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Log in</button>
+      <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Iniciar Sesión</button>
 
       <div class="d-flex justify-content-between">
         <a href="<?php echo RUTA_URL;?>/paginas/recuperarpw" class="btn btn-link p-0">¿Olvidaste tu contraseña?</a>
