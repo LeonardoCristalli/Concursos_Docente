@@ -18,7 +18,7 @@
         <!-- Card 1 -->
         <div class="col-md-6 d-flex">
           <div class="card index-card mb-3">
-            <img src="<?php echo RUTA_URL; ?>/img/F.Aditiva - Miniatura.png" alt="curso-3d" class="card-img-top">
+            <img src="<?php echo RUTA_URL; ?>/img/F.Aditiva.png" alt="curso-3d" class="card-img-top">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">Novedades</h5>
               <p class="card-text">Curso de Fabricación Aditiva</p>
