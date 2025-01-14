@@ -11,16 +11,29 @@ class VacanteController extends Controlador {
 
   public function agregarVacante() {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
-
       $fecha_ini = trim($_POST['fecha_ini']);
       $hoy = date('Y-m-d');
+      $fecha_fin = trim($_POST['fecha_fin']);
       
+      // Validación de fechas
+      if (strtotime($fecha_fin) < strtotime($hoy)) {
+        $_SESSION['mensaje_error'] = 'La fecha de cierre no puede ser anterior a la fecha actual.';
+        $this->vista('paginas/vacante/agregar', []);
+        return;
+      }
+      
+      if (strtotime($fecha_fin) < strtotime($fecha_ini)) {
+        $_SESSION['mensaje_error'] = 'La fecha de cierre debe ser posterior a la fecha de inicio.';
+        $this->vista('paginas/vacante/agregar', []);
+        return;
+      }
+
       $estado_id = ($fecha_ini == $hoy) ? 2 : 1002; // 2 = Abierta, 1002 = Nueva
 
       $datos = [
         'descrip' => trim($_POST['descrip']),  
-        'fecha_ini' => trim($_POST['fecha_ini']),
-        'fecha_fin' => trim($_POST['fecha_fin']),
+        'fecha_ini' => $fecha_ini,
+        'fecha_fin' => $fecha_fin,
         'req' => trim($_POST['req']),
         'tiempo' => trim($_POST['tiempo']),
         'exp' => trim($_POST['exp']),
@@ -34,7 +47,8 @@ class VacanteController extends Controlador {
         $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerDetalleVacantes();
         redireccionar('/vacantecontroller/listarvacantes');
       } else {
-        die ('No se pudo crear la Vacante');
+        $_SESSION['mensaje_error'] = 'Ocurrió un error al crear la vacante. Por favor, intente nuevamente.';
+        $this->vista('paginas/vacante/agregar', []);
       }          
     } else {
       
@@ -132,11 +146,16 @@ class VacanteController extends Controlador {
     }
 
     $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-    $registrosPorPagina = 2;
+    $registrosPorPagina = 6;
     $totalRegistros = $this->vacanteModelo->contarVacantes();
     $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 
-    $vacantes = $this->vacanteModelo->obtenerVacantesPaginados($pagina, $registrosPorPagina);
+    // Si solo hay una página, no necesitamos paginación
+    if ($totalRegistros <= $registrosPorPagina) {
+      $totalPaginas = 1;
+    }
+
+    $vacantes = $this->vacanteModelo->obtenerVacantes();
 
     $datos = [
       'vacantes' => $vacantes,

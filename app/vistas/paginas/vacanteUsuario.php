@@ -60,11 +60,12 @@
             </div>
 
             <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
-                    <div class="toast-content">
-                        <span class="close-toast">&times;</span>
-                        <p id="toast-message"></p>
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Notificación</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
+                    <div class="toast-body" id="toastMessage"></div>
                 </div>
             </div>
             
@@ -99,38 +100,30 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var toast = document.getElementById('toast');
-        var toastMessage = document.getElementById('toast-message');
-        var closeToast = document.querySelector('.close-toast');
-
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.style.display = 'block';
-            setTimeout(function () {
-                toast.style.display = 'none';
-            }, 3000); // El toast se ocultará después de 3 segundos
-        }
-
-        closeToast.addEventListener('click', function () {
-            toast.style.display = 'none';
-        });
-
+    document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
-        const toastParam = urlParams.get('toast');
-
-        if (toastParam) {
-            if (toastParam === 'error') {
-                showToast('¡Error! Necesitas cargar un CV.');
-            } else if (toastParam === 'exito') {
-                showToast('¡Inscripción exitosa!');
-            } else if (toastParam === 'yaInscripto') {
-                showToast('Ya se encuentra inscripto en esta vacante.');
+        const toast = urlParams.get('toast');
+        
+        if (toast) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElement);
+            const toastMessage = document.getElementById('toastMessage');
+            
+            switch(toast) {
+                case 'exito':
+                    toastMessage.textContent = 'Inscripción realizada con éxito';
+                    break;
+                case 'error':
+                    toastMessage.textContent = 'Debe cargar su CV antes de inscribirse';
+                    break;
+                case 'yaInscripto':
+                    toastMessage.textContent = 'Ya está inscripto en esta vacante';
+                    break;
             }
+            
+            toastBootstrap.show();
         }
-
     });
-
 </script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

@@ -9,11 +9,6 @@ class LoginController extends Controlador {
   }
 
   public function login() {
-    if (!isset($_SESSION['actualizacion_vacantes_realizada'])) {
-      $this->actualizarEstadosVacantes();
-      $_SESSION['actualizacion_vacantes_realizada'] = true;
-    }
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST["username"]) && isset($_POST["password"])) {
         $username = $_POST["username"];
@@ -145,7 +140,11 @@ class LoginController extends Controlador {
     $vacanteModelo = new Vacante();
     $vacanteController = new VacanteController();
 
-    $vacanteModelo->actualizarVacantesAbiertas();
-    $vacanteController->actualizarVacantesCerradasYNotificar();
+    try {
+      $vacanteModelo->actualizarVacantesAbiertas();
+      $vacanteController->actualizarVacantesCerradasYNotificar();
+    } catch (Exception $e) {
+      error_log('Error al actualizar estados de vacantes: ' . $e->getMessage());
+    }
   }
 }

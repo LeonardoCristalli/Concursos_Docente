@@ -5,6 +5,14 @@
 
 <main class="main-container w-100 m-auto">
 
+  <?php if (isset($_SESSION['mensaje_error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <?php echo $_SESSION['mensaje_error']; ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['mensaje_error']); ?>
+  <?php endif; ?>
+
   <?php if ($_SESSION['tipo_usu'] !== 'Admin'): ?>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -38,7 +46,9 @@
 
             <div class="form-group mb-3">
               <label for="fecha_ini" class="form-label">Fecha de Inicio:<sup>*</sup></label>
-              <input type="date" id="fecha_ini" name="fecha_ini" class="form-control">
+              <input type="date" id="fecha_ini" name="fecha_ini" class="form-control" 
+                     min="<?php echo date('Y-m-d'); ?>" 
+                     value="<?php echo date('Y-m-d'); ?>">
             </div>
 
             <div class="form-group mb-3">
@@ -91,5 +101,27 @@
     </div>
   </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fechaIni = document.getElementById('fecha_ini');
+    const fechaFin = document.getElementById('fecha_fin');
+    
+    // Establecer fecha mínima de cierre al cargar la página
+    const fechaInicial = new Date(fechaIni.value);
+    fechaInicial.setDate(fechaInicial.getDate() + 1);
+    fechaFin.min = fechaInicial.toISOString().split('T')[0];
+
+    // Actualizar fecha mínima de cierre cuando cambia fecha de inicio
+    fechaIni.addEventListener('change', function() {
+        const fechaInicio = new Date(fechaIni.value);
+        fechaInicio.setDate(fechaInicio.getDate() + 1);
+        fechaFin.min = fechaInicio.toISOString().split('T')[0];
+        if(fechaFin.value && fechaFin.value <= fechaIni.value) {
+            fechaFin.value = fechaInicio.toISOString().split('T')[0];
+        }
+    });
+});
+</script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

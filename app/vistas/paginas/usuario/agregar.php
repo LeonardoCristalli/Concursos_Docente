@@ -38,8 +38,11 @@
               </div>
 
               <div class="form-group mb-3">
-                <label for="fecha_nac" class="form-label">Fecha de Nacimiento: <sup>*</sup></label>
-                <input type="date" id="fecha_nac" name="fecha_nac" class="form-control">
+                <label for="fecha_nac" class="form-label">Fecha de Nacimiento:<sup>*</sup></label>
+                <input type="date" id="fecha_nac" name="fecha_nac" class="form-control"
+                       max="<?php echo date('Y-m-d', strtotime('-18 years')); ?>"
+                       min="<?php echo date('Y-m-d', strtotime('-100 years')); ?>"
+                       value="<?php echo date('Y-m-d', strtotime('-18 years')); ?>">
               </div>
 
               <div class="form-group mb-3">

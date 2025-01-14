@@ -20,7 +20,7 @@ header .nav-link.text-secondary {
 
 .main-container {
   padding: 20px;
-  overflow-y: hidden;
+  overflow-x: hidden;
   min-height: calc(100vh - 100px);
 }
 
@@ -166,4 +166,93 @@ footer iframe {
   border-radius: 20px;
   padding: 10px 20px;
   margin-top: 10px; /* Espaciado entre el texto y el botón */
+}
+
+/* Estilos para cards en listas */
+.hover-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  height: 100%;
+  width: 100%;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+.user-details p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.user-details i {
+  width: 20px;
+  color: #666;
+}
+
+/* Estilos para detalles de vacantes */
+.vacancy-details p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.vacancy-details p strong {
+  color: #333;
+}
+
+/* Ajustar el contenedor de cards */
+.row.row-cols-1.row-cols-md-2.row-cols-lg-3 {
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
+}
+
+/* Ajustar las cards */
+.hover-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  height: 100%;
+  width: 100%;
+}
+
+/* Ajustar el contenedor de la card */
+.col {
+  padding: 10px;
+}
+
+/* Estilos para la tabla de vacantes en RAPanel */
+.vacancy-row:hover {
+  background-color: rgba(0,0,0,.05);
+}
+
+.inscripciones-container {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.05);
+}
+
+.inscripciones-row td {
+  padding: 0 !important;
+}
+
+.inscripciones-container .table {
+  margin-bottom: 0;
+}
+
+/* Estilos para RAPanel */
+.vacante-item {
+  transition: all 0.2s ease;
+}
+
+.vacante-item:hover {
+  transform: translateX(5px);
+}
+
+.vacante-item.active {
+  border-left: 4px solid #0d6efd;
+  background-color: #f8f9fa;
+}
+
+#inscripciones-panel {
+  min-height: 400px;
+  border-left: 1px solid #dee2e6;
 }

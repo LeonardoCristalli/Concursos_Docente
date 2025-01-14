@@ -4,77 +4,94 @@
 ?>
 
 <main class="main-container w-100 m-auto"> 
+  
+  <?php if (isset($_SESSION['mensaje_exito'])): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <?php echo $_SESSION['mensaje_exito']; ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['mensaje_exito']); ?>
+  <?php endif; ?>
 
-  <div class="row mb-4 g-0">
-
+  <div class="row mb-4">
     <div class="col-md-1">
       <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>
     </div>
     
-    <div class="col-md-11">
+    <div class="col-md-8">
       <h2>Usuarios</h2>
-      <div class="table-responsive mb-4">
-        <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th class="text-center">Nombre</th>
-              <th class="text-center">Apellido</th>
-              <th class="text-center">Fecha de Nacimiento</th>
-              <th class="text-center">Sexo</th>
-              <th class="text-center">Dirección</th>
-              <th class="text-center">Teléfono</th>
-              <th class="text-center">Email</th>
-              <th class="text-center">Dni</th>
-              <th class="text-center">Cuil</th>
-              <th class="text-center">Rol</th>
-              <th class="text-center">Legajo</th>
-              <th class="text-center">Usuario</th>
-              <th class="text-center">Contraseña</th>
-              <th class="text-center">CV</th>           
-              <th class="text-center sticky-col" colspan="2">Acciones</th>
-            </tr>              
-          </thead>  
-          <tbody>
-            <?php foreach($datos['usuarios'] as $usuario) : ?>
-            <tr>
-              <td class="text-center"><?php echo $usuario->nombre; ?></td>
-              <td class="text-center"><?php echo $usuario->apellido; ?></td>
-              <td class="text-center"><?php echo $usuario->fecha_nac; ?></td>
-              <td class="text-center"><?php echo $usuario->sexo; ?></td>
-              <td class="text-center"><?php echo $usuario->direccion; ?></td>
-              <td class="text-center"><?php echo $usuario->telefono; ?></td>
-              <td class="text-center"><?php echo $usuario->email; ?></td>
-              <td class="text-center"><?php echo $usuario->nro_dni; ?></td>
-              <td class="text-center"><?php echo $usuario->cuil; ?></td>
-              <td class="text-center"><?php echo $usuario->tipo_usu; ?></td>
-              <td class="text-center"><?php echo $usuario->nro_legajo; ?></td>
-              <td class="text-center"><?php echo $usuario->usuario; ?></td>
-              <td class="text-center"><?php echo $usuario->password; ?></td>
-              <td class="text-center"><?php echo $usuario->cv; ?></td>
-              
-              <td class="sticky-col actions-cell">
-                <a href="<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>" class="btn btn-warning">Editar</a>
-                <form action="<?php echo RUTA_URL;?>/usuariocontroller/borrarUsuario/<?php echo $usuario->id; ?>" method="POST">
-                  <input type="hidden" name="id" value="<?php echo $usuario->id; ?>">
-                  <input type="submit" class="btn btn-danger" value="Borrar">
-                </form>
-              </td>          
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
+    </div>
+
+    <div class="col-md-3 text-end">
+      <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-primary">
+        Agregar Usuario
+      </a>
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <div class="col-auto">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <?php foreach($datos['usuarios'] as $usuario): ?>
+      <div class="col">
+        <div class="card h-100 shadow-sm hover-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h5 class="card-title mb-0">
+                <?php echo htmlspecialchars($usuario->nombre . ' ' . $usuario->apellido); ?>
+              </h5>
+              <span class="badge bg-<?php 
+                switch($usuario->tipo_usu) {
+                  case 'Admin':
+                    echo 'danger';  // rojo
+                    break;
+                  case 'RA':
+                    echo 'warning'; // amarillo
+                    break;
+                  case 'JC':
+                    echo 'success'; // verde
+                    break;
+                  default:
+                    echo 'info';    // azul - para Usuario normal
+                }
+              ?>">
+                <?php echo htmlspecialchars($usuario->tipo_usu); ?>
+              </span>
+            </div>
+
+            <div class="user-details mb-3">
+              <p class="mb-1">Email: <?php echo htmlspecialchars($usuario->email); ?></p>
+              <p class="mb-1">Tel: <?php echo htmlspecialchars($usuario->telefono); ?></p>
+              <p class="mb-1">DNI: <?php echo htmlspecialchars($usuario->nro_dni); ?></p>
+              <?php if($usuario->nro_legajo): ?>
+                <p class="mb-1">Legajo: <?php echo htmlspecialchars($usuario->nro_legajo); ?></p>
+              <?php endif; ?>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-sm btn-outline-primary" 
+                      onclick="window.location.href='<?php echo RUTA_URL; ?>/usuariocontroller/editarUsuario/<?php echo $usuario->id; ?>'">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-outline-danger" 
+                      onclick="confirmarBorrado(<?php echo $usuario->id; ?>, '<?php echo $usuario->nombre . ' ' . $usuario->apellido; ?>')">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12 d-flex justify-content-center">
       <nav aria-label="Page navigation">
         <ul class="pagination">
           <?php if ($datos['totalPaginas'] > 1): ?>
             <?php for($i = 1; $i <= $datos['totalPaginas']; $i++): ?>
               <li class="page-item <?php echo ($i == $datos['paginaActual']) ? 'active' : ''; ?>">
-                <a class="page-link" href="<?php echo RUTA_URL; ?>/usuariocontroller/listarUsuarios?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <a class="page-link" href="<?php echo RUTA_URL; ?>/usuariocontroller/listarUsuarios?pagina=<?php echo $i; ?>">
+                  <?php echo $i; ?>
+                </a>
               </li>
             <?php endfor; ?>
           <?php endif; ?>
@@ -82,15 +99,70 @@
       </nav>
     </div>
   </div>
+</main>
 
-  <div class="row">
-    <div class="col-2 offset-10">
-      <div>
-        <a href="<?php echo RUTA_URL; ?>/usuariocontroller/agregarUsuario" class="btn btn-primary w-100">Agregar Usuario</a>
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro que deseas eliminar al usuario <span id="userName"></span>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form id="deleteForm" action="" method="POST" style="display: inline;">
+            <input type="hidden" name="id" id="deleteId">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Toast para mensajes -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Notificación</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="toastMessage"></div>
+  </div>
+</div>
+
+<script>
+function confirmarBorrado(id, nombre) {
+  document.getElementById('userName').textContent = nombre;
+  document.getElementById('deleteId').value = id;
+  document.getElementById('deleteForm').action = '<?php echo RUTA_URL; ?>/usuariocontroller/borrarUsuario/' + id;
   
-</main> 
+  new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const toast = urlParams.get('toast');
+  
+  if (toast) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElement);
+    const toastMessage = document.getElementById('toastMessage');
+    
+    switch(toast) {
+      case 'usuarioCreado':
+        toastMessage.textContent = 'Usuario creado exitosamente';
+        break;
+    }
+    
+    toastBootstrap.show();
+  }
+});
+</script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

@@ -17,6 +17,19 @@
 
       <h1 class="h4 mb-4 text-center">Iniciar sesión</h1>
   
+      <?php if(isset($_SESSION["mensaje_error"])): ?>
+        <div class="alert alert-danger">
+          <?php echo $_SESSION["mensaje_error"]; ?>
+        </div>
+        <?php unset($_SESSION["mensaje_error"]); ?>
+      <?php endif; ?>
+      <?php if(isset($_SESSION["mensaje_exito"])): ?>
+        <div class="alert alert-success">
+          <?php echo $_SESSION["mensaje_exito"]; ?>
+        </div>
+        <?php unset($_SESSION["mensaje_exito"]); ?>
+      <?php endif; ?>
+
       <div class="form-floating mb-3">
         <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>
         <label for="username">Usuario</label>

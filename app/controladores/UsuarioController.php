@@ -82,17 +82,17 @@ class UsuarioController extends Controlador {
         $datos['password'] = $passwordHash;
 
         if ($this->usuarioModelo->agregarUsuario($datos)) {
-
           if (!isset($_SESSION['usuario_id'])) {
+            $_SESSION['mensaje_exito'] = 'Usuario creado exitosamente. Por favor, inicie sesión.';
             redireccionar('/paginas/login');
           } else {
-            redireccionar('/usuariocontroller/listarUsuarios');
-          }                      
+            redireccionar('/usuariocontroller/listarUsuarios?toast=usuarioCreado');
+          }
         } else {
           if (file_exists($fileDestination)) {
             unlink($fileDestination);
           }
-          echo "No se pudo agregar el usuario.";
+          die('Algo salió mal');
         }
       } else {
         die('Datos de usuario no válidos');

@@ -4,7 +4,6 @@
 ?>
 
 <main class="main-container w-100 m-auto">
-
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
@@ -13,94 +12,88 @@
   </nav>
 
   <div class="row">
+    <!-- Lista de vacantes -->
     <div class="col-md-4">
       <h2>Vacantes</h2>
-      <table class="table table-striped table-hover table-sm">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">ID</th>
-            <th scope="col">Catedra</th>  
-            <th scope="col">Estado</th>
-            <th scope="col"></th>
-          </tr>              
-        </thead>  
-        <tbody>
-          <?php $cont = 1; ?>
-          <?php if (isset($datos['vacantesDetalles']) && !empty($datos['vacantesDetalles'])) : ?>
-            <?php foreach($datos['vacantesDetalles'] as $vacanteDetalle) : ?>
-              <tr>
-                <th scope="row"><?php echo $cont++; ?></th>
-                <td><?php echo $vacanteDetalle->id; ?></td>
-                <td>
-                  <a href="<?php echo RUTA_URL . '/inscripcionController/obtenerDetallesInscripPorVacanteId/' . $vacanteDetalle->id; ?>">
-                    <?php echo $vacanteDetalle->nombre_catedra; ?>
-                  </a>
-                </td>
-                <td><?php echo isset($vacanteDetalle->estado_descrip) ? $vacanteDetalle->estado_descrip : 'Estado desconocido'; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else : ?>
-            <tr>
-              <td colspan="3">No hay vacantes disponibles.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
+      <div class="list-group">
+        <?php if(isset($datos['vacantesDetalles']) && is_array($datos['vacantesDetalles'])): ?>
+          <?php foreach($datos['vacantesDetalles'] as $vacante): ?>
+            <a href="<?php echo RUTA_URL; ?>/inscripcioncontroller/obtenerDetallesInscripPorVacanteId/<?php echo $vacante->id; ?>" 
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-1"><?php echo htmlspecialchars($vacante->catedra_nombre); ?></h6>
+                <small class="text-muted">ID: <?php echo $vacante->id; ?></small>
+              </div>
+              <span class="badge bg-<?php 
+                switch($vacante->estado_descrip) {
+                  case 'Nueva': echo 'secondary'; break;
+                  case 'Abierta': echo 'success'; break;
+                  case 'Cerrada': echo 'danger'; break;
+                  case 'Evaluada': echo 'warning'; break;
+                  case 'Publicada': echo 'info'; break;
+                  default: echo 'secondary';
+                }
+              ?>">
+                <?php echo $vacante->estado_descrip; ?>
+              </span>
+            </a>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div class="alert alert-info">
+            No hay vacantes disponibles
+          </div>
+        <?php endif; ?>
+      </div>
     </div>
 
+    <!-- Panel de inscripciones -->
     <div class="col-md-8">
-      <div class="table-responsive mb-4" id="inscripciones-vacante">
-        <h2>Inscripciones</h2>
-        <table class="table table-striped table-hover table-sm">
-           <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Usuario</th>              
-              <th scope="col">Fecha de Inscripción</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if (isset($datos['inscripciones']) && !empty($datos['inscripciones'])) : ?>
-              <?php $cont = 1; ?>
-              <?php foreach ($datos['inscripciones'] as $inscripcion) : ?>
-                <tr>
-                  <th scope="row"><?php echo $cont; ?></th>
-                  <td><?php echo $inscripcion->usuario; ?></td>
-                  <td><?php echo $inscripcion->fecha; ?></td>
-                  <td>
-                    <a href="<?php echo RUTA_URL;?>/usuarioController/descargarCV/<?php echo $inscripcion->cv; ?>"  class="btn btn-sm btn-dark">
-                      Descargar CV
-                    </a>                  
-                  </td>
-                </tr>
-                <?php $cont++; ?>
-              <?php endforeach; ?>
-            <?php else : ?>
-              <tr>
-                <td colspan="3">No hay inscripciones para esta vacante.</td>
-              </tr>
+      <?php if(isset($datos['inscripciones'])): ?>
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Inscripciones</h5>
+          </div>
+          <div class="card-body">
+            <?php if(empty($datos['inscripciones'])): ?>
+              <div class="alert alert-info">
+                No hay inscripciones para esta vacante
+              </div>
+            <?php else: ?>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Postulante</th>
+                      <th>Usuario</th>
+                      <th>Fecha</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($datos['inscripciones'] as $inscripcion): ?>
+                      <tr>
+                        <td><?php echo $inscripcion->nombre . ' ' . $inscripcion->apellido; ?></td>
+                        <td><?php echo $inscripcion->usuario; ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($inscripcion->fecha)); ?></td>
+                        <td>
+                          <a href="<?php echo RUTA_URL; ?>/usuariocontroller/descargarCV/<?php echo $inscripcion->usuario_id; ?>" 
+                             class="btn btn-sm btn-outline-primary">Ver CV</a>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             <?php endif; ?>
-          </tbody>  
-        </table>
-      </div>
+          </div>
+        </div>
+      <?php else: ?>
+        <div class="text-center p-5 text-muted">
+          <h4>Seleccione una vacante para ver sus inscripciones</h4>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </main>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var inscripcionesVacante = document.getElementById("inscripciones-vacante");
-
-    <?php if(!isset($datos['inscripciones'])) : ?>
-
-    if (inscripcionesVacante) {
-      inscripcionesVacante.style.display = "none";
-    }
-
-    <?php endif; ?>
-  });
-</script>
 
 <?php require_once RUTA_APP . '/vistas/inc/footer.php'; ?>
