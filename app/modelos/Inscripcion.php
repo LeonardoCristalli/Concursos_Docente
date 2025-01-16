@@ -118,5 +118,14 @@ class Inscripcion {
     $this->db->bind(':vacanteId', $vacanteId);
     return $this->db->registros();
   }
+
+  public function obtenerInscripcionesPorVacanteId($vacante_id) {
+    $this->db->query("SELECT i.*, u.nombre, u.apellido, u.usuario, u.cv 
+                      FROM inscripciones i 
+                      INNER JOIN usuarios u ON i.usuario_id = u.id 
+                      WHERE i.vacante_id = :vacante_id");
+    $this->db->bind(':vacante_id', $vacante_id);
+    return $this->db->registros();
+  }
   
 }

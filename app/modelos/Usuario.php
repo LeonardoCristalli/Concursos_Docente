@@ -15,9 +15,9 @@ class Usuario {
 
   public function agregarUsuario($datos) {
     $this->db->query('INSERT INTO usuarios (nombre, apellido, fecha_nac, sexo, direccion, telefono, nro_dni, email, 
-                                  cuil, tipo_usu, nro_legajo, usuario, password, cv) 
+                                  cuil, tipo_usu, usuario, password, cv) 
                       VALUES (:nombre, :apellido, :fecha_nac, :sexo, :direccion, :telefono, :nro_dni, :email, :cuil, 
-                              :tipo_usu, :nro_legajo, :usuario, :password, :cv)');
+                              :tipo_usu, :usuario, :password, :cv)');
     
     $this->db->bind(':nombre', $datos['nombre']);
     $this->db->bind(':apellido', $datos['apellido']);
@@ -29,7 +29,6 @@ class Usuario {
     $this->db->bind(':email', $datos['email']);
     $this->db->bind(':cuil', $datos['cuil']);
     $this->db->bind(':tipo_usu', $datos['tipo_usu']);
-    $this->db->bind(':nro_legajo', $datos['nro_legajo']);
     $this->db->bind(':usuario', $datos['usuario']);
     $this->db->bind(':password', $datos['password']);
     $this->db->bind(':cv', $datos['cv']);
@@ -74,7 +73,7 @@ class Usuario {
 
     $this->db->query('UPDATE usuarios SET nombre = :nombre, apellido = :apellido, fecha_nac = :fecha_nac, sexo = :sexo,
                       direccion = :direccion, telefono = :telefono, nro_dni = :nro_dni, email = :email, cuil = :cuil,  
-                      tipo_usu = :tipo_usu, nro_legajo = :nro_legajo, usuario = :usuario, password = :password, cv = :cv
+                      tipo_usu = :tipo_usu, usuario = :usuario, password = :password, cv = :cv
                       WHERE id = :id');
 
     $this->db->bind(':id', $datos['id']);
@@ -88,7 +87,6 @@ class Usuario {
     $this->db->bind(':email', $datos['email']);
     $this->db->bind(':cuil', $datos['cuil']);      
     $this->db->bind(':tipo_usu', $datos['tipo_usu']);
-    $this->db->bind(':nro_legajo', $datos['nro_legajo']);
     $this->db->bind(':usuario', $datos['usuario']);
     $this->db->bind(':password', $datos['password']);
     $this->db->bind(':cv', $datos['cv']);

@@ -61,9 +61,6 @@
               <p class="mb-1">Email: <?php echo htmlspecialchars($usuario->email); ?></p>
               <p class="mb-1">Tel: <?php echo htmlspecialchars($usuario->telefono); ?></p>
               <p class="mb-1">DNI: <?php echo htmlspecialchars($usuario->nro_dni); ?></p>
-              <?php if($usuario->nro_legajo): ?>
-                <p class="mb-1">Legajo: <?php echo htmlspecialchars($usuario->nro_legajo); ?></p>
-              <?php endif; ?>
             </div>
 
             <div class="d-flex justify-content-end gap-2">
@@ -80,24 +77,6 @@
         </div>
       </div>
     <?php endforeach; ?>
-  </div>
-
-  <div class="row mt-4">
-    <div class="col-12 d-flex justify-content-center">
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <?php if ($datos['totalPaginas'] > 1): ?>
-            <?php for($i = 1; $i <= $datos['totalPaginas']; $i++): ?>
-              <li class="page-item <?php echo ($i == $datos['paginaActual']) ? 'active' : ''; ?>">
-                <a class="page-link" href="<?php echo RUTA_URL; ?>/usuariocontroller/listarUsuarios?pagina=<?php echo $i; ?>">
-                  <?php echo $i; ?>
-                </a>
-              </li>
-            <?php endfor; ?>
-          <?php endif; ?>
-        </ul>
-      </nav>
-    </div>
   </div>
 </main>
 

@@ -13,11 +13,30 @@ class UsuarioController extends Controlador {
   public function agregarUsuario() {
     $catedras = $this->catedraModelo->obtenerCatedras();
 
+    $puedeAsignarRoles = isset($_SESSION['usuario_id']) && $_SESSION['tipo_usu'] === 'Admin';
+
+    $datos = [
+      'nombre' => '',
+      'apellido' => '',
+      'fecha_nac' => '',
+      'sexo' => '',
+      'direccion' => '',
+      'telefono' => '',
+      'email' => '',
+      'nro_dni' => '',
+      'cuil' => '',
+      'tipo_usu' => '',
+      'nro_legajo' => '',
+      'usuario' => '',
+      'password' => '',                  
+      'cv' => '',
+      'catedras' => $catedras,
+      'mostrar_tipo_usu' => $puedeAsignarRoles
+    ];
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-      $tipo_usu = isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin') ? trim($_POST['tipo_usu']) : 'Usuario';
-      $nro_legajo = isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin') ? trim($_POST['nro_legajo']) : null;
+      $tipo_usu = isset($_SESSION['tipo_usu']) && $_SESSION['tipo_usu'] === 'Admin' ? trim($_POST['tipo_usu']) : 'Usuario';
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
@@ -29,8 +48,7 @@ class UsuarioController extends Controlador {
         'email' => trim($_POST['email']),  
         'nro_dni' => trim($_POST['nro_dni']),      
         'cuil' => trim($_POST['cuil']),                    
-        'tipo_usu' => $tipo_usu,
-        'nro_legajo' => $nro_legajo,
+        'tipo_usu' => $puedeAsignarRoles ? trim($_POST['tipo_usu']) : 'Usuario',
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
         'cv' => '',
@@ -109,7 +127,6 @@ class UsuarioController extends Controlador {
         'nro_dni' => '',
         'cuil' => '',
         'tipo_usu' => '',
-        'nro_legajo' => '',
         'usuario' => '',
         'password' => '',                  
         'cv' => '',
@@ -121,8 +138,17 @@ class UsuarioController extends Controlador {
   }
 
   public function editarUsuario($id) {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!isset($_SESSION['usuario_id'])) {
+      redireccionar('/');
+    }
 
+    // Solo permitir editar su propio perfil o ser Admin
+    if ($_SESSION['usuario_id'] != $id && 
+      $_SESSION['tipo_usu'] !== 'Admin') {
+      redireccionar('/');
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $usuario = $this->usuarioModelo->obtenerUsuarioId($id);
 
       $datos = [
@@ -136,8 +162,8 @@ class UsuarioController extends Controlador {
         'email' => trim($_POST['email']), 
         'nro_dni' => trim($_POST['nro_dni']),    
         'cuil' => trim($_POST['cuil']),                    
-        'tipo_usu' => trim($_POST['tipo_usu']),
-        'nro_legajo' => trim($_POST['nro_legajo']),
+        'tipo_usu' => $_SESSION['tipo_usu'] === 'Admin' ? 
+                      trim($_POST['tipo_usu']) : $usuario->tipo_usu,
         'usuario' => trim($_POST['usuario']),
         'password' => !empty(trim($_POST['password'])) ? trim($_POST['password']) : $usuario->password, 
         'cv' => isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK ? $_FILES['cv']['name'] : $usuario->cv, 
@@ -201,7 +227,11 @@ class UsuarioController extends Controlador {
         }
 
         if ($this->usuarioModelo->actualizarUsuario($datos)) {   
-          $this->listarUsuarios();
+          if ($_SESSION['tipo_usu'] == 'Usuario') {
+            $_SESSION['mensaje'] = 'Datos actualizados correctamente';
+            redireccionar('/');
+          }
+          redireccionar('/usuariocontroller/listarusuarios');
         } else {
           if (!empty($fileDestination) && file_exists($fileDestination)) {
             unlink($fileDestination);
@@ -227,10 +257,10 @@ class UsuarioController extends Controlador {
         'nro_dni' => $usuario->nro_dni,
         'cuil' => $usuario->cuil,                  
         'tipo_usu' => $usuario->tipo_usu,
-        'nro_legajo' => $usuario->nro_legajo,
         'usuario' => $usuario->usuario,
         'password' => $usuario->password,
         'cv' => $usuario->cv,
+        'mostrar_tipo_usu' => in_array($_SESSION['tipo_usu'], ['Admin', 'RA'])
       ];
 
         $this->vista('paginas/usuario/editar', $datos);
@@ -253,23 +283,12 @@ class UsuarioController extends Controlador {
   }
 
   public function listarUsuarios() {
-    if (session_status() == PHP_SESSION_NONE) {
-      session_start();
+    if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usu'] !== 'Admin') {
+      redireccionar('/');
     }
 
-    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-    $registrosPorPagina = 4;
-    $totalRegistros = $this->usuarioModelo->contarUsuarios();
-    $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
-
-    $usuarios = $this->usuarioModelo->obtenerUsuariosPaginados($pagina, $registrosPorPagina);
-
-    $datos = [
-      'usuarios' => $usuarios,
-      'totalPaginas' => $totalPaginas,
-      'paginaActual' => $pagina
-    ];
-
+    $usuarios = $this->usuarioModelo->obtenerUsuarios();
+    $datos = ['usuarios' => $usuarios];
     $this->vista('paginas/usuario/listar', $datos);
   }
 
@@ -402,30 +421,25 @@ class UsuarioController extends Controlador {
     }
   }
 
-  public function descargarCV($cv) { 
-    if (!isset($_SESSION['tipo_usu']) || !in_array($_SESSION['tipo_usu'], ['RA', 'JC', 'Admin'])) {
-      die("No tiene permisos para descargar este archivo.");
+  public function descargarCV($id) {
+    if (!isset($_SESSION['usuario_id']) || !in_array($_SESSION['tipo_usu'], ['Admin', 'RA', 'JC'])) {
+      redireccionar('/');
     }
 
-    $file_path = $this->uploadPath . $cv;
-
-    if(!empty($cv) && file_exists($file_path)) {
-      if (ob_get_length()) {
-        ob_end_clean();
-      }  
-      header('Cache-Control: public');
-      header('Content-Description: File Transfer');
-      header('Content-Type: application/pdf');
-      header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
-      header('Content-Length: ' . filesize($file_path));
-      header('Content-Transfer-Encoding: binary');
-
-      readfile($file_path);
-      exit;
+    $usuario = $this->usuarioModelo->obtenerUsuarioId($id);
+    if ($usuario) {
+      $cvPath = RUTA_APP . '/uploads/' . $usuario->cv;
       
-    } else {
-      echo "El archivo no existe.";
-      redireccionar('/paginas/RAPanel');
+      if (file_exists($cvPath)) {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="CV_' . $usuario->apellido . '_' . $usuario->nombre . '.pdf"');
+        header('Content-Length: ' . filesize($cvPath));
+        readfile($cvPath);
+        exit;
+      }
     }
+    
+    $_SESSION['mensaje_error'] = 'No se pudo descargar el CV';
+    redireccionar('/');
   }
 }

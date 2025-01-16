@@ -77,7 +77,9 @@
                         <td><?php echo date('d/m/Y', strtotime($inscripcion->fecha)); ?></td>
                         <td>
                           <a href="<?php echo RUTA_URL; ?>/usuariocontroller/descargarCV/<?php echo $inscripcion->usuario_id; ?>" 
-                             class="btn btn-sm btn-outline-primary">Ver CV</a>
+                             class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-download"></i> Descargar CV
+                          </a>
                         </td>
                       </tr>
                     <?php endforeach; ?>

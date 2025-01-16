@@ -82,17 +82,17 @@
               <input type="text" id="cuil" name="cuil" class="form-control" value="<?php echo $datos['cuil']; ?>">
             </div>
 
-            <fieldset>
-              <div class="form-group mb-3">
-                <label for="tipo_usu" class="form-label">Tipo de Usuario: <sup>*</sup></label>
-                <input type="text" id="tipo_usu" name="tipo_usu" class="form-control" value="<?php echo $datos['tipo_usu']; ?>">
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="nro_legajo" class="form-label">Número de Legajo: <sup>*</sup></label>
-                <input type="text" id="nro_legajo" name="nro_legajo" class="form-control" value="<?php echo $datos['nro_legajo']; ?>">
-              </div>
-            </fieldset>
+            <?php if($datos['mostrar_tipo_usu']): ?>
+                <div class="mb-3">
+                    <label for="tipo_usu">Tipo de Usuario:</label>
+                    <select name="tipo_usu" class="form-control">
+                        <option value="Usuario" <?php echo ($datos['tipo_usu'] == 'Usuario') ? 'selected' : ''; ?>>Usuario</option>
+                        <option value="JC" <?php echo ($datos['tipo_usu'] == 'JC') ? 'selected' : ''; ?>>Jefe de Cátedra</option>
+                        <option value="RA" <?php echo ($datos['tipo_usu'] == 'RA') ? 'selected' : ''; ?>>Responsable Administrativo</option>
+                        <option value="Admin" <?php echo ($datos['tipo_usu'] == 'Admin') ? 'selected' : ''; ?>>Administrador</option>
+                    </select>
+                </div>
+            <?php endif; ?>
 
             <fieldset>
               <div class="form-group mb-3">

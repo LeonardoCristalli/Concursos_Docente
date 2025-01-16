@@ -120,14 +120,15 @@
             </fieldset>
           </div>
 
-          <div class="col-md-3">
-            <fieldset>
-              <legend>Otros Detalles</legend>
-
-              <?php if (isset($_SESSION['tipo_usu']) && ($_SESSION['tipo_usu'] === 'RA' || $_SESSION['tipo_usu'] === 'Admin')): ?>
+          <?php if (!isset($_SESSION['usuario_id'])): ?>
+            <input type="hidden" name="tipo_usu" value="Usuario">
+          <?php elseif (isset($_SESSION['tipo_usu']) && $_SESSION['tipo_usu'] === 'Admin'): ?>
+            <div class="col-md-3">
+              <fieldset>
+                <legend>Otros Detalles</legend>
                 <div class="form-group mb-3">
                   <label for="tipo_usu" class="form-label">Tipo de Usuario: </label>
-                  <select id="tipo_usu" name="tipo_usu" class="form-select" onchange="mostrarCatedra(this.value)">
+                  <select id="tipo_usu" name="tipo_usu" class="form-select">
                     <option value="" disabled selected></option>
                     <option value="Usuario">Usuario</option>
                     <option value="JC">Jefe de Cátedra</option>
@@ -145,14 +146,9 @@
                     <?php endforeach; ?>
                   </select>
                 </div>
-
-                <div class="form-group mb-3">
-                  <label for="nro_legajo" class="form-label">Número de Legajo: </label>
-                  <input type="text" id="nro_legajo" name="nro_legajo" class="form-control">
-                </div>
-              <?php endif; ?>               
-            </fieldset>
-          </div>
+              </fieldset>
+            </div>
+          <?php endif; ?>
 
           <div class="col-md-5">
             <div class="form-group mb-3">
