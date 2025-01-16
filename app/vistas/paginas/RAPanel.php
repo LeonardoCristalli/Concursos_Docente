@@ -7,12 +7,11 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Inscriptos</li>
+      <li class="breadcrumb-item active" aria-current="page">Inscriptos por Vacante</li>
     </ol>
   </nav>
 
   <div class="row">
-    <!-- Lista de vacantes -->
     <div class="col-md-4">
       <h2>Vacantes</h2>
       <div class="list-group">

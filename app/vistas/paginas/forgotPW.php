@@ -16,7 +16,7 @@
       <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Enviar</button>
 
       <div class="d-flex justify-content-between">
-        <a href="<?php echo RUTA_URL;?>/logincontroller/index" class="btn btn-link p-0">Volver al inicio de sesión</a>
+        <a href="<?php echo RUTA_URL;?>/paginas/login" class="btn btn-link p-0">Volver al inicio de sesión</a>
       </div>
       
       <div id="success-message" class="alert alert-success d-none my-4" role="alert"></div>

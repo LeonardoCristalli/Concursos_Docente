@@ -205,7 +205,7 @@ class Vacante {
 
   public function obtenerVacantesPorUsuarioId($usuarioId) {
 
-    $this->db->query("SELECT v.*, c.nombre AS nombre_catedra, e.descrip AS estado_descrip
+    $this->db->query("SELECT v.*, c.nombre AS catedra_nombre, e.descrip AS estado_descrip
                       FROM vacantes v
                       INNER JOIN catedras c 
                         ON v.catedra_id = c.id

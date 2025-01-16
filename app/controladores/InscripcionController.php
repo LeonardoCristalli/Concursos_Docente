@@ -101,10 +101,19 @@ class InscripcionController extends Controlador {
   }
 
   public function obtenerDetallesInscripPorVacanteId($vacante_id) {
-    $vacantesDetalles = $this->vacanteModelo->obtenerDetalleVacantes();
+    $usuarioId = $_SESSION['usuario_id'];
+    $tipoUsuario = $_SESSION['tipo_usu'];
+    $vacantes = [];
+    
+    if ($tipoUsuario === 'RA') {
+      $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
+    } elseif ($tipoUsuario === 'JC') {
+      $vacantes = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
+    }
+    
     $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
     $datos = [
-      'vacantesDetalles' => $vacantesDetalles,
+      'vacantesDetalles' => $vacantes,
       'inscripciones' => $inscripciones
     ];
 

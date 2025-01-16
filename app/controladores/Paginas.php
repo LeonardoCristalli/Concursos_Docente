@@ -174,14 +174,22 @@ class Paginas extends Controlador {
   }
 
   public function RAPanel() {
-    if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usu'] !== 'RA') {
-        redireccionar('/');
+    if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usu'] !== 'RA' && $_SESSION['tipo_usu'] !== 'JC') {
+      redireccionar('/');
     }
 
-    $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
+    $usuarioId = $_SESSION['usuario_id'];
+    $tipoUsuario = $_SESSION['tipo_usu'];
+    $vacantes = [];
 
+    if ($tipoUsuario === 'RA') {
+      $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
+    } elseif ($tipoUsuario === 'JC') {
+      $vacantes = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
+    }
+    
     $datos = [
-        'vacantesDetalles' => $vacantes
+      'vacantesDetalles' => $vacantes
     ];
 
     $this->vista('paginas/RAPanel', $datos);
