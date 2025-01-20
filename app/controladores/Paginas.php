@@ -206,7 +206,7 @@ class Paginas extends Controlador {
   public function recuperarPW() {
     $this->vista('paginas/forgotPW');
   }
-  
+
   public function OMPanel() {
     $usuarioId = $_SESSION['usuario_id'];
     $vacantesCerradasEvaluadas = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPublicadasPorJefeCatedraId($usuarioId);
@@ -223,6 +223,10 @@ class Paginas extends Controlador {
       $vacante_descrip = $vacanteSeleccionada ? $vacanteSeleccionada->descrip : null;
       $estadoVacante = $vacanteSeleccionada ? $vacanteSeleccionada->estado_id : null;
     }
+
+    usort($inscripciones, function($a, $b) {
+      return $a->puntaje <=> $b->puntaje; 
+    });
 
     $datos = [
       'vacantes' => $vacantesCerradasEvaluadas,

@@ -128,7 +128,7 @@
                 <legend>Otros Detalles</legend>
                 <div class="form-group mb-3">
                   <label for="tipo_usu" class="form-label">Tipo de Usuario: </label>
-                  <select id="tipo_usu" name="tipo_usu" class="form-select">
+                  <select id="tipo_usu" name="tipo_usu" class="form-select" onchange="mostrarCatedra(this.value)">
                     <option value="" disabled selected></option>
                     <option value="Usuario">Usuario</option>
                     <option value="JC">Jefe de Cátedra</option>

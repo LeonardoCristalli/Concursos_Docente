@@ -57,6 +57,19 @@ class UsuarioController extends Controlador {
 
       $datosValidados = $this->validarDatosUsuario($datos);
 
+      $errores = [];
+
+      if ($datos['tipo_usu'] === 'JC' && empty($datos['catedra_id'])) {
+        $errores[] = "El campo catedra_id es obligatorio para Jefe de Cátedra.";
+      }
+
+      if (!empty($errores)) {
+        foreach ($errores as $error) {
+          echo $error . "<br/>";
+        }
+        return; 
+      }
+
       if (is_array($datosValidados)) {
         foreach ($datosValidados as $error) {
           echo $error . "<br/>";

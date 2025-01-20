@@ -247,7 +247,7 @@ class Vacante {
                       ) ve_max 
                         ON ve.vacante_id = ve_max.vacante_id 
                         AND ve.fecha_desde = ve_max.max_fecha_desde
-                      WHERE jc.usuario_id = :usuario_id AND (ve.estado_id = 3 OR ve.estado_id = 1003 OR ve.estado_id = 1004)");
+                      WHERE jc.usuario_id = :usuario_id AND (ve.estado_id = 3 OR ve.estado_id = 4 OR ve.estado_id = 5)");
 
     $this->db->bind(':usuario_id', $usuarioId);
     return $this->db->registros();
@@ -351,14 +351,14 @@ class Vacante {
                         ON v.id = ve.vacante_id
                       INNER JOIN estados e 
                         ON ve.estado_id = e.id
-                      WHERE jc.usuario_id = :usuario_id AND ve.estado_id = 1003");
+                      WHERE jc.usuario_id = :usuario_id AND ve.estado_id = 4");
 
     $this->db->bind(':usuario_id', $usuarioId);
     return $this->db->registros();
   }
 
   public function cambiarEstadoPublicado($vacanteId) {
-    $this->db->query("INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) VALUES (:vacante_id, 1004, GETDATE())");
+    $this->db->query("INSERT INTO vacantes_estados (vacante_id, estado_id, fecha_desde) VALUES (:vacante_id, 5, GETDATE())");
     $this->db->bind(':vacante_id', $vacanteId);
     return $this->db->execute();
   }
@@ -377,7 +377,7 @@ class Vacante {
             ) ve_max 
               ON ve.vacante_id = ve_max.vacante_id 
               AND ve.fecha_desde = ve_max.max_fecha_desde
-            WHERE ve.estado_id = 1004
+            WHERE ve.estado_id = 5
             ORDER BY ve.fecha_desde DESC";
     $this->db->query($sql);
 

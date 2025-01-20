@@ -63,8 +63,13 @@
             </div>
         
             <div class="form-group mb-3">
-              <label for="area_id">Area: <sup>*</sup></label>
-              <input type="number" id="area_id" name="area_id" class="form-control"></input>
+              <label for="area_id">Área: <sup>*</sup></label>
+              <select id="area_id" name="area_id" class="form-select" required>
+                <option value="" disabled selected>Seleccione un área</option>
+                <?php foreach ($datos['areas'] as $area): ?>
+                  <option value="<?php echo $area->id; ?>"><?php echo $area->nombre; ?></option>
+                <?php endforeach; ?>
+              </select>
             </div>
 
             <div class="d-flex justify-content-end">

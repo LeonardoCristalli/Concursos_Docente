@@ -8,6 +8,9 @@ class AreaController extends Controlador {
 
   public function agregarArea() {
 
+    $dptoModelo = $this->modelo('Dpto');
+    $dptos = $dptoModelo->obtenerDptos();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
       $datos = [
@@ -24,6 +27,7 @@ class AreaController extends Controlador {
       $datos = [
         'nombre' => '',       
         'dpto_id' => '',
+        'dptos' => $dptos
       ];
 
       $this->vista('paginas/area/agregar', $datos);

@@ -28,7 +28,7 @@ class VacanteController extends Controlador {
         return;
       }
 
-      $estado_id = ($fecha_ini == $hoy) ? 2 : 1002; // 2 = Abierta, 1002 = Nueva
+      $estado_id = ($fecha_ini == $hoy) ? 2 : 1; // 2 = Abierta, 1 = Nueva
 
       $datos = [
         'descrip' => trim($_POST['descrip']),  
@@ -39,7 +39,6 @@ class VacanteController extends Controlador {
         'exp' => trim($_POST['exp']),
         'catedra_id' => trim($_POST['catedra_id']),
         'estado_id' => $estado_id, 
-        //'fecha_desde' => date('Y-m-d H:i:s'),
         'observacion' => trim($_POST['observacion']),          
       ];
 
@@ -90,7 +89,6 @@ class VacanteController extends Controlador {
         'req' => trim($_POST['req']),
         'tiempo' => trim($_POST['tiempo']),
         'exp' => trim($_POST['exp']),
-        //'estado_id' => trim($_POST['estado_id']),
         'catedra_id' => trim($_POST['catedra_id']),   
       ];
 
@@ -110,7 +108,6 @@ class VacanteController extends Controlador {
         'req' => $vacante->req,
         'tiempo' => $vacante->tiempo,
         'exp' => $vacante->exp,
-        //'estado_id' => $vacante->estado_id,
         'catedra_id' => $vacante->catedra_id,
       ];
 

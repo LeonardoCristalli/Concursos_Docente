@@ -26,7 +26,12 @@
 
             <div class="form-group mb-3">
               <label for="dpto_id">Departamento: <sup>*</sup></label>
-              <input type="number" id="dpto_id" name="dpto_id" class="form-control form-control-lg">
+              <select id="dpto_id" name="dpto_id" class="form-select" required>
+                <option value="" disabled selected>Seleccione un departamento</option>
+                <?php foreach ($datos['dptos'] as $dpto): ?>
+                  <option value="<?php echo $dpto->id; ?>"><?php echo $dpto->nombre; ?></option>
+                <?php endforeach; ?>
+              </select>              
             </div>
 
             <div class="d-flex justify-content-end">

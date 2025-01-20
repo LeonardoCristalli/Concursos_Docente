@@ -8,6 +8,9 @@ class CatedraController extends Controlador {
   }
 
   public function agregarCatedra() {
+    $areaModelo = $this->modelo('Area'); 
+    $areas = $areaModelo->obtenerAreas(); 
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {        
 
       $datos = [
@@ -24,10 +27,9 @@ class CatedraController extends Controlador {
       if ($this->catedraModelo->agregarCatedra($datos)) {
         redireccionar('/catedracontroller/listarcatedras');
       } else {
-        die ('No se pudo agregar el Área');
+        die ('No se pudo agregar la Cátedra');
       }          
     } else {
-      
       $datos = [
         'nombre' => '',  
         'descrip' => '',
@@ -37,6 +39,7 @@ class CatedraController extends Controlador {
         'tipo_cursado' => '',
         'electiva' => '',
         'area_id' => '',
+        'areas' => $areas 
       ];
 
       $this->vista('paginas/catedra/agregar', $datos);

@@ -39,6 +39,10 @@ class Usuario {
       $usuario_id = $pdo->lastInsertId();
 
       if ($datos['tipo_usu'] === 'JC') {
+        if (empty($datos['catedra_id'])) {
+          return false; 
+        }
+
         $catedra_id = $datos['catedra_id'];
         $fecha_desde = date('Y-m-d');  
 
@@ -50,6 +54,7 @@ class Usuario {
         $this->db->bind(':fecha_desde', $fecha_desde);
 
         if (!$this->db->execute()) {
+          $this->borrarUsuario($usuario_id);
           return false;  
         }        
       }

@@ -18,6 +18,7 @@ class LoginController extends Controlador {
           if (password_verify($password, $usuario->password)) {        
             $_SESSION['usuario_id'] = $usuario->id;
             $_SESSION['tipo_usu'] = $usuario->tipo_usu;
+            $this->actualizarEstadosVacantes();
             switch ($usuario->tipo_usu) {                
               case 'Usuario':
                 redireccionar('/vacanteController/vacanteUsuario');
