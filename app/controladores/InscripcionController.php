@@ -129,7 +129,7 @@ class InscripcionController extends Controlador {
         $this->inscripcionModelo->asignarPuntaje($vacante_id, $usuario_id, $puntaje);
       }
 
-      $this->vacanteModelo->actualizarEstadoVacante($vacante_id, 1003);
+      $this->vacanteModelo->actualizarEstadoVacante($vacante_id, 4);
 
       $_SESSION['vacantesDetalles'] = $this->vacanteModelo->obtenerVacantesCerradasEvaluadasPublicadasPorJefeCatedraId($_SESSION['usuario_id']);
 

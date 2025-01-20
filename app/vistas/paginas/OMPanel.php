@@ -60,20 +60,23 @@
       <?php if(isset($datos['vacante_id'])) : ?>
         
         <?php if (empty($datos['inscripciones'])) : ?>
+
           <div class="alert alert-warning">
             No hay inscripciones para esta vacante.
           </div>
+
           <div class="d-flex justify-content-end mt-3">
             <a href="<?php echo RUTA_URL; ?>/vacanteController/finalizarVacante/<?php echo $datos['vacante_id']; ?>" class="btn btn-danger om-btn">Finalizar Vacante</a>
           </div>
+
         <?php else : ?>
           <?php 
             $estadoId = $datos['estado_vacante'];
-            $isEvaluada = $estadoId == 1003; 
+            $isEvaluada = $estadoId == 4; 
             $isCerrada = $estadoId == 3 || isset($_GET['editar']); 
           ?>
 
-          <?php if ($estadoId == 1004) : // Estado "Publicada" ?>
+          <?php if ($estadoId == 5) : // Estado "Publicada" ?>
             <h6>La vacante: <?php echo $datos['vacante_descrip']; ?> está publicada.</h6>
             <div class="d-flex justify-content-end mt-3">
               <a href="<?php echo RUTA_URL; ?>/vacanteController/finalizarVacante/<?php echo $datos['vacante_id']; ?>" class="btn btn-danger om-btn me-2">Finalizar Vacante</a>
@@ -93,13 +96,11 @@
                   </thead>
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                      // Verificar si el parámetro 'editar' está presente en la URL
                       const urlParams = new URLSearchParams(window.location.search);
                       if (urlParams.get('editar') === 'true') {
-                        // Restablecer todos los selectores a "Seleccionar"
                         const selects = document.querySelectorAll('.om-select');
                         selects.forEach(select => {
-                          select.value = ""; // Establecer el valor a vacío
+                          select.value = ""; 
                         });
                       }
                     });

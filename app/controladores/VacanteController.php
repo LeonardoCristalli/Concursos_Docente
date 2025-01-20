@@ -196,7 +196,7 @@ class VacanteController extends Controlador {
   }
 
   public function finalizarVacante($vacanteId) {
-    if ($this->vacanteModelo->cambiarEstadoVacante($vacanteId, 1005)) {
+    if ($this->vacanteModelo->cambiarEstadoVacante($vacanteId, 6)) {
       $_SESSION['mensaje_exito'] = 'La vacante ha sido finalizada correctamente.';
     } else {
       $_SESSION['mensaje_error'] = 'Hubo un error al finalizar la vacante.';
