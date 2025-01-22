@@ -205,4 +205,11 @@ class VacanteController extends Controlador {
     redireccionar('/paginas/OMPanel');
   }
 
+  public function publicarResultados($vacanteId) {
+    $this->vacanteModelo->cambiarEstadoPublicado($vacanteId);
+    $_SESSION['mensaje_exito'] = "Resultados publicados correctamente.";
+    // Redirigir a RAPanel
+    redireccionar('/paginas/RAPanel?vacante_id=' . $vacanteId);
+  }
+
 }

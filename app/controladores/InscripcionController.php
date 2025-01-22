@@ -114,7 +114,8 @@ class InscripcionController extends Controlador {
     $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
     $datos = [
       'vacantesDetalles' => $vacantes,
-      'inscripciones' => $inscripciones
+      'inscripciones' => $inscripciones,
+      'vacante_id' => $vacante_id
     ];
 
     $this->vista('paginas/RAPanel', $datos);

@@ -4,6 +4,14 @@
 ?>
 
 <main class="main-container w-100 m-auto">
+
+  <?php if (isset($_SESSION['mensaje_exito'])): ?>
+    <div class="alert alert-success">
+      <?php echo $_SESSION['mensaje_exito']; ?>
+      <?php unset($_SESSION['mensaje_exito']); ?>
+    </div>
+  <?php endif; ?>
+
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo RUTA_URL; ?>/">Inicio</a></li>
@@ -17,8 +25,7 @@
       <div class="list-group">
         <?php if(isset($datos['vacantesDetalles']) && is_array($datos['vacantesDetalles'])): ?>
           <?php foreach($datos['vacantesDetalles'] as $vacante): ?>
-            <a href="<?php echo RUTA_URL; ?>/inscripcioncontroller/obtenerDetallesInscripPorVacanteId/<?php echo $vacante->id; ?>" 
-               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <a href="<?php echo RUTA_URL; ?>/inscripcioncontroller/obtenerDetallesInscripPorVacanteId/<?php echo $vacante->id; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
               <div>
                 <h6 class="mb-1"><?php echo htmlspecialchars($vacante->catedra_nombre); ?></h6>
                 <small class="text-muted">ID: <?php echo $vacante->id; ?></small>
@@ -75,9 +82,8 @@
                         <td><?php echo $inscripcion->usuario; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($inscripcion->fecha)); ?></td>
                         <td>
-                          <a href="<?php echo RUTA_URL; ?>/usuariocontroller/descargarCV/<?php echo $inscripcion->usuario_id; ?>" 
-                             class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-download"></i> Descargar CV
+                          <a href="<?php echo RUTA_URL; ?>/usuariocontroller/descargarCV/<?php echo $inscripcion->usuario_id; ?>" class="btn btn-sm btn-outline-primary">
+                            Descargar CV
                           </a>
                         </td>
                       </tr>
@@ -85,6 +91,23 @@
                   </tbody>
                 </table>
               </div>
+              <?php 
+                $vacanteSeleccionada = null;
+                foreach ($datos['vacantesDetalles'] as $vacante) {
+                  if ($vacante->id == $datos['vacante_id']) {
+                    $vacanteSeleccionada = $vacante;
+                    break;
+                  }
+                }
+              ?>
+              <?php if ($vacanteSeleccionada && $vacanteSeleccionada->estado_descrip == 'Evaluada' && $_SESSION['tipo_usu'] == 'RA'): ?>
+                <div class="d-flex justify-content-end mt-3">
+                  <form action="<?php echo RUTA_URL; ?>/vacantecontroller/publicarResultados/<?php echo $vacanteSeleccionada->id; ?>" method="POST">
+                    <input type="hidden" name="vacante_id" value="<?php echo $vacanteSeleccionada->id; ?>">
+                    <button type="submit" class="btn btn-success">Publicar</button>
+                  </form>
+                </div>
+              <?php endif; ?>
             <?php endif; ?>
           </div>
         </div>
