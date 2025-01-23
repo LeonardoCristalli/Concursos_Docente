@@ -8,23 +8,6 @@ class Vacante {
     $this->db = new Base;   
   }
 
-  public function obtenerDetalleVacantes() {
-    $this->db->query("SELECT v.*, c.nombre AS catedra_nombre, e.descrip AS estado_descrip
-                      FROM vacantes v
-                      INNER JOIN catedras c ON v.catedra_id = c.id
-                      INNER JOIN vacantes_estados ve ON v.id = ve.vacante_id
-                      INNER JOIN estados e ON ve.estado_id = e.id
-                      INNER JOIN (
-                          SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
-                          FROM vacantes_estados
-                          GROUP BY vacante_id
-                      ) ve_max ON ve.vacante_id = ve_max.vacante_id 
-                          AND ve.fecha_desde = ve_max.max_fecha_desde
-                      ORDER BY v.id DESC");
-
-    return $this->db->registros();
-  }
-
   public function obtenerVacantes() {
     $this->db->query("SELECT v.*, c.nombre AS catedra_nombre, e.descrip AS estado_descrip
                       FROM vacantes v
@@ -32,11 +15,11 @@ class Vacante {
                       INNER JOIN vacantes_estados ve ON v.id = ve.vacante_id
                       INNER JOIN estados e ON ve.estado_id = e.id
                       INNER JOIN (
-                          SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
-                          FROM vacantes_estados
-                          GROUP BY vacante_id
+                        SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
+                        FROM vacantes_estados
+                        GROUP BY vacante_id
                       ) ve_max ON ve.vacante_id = ve_max.vacante_id 
-                          AND ve.fecha_desde = ve_max.max_fecha_desde
+                        AND ve.fecha_desde = ve_max.max_fecha_desde
                       ORDER BY v.id DESC");
 
     return $this->db->registros();
@@ -180,27 +163,6 @@ class Vacante {
       return false;
     }
     
-  }
-
-  public function contarVacantes() {
-    $this->db->query("SELECT COUNT(*) AS total FROM vacantes");
-    return $this->db->registro()->total;
-  }
-
-  public function obtenerVacantesPaginados($pagina, $registrosPorPagina) {
-    $inicio = ($pagina - 1) * $registrosPorPagina;
-    $sql = "SELECT v.id, v.descrip, v.fecha_ini, v.fecha_fin, v.req, v.tiempo, v.exp, c.nombre as catedra_nombre
-            FROM vacantes v
-            INNER JOIN catedras c 
-              ON v.catedra_id = c.id
-            ORDER BY v.id
-            OFFSET :inicio ROWS FETCH NEXT :registrosPorPagina ROWS ONLY";
-
-    $this->db->query($sql);
-    $this->db->bind(':inicio', $inicio, PDO::PARAM_INT);
-    $this->db->bind(':registrosPorPagina', $registrosPorPagina, PDO::PARAM_INT);
-
-    return $this->db->registros();
   }
 
   public function obtenerVacantesPorUsuarioId($usuarioId) {

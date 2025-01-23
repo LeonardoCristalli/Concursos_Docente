@@ -9,7 +9,7 @@ define('RUTA_APP', dirname(dirname(__FILE__)));
 
 // Configuración para ngrok
 $protocol = "https";
-$host = "1376-2803-9800-98cb-7207-a072-a6fe-bdbc-1818.ngrok-free.app";  // URL de ngrok actual 
+$host = "6b5d-2803-9800-98cb-7207-a072-a6fe-bdbc-1818.ngrok-free.app";  // URL de ngrok actual 
 
 define('RUTA_URL', $protocol . "://" . $host . '/concursos_docente');
 

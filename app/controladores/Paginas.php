@@ -183,7 +183,7 @@ class Paginas extends Controlador {
     $vacantes = [];
 
     if ($tipoUsuario === 'RA') {
-      $vacantes = $this->vacanteModelo->obtenerDetalleVacantes();
+      $vacantes = $this->vacanteModelo->obtenerVacantes();
     } elseif ($tipoUsuario === 'JC') {
       $vacantes = $this->vacanteModelo->obtenerVacantesPorUsuarioId($usuarioId);
     }

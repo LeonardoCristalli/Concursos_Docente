@@ -4,6 +4,7 @@
 ?>
 
 <main class="main-container">
+  
   <?php if ($_SESSION['tipo_usu'] !== 'Admin'): ?>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -14,6 +15,7 @@
   <?php endif; ?>
   
   <div class="row mb-4">
+
     <?php if ($_SESSION['tipo_usu'] == 'Admin'): ?>
       <div class="col-md-1">
         <a href="<?php echo RUTA_URL;?>/paginas/adminPanel" class="btn btn-secondary btn-sm">Volver</a>      
@@ -25,10 +27,9 @@
     </div>
   
     <div class="col-md-3 text-end">
-      <a href="<?php echo RUTA_URL; ?>/vacantecontroller/agregarvacante" class="btn btn-primary">
-        Agregar Vacante
-      </a>
+      <a href="<?php echo RUTA_URL; ?>/vacantecontroller/agregarvacante" class="btn btn-primary">Agregar Vacante</a>
     </div>
+
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -78,12 +79,14 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2">
+
               <button class="btn btn-sm btn-outline-primary" 
-                      onclick="window.location.href='<?php echo RUTA_URL; ?>/vacantecontroller/editarvacante/<?php echo $vacante->id; ?>'">
+              onclick="window.location.href='<?php echo RUTA_URL; ?>/vacantecontroller/editarvacante/<?php echo $vacante->id; ?>'">
                 Editar
               </button>
+
               <button class="btn btn-sm btn-outline-danger" 
-                      onclick="confirmarBorrado(<?php echo $vacante->id; ?>, '<?php echo $vacante->catedra_nombre; ?>')">
+              onclick="confirmarBorrado(<?php echo $vacante->id; ?>, '<?php echo $vacante->catedra_nombre; ?>')">
                 Eliminar
               </button>
             </div>
@@ -92,39 +95,8 @@
       </div>
     <?php endforeach; ?>
   </div>
-
-  <?php if ($datos['totalPaginas'] > 1 && $datos['totalPaginas'] > $datos['paginaActual']): ?>
-    <div class="text-center mt-4">
-      <button id="loadMore" class="btn btn-primary">
-        Cargar más vacantes
-      </button>
-    </div>
-  <?php endif; ?>
-
-  <script>
-  let paginaActual = <?php echo $datos['paginaActual']; ?>;
-  
-  document.getElementById('loadMore')?.addEventListener('click', function() {
-      paginaActual++;
-      fetch(`${RUTA_URL}/vacantecontroller/obtenerMasVacantes?pagina=${paginaActual}`)
-          .then(response => response.json())
-          .then(data => {
-              // Agregar nuevas cards
-              const container = document.querySelector('.row.row-cols-1');
-              data.vacantes.forEach(vacante => {
-                  // Agregar card al contenedor
-              });
-              
-              // Ocultar botón si no hay más páginas
-              if (paginaActual >= <?php echo $datos['totalPaginas']; ?>) {
-                  this.style.display = 'none';
-              }
-          });
-  });
-  </script>
 </main>
 
-<!-- Modal de Confirmación -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -147,13 +119,13 @@
 </div>
 
 <script>
-function confirmarBorrado(id, nombre) {
-  document.getElementById('vacanteName').textContent = nombre;
-  document.getElementById('deleteId').value = id;
-  document.getElementById('deleteForm').action = '<?php echo RUTA_URL; ?>/vacantecontroller/borrarvacante/' + id;
-  
-  new bootstrap.Modal(document.getElementById('deleteModal')).show();
-}
+  function confirmarBorrado(id, nombre) {
+    document.getElementById('vacanteName').textContent = nombre;
+    document.getElementById('deleteId').value = id;
+    document.getElementById('deleteForm').action = '<?php echo RUTA_URL; ?>/vacantecontroller/borrarvacante/' + id;
+    
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+  }
 </script>
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

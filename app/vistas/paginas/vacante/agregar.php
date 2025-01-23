@@ -86,11 +86,6 @@
 
             <input type="hidden" name="fecha_desde" value="<?php echo date('Y-m-d'); ?>">
 
-            <div class="form-group mb-3">
-              <label for="observacion" class="form-label">Observación:</label>
-              <input type="text" id="observacion" name="observacion" class="form-control">
-            </div>
-
             <div class="d-flex justify-content-end">
               <button class="btn btn-primary" type="submit" name="submit" value="submit">Crear</button>
             </div>  
@@ -104,23 +99,23 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const fechaIni = document.getElementById('fecha_ini');
-    const fechaFin = document.getElementById('fecha_fin');
-    
-    // Establecer fecha mínima de cierre al cargar la página
-    const fechaInicial = new Date(fechaIni.value);
-    fechaInicial.setDate(fechaInicial.getDate() + 1);
-    fechaFin.min = fechaInicial.toISOString().split('T')[0];
+  const fechaIni = document.getElementById('fecha_ini');
+  const fechaFin = document.getElementById('fecha_fin');
+  
+  // Establecer fecha mínima de cierre al cargar la página
+  const fechaInicial = new Date(fechaIni.value);
+  fechaInicial.setDate(fechaInicial.getDate() + 1);
+  fechaFin.min = fechaInicial.toISOString().split('T')[0];
 
-    // Actualizar fecha mínima de cierre cuando cambia fecha de inicio
-    fechaIni.addEventListener('change', function() {
-        const fechaInicio = new Date(fechaIni.value);
-        fechaInicio.setDate(fechaInicio.getDate() + 1);
-        fechaFin.min = fechaInicio.toISOString().split('T')[0];
-        if(fechaFin.value && fechaFin.value <= fechaIni.value) {
-            fechaFin.value = fechaInicio.toISOString().split('T')[0];
-        }
-    });
+  // Actualizar fecha mínima de cierre cuando cambia fecha de inicio
+  fechaIni.addEventListener('change', function() {
+    const fechaInicio = new Date(fechaIni.value);
+    fechaInicio.setDate(fechaInicio.getDate() + 1);
+    fechaFin.min = fechaInicio.toISOString().split('T')[0];
+    if(fechaFin.value && fechaFin.value <= fechaIni.value) {
+      fechaFin.value = fechaInicio.toISOString().split('T')[0];
+    }
+  });
 });
 </script>
 

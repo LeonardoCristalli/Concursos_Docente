@@ -64,7 +64,19 @@
 
             <div class="form-group mb-3">
               <label for="catedra_id" class="form-label">Catedra:<sup>*</sup></label>
-              <input type="number" id="catedra_id" name="catedra_id" class="form-control" value="<?php echo $datos['catedra_id']; ?>">
+              <select id="catedra_id" name="catedra_id" class="form-select">
+                <?php foreach ($datos['catedras'] as $catedra): ?>
+                  <?php if ($catedra->id == $datos['catedra_id']): ?>
+                    <option value="<?php echo $catedra->id; ?>" selected>
+                      <?php echo htmlspecialchars($catedra->nombre); ?>
+                    </option>
+                  <?php else: ?>
+                    <option value="<?php echo $catedra->id; ?>">
+                      <?php echo htmlspecialchars($catedra->nombre); ?>
+                    </option>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </select>
             </div>
             
             <div class="d-flex justify-content-center">
