@@ -222,6 +222,7 @@ class Paginas extends Controlador {
       $inscripciones = $this->inscripcionModelo->obtenerDetallesInscripPorVacanteId($vacante_id);
       $vacante_descrip = $vacanteSeleccionada ? $vacanteSeleccionada->descrip : null;
       $estadoVacante = $vacanteSeleccionada ? $vacanteSeleccionada->estado_id : null;
+      
     }
 
     usort($inscripciones, function($a, $b) {

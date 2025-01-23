@@ -56,6 +56,7 @@
       </table>
     </div>
 
+   
     <div class="col-md-7">
       <?php if(isset($datos['vacante_id'])) : ?>
         

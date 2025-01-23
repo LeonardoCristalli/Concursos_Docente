@@ -104,16 +104,13 @@ class Vacante {
                       FROM vacantes v
                       INNER JOIN catedras c 
                         ON v.catedra_id = c.id
-                      LEFT JOIN (
-                        SELECT vacante_id, estado_id
+                      INNER JOIN vacantes_estados ve ON v.id = ve.vacante_id
+                      INNER JOIN (
+                        SELECT vacante_id, MAX(fecha_desde) AS max_fecha_desde
                         FROM vacantes_estados
-                        WHERE fecha_desde = (
-                          SELECT MAX(fecha_desde)
-                          FROM vacantes_estados
-                          WHERE vacante_id = vacantes_estados.vacante_id
-                        )
-                      ) ve 
-                        ON v.id = ve.vacante_id
+                        GROUP BY vacante_id
+                      ) ve_max ON ve.vacante_id = ve_max.vacante_id
+                        AND ve.fecha_desde = ve_max.max_fecha_desde
                       WHERE v.id = :id');
 
     $this->db->bind(':id', $id);
