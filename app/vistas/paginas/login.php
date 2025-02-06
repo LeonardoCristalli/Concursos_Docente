@@ -35,9 +35,12 @@
         <label for="username">Usuario</label>
       </div>
 
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-        <label for="password">Contraseña</label>
+      <div class="input-group mb-3">
+        <div class="form-floating flex-grow-1">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+          <label for="password">Contraseña</label>
+        </div>
+        <span class="input-group-text"><i class="fas fa-eye toggle-password"></i></span>
       </div>
 
       <div class="form-check text-start mb-3">
@@ -72,5 +75,25 @@
     errorMessageElement.classList.remove("d-none"); 
   }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      // Encuentra el campo de contraseña dentro del mismo input-group
+      const passwordField = this.closest('.input-group').querySelector('input');
+      
+      // Alterna el tipo de input entre 'password' y 'text'
+      passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+      
+      // Cambia el icono
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+  });
+});
+
+</script>
+
 
 <?php require RUTA_APP . '/vistas/inc/footer.php'; ?>

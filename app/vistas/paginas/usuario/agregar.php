@@ -29,32 +29,44 @@
 
               <div class="form-group mb-3">
                 <label for="nombre" class="form-label">Nombre:<sup>*</sup></label>
-                <input type="text" id="nombre" name="nombre" class="form-control">
+                <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?>">
+                <?php if (isset($datos['errores']['nombre'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['nombre']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label for="apellido" class="form-label">Apellido: <sup>*</sup></label>
-                <input type="text" id="apellido" name="apellido" class="form-control">
+                <input type="text" id="apellido" name="apellido" class="form-control" value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>">
+                <?php if (isset($datos['errores']['apellido'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['apellido']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label for="fecha_nac" class="form-label">Fecha de Nacimiento:<sup>*</sup></label>
                 <input type="date" id="fecha_nac" name="fecha_nac" class="form-control"
-                       max="<?php echo date('Y-m-d', strtotime('-18 years')); ?>"
-                       min="<?php echo date('Y-m-d', strtotime('-100 years')); ?>"
-                       value="<?php echo date('Y-m-d', strtotime('-18 years')); ?>">
+                      max="<?php echo date('Y-m-d', strtotime('-18 years')); ?>"
+                      min="<?php echo date('Y-m-d', strtotime('-100 years')); ?>"
+                      value="<?php echo isset($_POST['fecha_nac']) ? $_POST['fecha_nac'] : date('Y-m-d', strtotime('-18 years')); ?>">
+                <?php if (isset($datos['errores']['fecha_nac'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['fecha_nac']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label>Sexo: <sup>*</sup></label><br>
                 <div class="form-check">
-                  <input type="radio" id="masculino" name="sexo" class="form-check-input" value="M">
+                  <input type="radio" id="masculino" name="sexo" class="form-check-input" value="M" <?php echo isset($_POST['sexo']) && $_POST['sexo'] == 'M' ? 'checked' : ''; ?>>
                   <label class="form-check-label" for="masculino">Masculino</label><br>
                 </div>
                 <div class="form-check">
-                  <input type="radio" id="femenino" name="sexo" class="form-check-input" value="F">
+                  <input type="radio" id="femenino" name="sexo" class="form-check-input" value="F" <?php echo isset($_POST['sexo']) && $_POST['sexo'] == 'F' ? 'checked' : ''; ?>>
                   <label class="form-check-label" for="femenino">Femenino</label>
                 </div>
+                <?php if (isset($datos['errores']['sexo'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['sexo']; ?></div>
+                <?php endif; ?>
               </div>       
 
             </fieldset>
@@ -66,17 +78,26 @@
 
               <div class="form-group mb-3">
                 <label for="direccion" class="form-label">Dirección: <sup>*</sup></label>
-                <input type="text" id="direccion" name="direccion" class="form-control">
+                <input type="text" id="direccion" name="direccion" class="form-control" value="<?php echo isset($_POST['direccion']) ? $_POST['direccion'] : ''; ?>">
+                <?php if (isset($datos['errores']['direccion'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['direccion']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label for="telefono" class="form-label">Teléfono: <sup>*</sup></label>
-                <input type="tel" id="telefono" name="telefono" class="form-control">
+                <input type="tel" id="telefono" name="telefono" class="form-control" value="<?php echo isset($_POST['telefono']) ? $_POST['telefono'] : ''; ?>">
+                <?php if (isset($datos['errores']['telefono'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['telefono']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label for="email" class="form-label">Email: <sup>*</sup></label>
-                <input type="email" id="email" name="email" class="form-control">
+                <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+                <?php if (isset($datos['errores']['email'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['email']; ?></div>
+                <?php endif; ?>
               </div>
 
             </fieldset>
@@ -88,12 +109,18 @@
 
               <div class="form-group mb-3">
                 <label for="nro_dni" class="form-label">DNI: <sup>*</sup></label>
-                <input type="text" id="nro_dni" name="nro_dni" class="form-control">
+                <input type="text" id="nro_dni" name="nro_dni" class="form-control" value="<?php echo isset($_POST['nro_dni']) ? $_POST['nro_dni'] : ''; ?>">
+                <?php if (isset($datos['errores']['nro_dni'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['nro_dni']; ?></div>
+                <?php endif; ?>
               </div>
 
               <div class="form-group mb-3">
                 <label for="cuil" class="form-label">Cuil: <sup>*</sup></label>
-                <input type="text" id="cuil" name="cuil" class="form-control">
+                <input type="text" id="cuil" name="cuil" class="form-control" value="<?php echo isset($_POST['cuil']) ? $_POST['cuil'] : ''; ?>">
+                <?php if (isset($datos['errores']['cuil'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['cuil']; ?></div>
+                <?php endif; ?>
               </div>
               
             </fieldset>
@@ -107,15 +134,26 @@
 
               <div class="form-group mb-3">
                 <label for="usuario" class="form-label">Usuario: <sup>*</sup></label>
-                <input type="text" id="usuario" name="usuario" class="form-control">
+                <input type="text" id="usuario" name="usuario" class="form-control" value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>">
+                <?php if (isset($datos['errores']['usuario'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['usuario']; ?></div>
+                <?php endif; ?>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="password" class="form-label">Password: <sup>*</sup></label>
-                <input type="password" id="password" name="password" class="form-control">
+              <div class="input-group mb-3">
+                <div class="form-group">
+                  <label for="password" class="form-label">Password: <sup>*</sup></label>
+                  <input type="password" id="password" name="password" class="form-control pe-5">
+                </div>                
+                <span class="toggle-password position-absolute end-0 top-50 translate-middle-y me-3">
+                  <i class="fas fa-eye"></i>
+                </span>
                 <div id="passwordHelpBlock" class="form-text">
                   La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
                 </div>
+                 <?php if (isset($datos['errores']['password'])): ?>
+                  <div class="text-danger"><?php echo $datos['errores']['password']; ?></div>
+                <?php endif; ?>
               </div>
             </fieldset>
           </div>
@@ -180,6 +218,25 @@
   document.addEventListener('DOMContentLoaded', function() {
     var tipoUsuario = document.getElementById('tipo_usu').value;
     mostrarCatedra(tipoUsuario);
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+      let passwordInput = document.getElementById('password');
+      let icon = this.querySelector('i');
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    });
   });
 </script>
 

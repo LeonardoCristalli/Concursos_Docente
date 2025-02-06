@@ -36,19 +36,20 @@ class UsuarioController extends Controlador {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-      $tipo_usu = isset($_SESSION['tipo_usu']) && $_SESSION['tipo_usu'] === 'Admin' ? trim($_POST['tipo_usu']) : 'Usuario';
+      $tipo_usu = isset($_SESSION['tipo_usu']) && $_SESSION['tipo_usu'] === 'Admin' && isset($_POST['tipo_usu']) ? trim($_POST['tipo_usu']) : 'Usuario';
 
       $datos = [
         'nombre' => trim($_POST['nombre']),
         'apellido' => trim($_POST['apellido']),
         'fecha_nac' => trim($_POST['fecha_nac']),
-        'sexo' => trim($_POST['sexo']),
+        'sexo' => isset($_POST['sexo']) ? trim($_POST['sexo']) : '',
         'direccion' => trim($_POST['direccion']),
         'telefono' => trim($_POST['telefono']),  
         'email' => trim($_POST['email']),  
         'nro_dni' => trim($_POST['nro_dni']),      
         'cuil' => trim($_POST['cuil']),                    
-        'tipo_usu' => $puedeAsignarRoles ? trim($_POST['tipo_usu']) : 'Usuario',
+        'tipo_usu' => $puedeAsignarRoles && isset($_POST['tipo_usu']) && $_POST['tipo_usu'] !== null 
+                      ? trim($_POST['tipo_usu']) : 'Usuario',
         'usuario' => trim($_POST['usuario']),
         'password' => trim($_POST['password']),
         'cv' => '',
@@ -63,18 +64,13 @@ class UsuarioController extends Controlador {
         $errores[] = "El campo catedra_id es obligatorio para Jefe de Cátedra.";
       }
 
-      if (!empty($errores)) {
-        foreach ($errores as $error) {
-          echo $error . "<br/>";
-        }
-        return; 
-      }
-
       if (is_array($datosValidados)) {
-        foreach ($datosValidados as $error) {
-          echo $error . "<br/>";
+        $errores = array_merge($errores, $datosValidados);
+        if (!empty($errores)) {
+          $datos = ['errores' => $errores];
+          $this->vista('paginas/usuario/agregar', $datos);
         }
-      } elseif ($datosValidados === true) {
+      } else {
 
         if (!empty($_FILES['cv']['tmp_name']) && file_exists($_FILES['cv']['tmp_name'])) {
           $fileName = $_FILES['cv']['name'];
@@ -125,9 +121,7 @@ class UsuarioController extends Controlador {
           }
           die('Algo salió mal');
         }
-      } else {
-        die('Datos de usuario no válidos');
-      }      
+      }
     } else {
       $datos = [
         'nombre' => '',
@@ -308,63 +302,63 @@ class UsuarioController extends Controlador {
   private function validarDatosUsuario($datos) {
     $errores = [];
     if (empty($datos['nombre'])) {
-      $errores[] = 'El nombre es obligatorio';
+      $errores['nombre'] = 'El nombre es obligatorio';
     }
 
     if (empty($datos['apellido'])) {
-      $errores[] = 'El apellido es obligatorio';
+      $errores['apellido'] = 'El apellido es obligatorio';
     }
 
     if (empty($datos['sexo'])) {
-      $errores[] = 'El sexo es obligatorio';
+      $errores['sexo'] = 'El sexo es obligatorio';
     }
 
     if (empty($datos['direccion'])) {
-      $errores[] = 'La direccion es obligatoria';
+      $errores['direccion'] = 'La direccion es obligatoria';
     }
 
     if (empty($datos['telefono'])) {
-      $errores[] = 'El telefono es obligatorio';
+      $errores['telefono'] = 'El telefono es obligatorio';
     }
 
     if (empty($datos['cuil'])) {
-      $errores[] = 'El cuil es obligatorio';
+      $errores['cuil'] = 'El cuil es obligatorio';
     } elseif (strlen($datos['cuil']) !== 11) {
-      $errores[] = 'El número de cuil debe tener exactamente 11 dígitos';
+      $errores['cuil'] = 'El número de cuil debe tener exactamente 11 dígitos';
     }
 
     if (empty($datos['email'])) {
-      $errores[] = 'El email es obligatorio';
+      $errores['email'] = 'El email es obligatorio';
     } elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
-      $errores[] = 'El correo electrónico no tiene un formato válido';
+      $errores['email'] = 'El correo electrónico no tiene un formato válido';
     }
 
     if (empty($datos['fecha_nac'])) {
-      $errores[] = 'La fecha de nacimiento es obligatoria';
+      $errores['fecha_nac'] = 'La fecha de nacimiento es obligatoria';
     }
 
     if (empty($datos['usuario'])) {
-      $errores[] = 'El nombre de usuario es obligatorio';
+      $errores['usuario'] = 'El nombre de usuario es obligatorio';
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', $datos['usuario'])) {
-      $errores[] = 'El nombre de usuario solo puede contener letras, números y guiones bajos';
+      $errores['usuario'] = 'El nombre de usuario solo puede contener letras, números y guiones bajos';
     }
 
     if (empty($datos['password'])) {
-      $errores[] = 'La contraseña es obligatoria';
+      $errores['password'] = 'La contraseña es obligatoria';
     } else {
       if (strlen($datos['password']) < 8) {
-        $errores[] = 'La contraseña debe tener al menos 8 caracteres';
+        $errores['password'] = 'La contraseña debe tener al menos 8 caracteres';
       } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/', $datos['password'])) {
-        $errores[] = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
+        $errores['password'] = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
       }
     }
 
     if (empty($datos['nro_dni'])) {
-      $errores[] = 'El número de DNI es obligatorio';
+      $errores['nro_dni'] = 'El número de DNI es obligatorio';
     } elseif (!ctype_digit($datos['nro_dni'])) {
-      $errores[] = 'El número de DNI debe contener solo dígitos numéricos';
+      $errores['nro_dni'] = 'El número de DNI debe contener solo dígitos numéricos';
     } elseif (strlen($datos['nro_dni']) !== 8) {
-      $errores[] = 'El número de DNI debe tener exactamente 8 dígitos';
+      $errores['nro_dni'] = 'El número de DNI debe tener exactamente 8 dígitos';
     }
 
     if (!empty($errores)){
